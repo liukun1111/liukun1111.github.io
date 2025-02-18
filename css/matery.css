@@ -2146,6 +2146,42 @@ footer .copy-right {
 }
 
 /*箭头*/
+/* 向下滚动提示图标的样式 */
+.cover-scroll-down {
+    position: fixed;
+    bottom: 30px;  /* 控制图标距离页面底部的距离 */
+    left: 50%;
+    transform: translateX(-50%); /* 使图标居中 */
+    z-index: 9999;  /* 确保图标位于其他内容之上 */
+    font-size: 30px;
+    color: #fff; /* 图标颜色 */
+    cursor: pointer;  /* 鼠标悬停时显示手型 */
+    opacity: 0.8;  /* 默认透明度 */
+    transition: opacity 0.3s;  /* 平滑过渡 */
+}
+
+/* 鼠标悬停时的效果 */
+.cover-scroll-down:hover {
+    opacity: 1;
+}
+
+/* 向下滚动的动画效果 */
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+#pointer3 {
+    animation: bounce 1s infinite; /* 循环执行动画 */
+}
+
 .cover-scroll-down i {
     display: inline-block;
     font-size: 50px; /* 增大箭头尺寸 */
