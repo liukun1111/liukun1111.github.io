@@ -2231,10 +2231,14 @@ footer .copy-right {
     }
 }
 /*字体*/
-@font-face{
-    font-family: 'Liu Jian Mao Cao';
-    src: url('https://fonts.googleapis.com/css2?family=Liu+Jian+Mao+Cao&display=swap');   
+/* 在 CSS 中引入自定义字体 */
+@font-face {
+    font-family: 'LiuJianMaoCao';
+    src: url('/fonts/LiuJianMaoCao-Regular.ttf') format('truetype'); /* 这里是字体文件路径 */
+    font-weight: normal;
+    font-style: normal;
 }
+
 #indexCard {
-    font-family: 'Liu Jian Mao Cao';
+    font-family: 'LiuJianMaoCao'; /* 设置默认字体 */
 }
