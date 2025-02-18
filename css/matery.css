@@ -2230,3 +2230,11 @@ footer .copy-right {
         transform: translateY(-7px);
     }
 }
+/*字体*/
+@font-face{
+    font-family: 'Liu Jian Mao Cao';
+    src: url('https://fonts.googleapis.com/css2?family=Liu+Jian+Mao+Cao&display=swap');   
+}
+#indexCard {
+    font-family: 'Liu Jian Mao Cao';
+}
