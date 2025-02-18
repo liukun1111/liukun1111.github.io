@@ -2144,3 +2144,53 @@ footer .copy-right {
 	height: 240px;
     vertical-align: middle
 }
+
+/*箭头*/
+.cover-scroll-down i {
+    display: inline-block;
+    font-size: 50px; /* 增大箭头尺寸 */
+    margin: 0 5px;
+    animation: bounce 1.5s infinite, colorChange 1.5s infinite; /* 增加颜色变化动画 */
+}
+
+.cover-scroll-down i:nth-child(1) {
+    animation-delay: 0s;
+    color: #FF6347; /* 番茄红 */
+}
+
+.cover-scroll-down i:nth-child(2) {
+    animation-delay: 0.3s;
+    color: #32CD32; /* 螺栓绿 */
+}
+
+.cover-scroll-down i:nth-child(3) {
+    animation-delay: 0.6s;
+    color: #1E90FF; /* 道奇蓝 */
+}
+
+.cover-scroll-down i:nth-child(4) {
+    animation-delay: 0.9s;
+    color: #FFD700; /* 金色 */
+}
+
+.cover-scroll-down i:nth-child(5) {
+    animation-delay: 1.2s;
+    color: #FF69B4; /* 热情粉 */
+}
+
+.cover-scroll-down i:nth-child(6) {
+    animation-delay: 1.5s;
+    color: #9400D3; /* 紫罗兰 */
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-15px); /* 增加上下浮动的幅度 */
+    }
+    60% {
+        transform: translateY(-7px);
+    }
+}
