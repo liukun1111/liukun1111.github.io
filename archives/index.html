@@ -41,9 +41,9 @@
     <script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img@76ba2b3/live2d/lib/pio_sdk4.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img@76ba2b3/live2d/lib/load.js"></script>
 
-<meta name="generator" content="Hexo 7.3.0">
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="lkii's Blog" type="application/atom+xml">
+
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
-<link rel="alternate" href="/atom.xml" title="lkii's Blog" type="application/atom+xml">
 </head>
 
 
@@ -268,20 +268,29 @@
     <div class="cover-scroll-down">
       <i class="fa fa-angle-down" aria-hidden="true" id="pointer3"></i>
     </div>
-    <script>
-        document.getElementById('pointer3').addEventListener('click', function() {
-            // 平滑滚动到页面下方
-            window.scrollTo({
-                top: window.innerHeight,  // 滚动到屏幕的高度
-                behavior: 'smooth'  // 平滑滚动
-            });
+<script>
+    // 获取箭头元素
+    var coverScrollDown = document.querySelector('.cover-scroll-down');
 
-            // 在滚动完成后隐藏箭头
-            setTimeout(function() {
-                document.querySelector('.cover-scroll-down').style.display = 'none';
-            }, 1000);  // 延时1秒后隐藏箭头
+    // 点击箭头时隐藏箭头并滚动页面
+    document.getElementById('pointer3').addEventListener('click', function() {
+        window.scrollTo({
+            top: window.innerHeight,  // 滚动到页面的高度
+            behavior: 'smooth'  // 平滑滚动
         });
-    </script>
+    });
+
+    // 监听滚动事件，判断页面是否已经向下滚动，若滚动到一定位置则隐藏箭头
+    window.addEventListener('scroll', function() {
+        // 判断页面的滚动位置
+        if (window.scrollY > 100) {  // 当页面滚动超过100px时隐藏箭头
+            coverScrollDown.style.display = 'none';
+        } else {
+            coverScrollDown.style.display = 'block';  // 如果页面回到顶部则重新显示箭头
+        }
+    });
+</script>
+
 
 </header>
 
