@@ -2233,12 +2233,12 @@ footer .copy-right {
 /*字体*/
 /* 在 CSS 中引入自定义字体 */
 @font-face {
-    font-family: 'LiuJianMaoCao';
-    src: url('/fonts/LiuJianMaoCao-Regular.ttf') format('truetype'); /* 这里是字体文件路径 */
+    font-family: 'xingkai';
+    src: url('/fonts/YeZiGongChangZuiHanJiangXingCao-2.ttf') format('truetype'); /* 这里是字体文件路径 */
     font-weight: normal;
     font-style: normal;
 }
 
 #indexCard {
-    font-family: 'LiuJianMaoCao'; /* 设置默认字体 */
+    font-family: 'xingkai'; /* 设置默认字体 */
 }
