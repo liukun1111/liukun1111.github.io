@@ -2138,3 +2138,9 @@ footer .copy-right {
     padding: 0;
     margin: 0;
 }
+
+/* 看板娘大小调整 */
+#pio {
+	height: 240px;
+    vertical-align: middle
+}
