@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Hexo</title>
+  <title>lkii&#39;s Blog</title>
   
-  
+  <subtitle>Welcome</subtitle>
   <link href="https://liukun1111.github.io/atom.xml" rel="self"/>
   
   <link href="https://liukun1111.github.io/"/>
@@ -10,7 +10,7 @@
   <id>https://liukun1111.github.io/</id>
   
   <author>
-    <name>John Doe</name>
+    <name>lkii</name>
     
   </author>
   
