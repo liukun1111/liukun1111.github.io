@@ -40,17 +40,31 @@
     <link href="https://liukun1111.github.io/2025/02/19/nevada/"/>
     <id>https://liukun1111.github.io/2025/02/19/nevada/</id>
     <published>2025-02-19T02:21:49.000Z</published>
-    <updated>2025-02-19T02:21:49.032Z</updated>
+    <updated>2025-02-19T04:26:42.255Z</updated>
     
     
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;简介&lt;/p&gt;
-&lt;/blockquote&gt;</summary>
+      
+      
+        
+        
+    <summary type="html">&lt;div id=&quot;demo&quot;&gt;&lt;/div&gt;
+
+&lt;script&gt;
+    var demo = new APlayer({
+        element: document.getElementById(&#39;demo&#39;),
+        showlrc: false,
+    </summary>
+        
+      
     
     
     
-    <category term="未分类" scheme="https://liukun1111.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+    <category term="音乐故事厅" scheme="https://liukun1111.github.io/categories/%E9%9F%B3%E4%B9%90%E6%95%85%E4%BA%8B%E5%8E%85/"/>
     
+    
+    <category term="分享" scheme="https://liukun1111.github.io/tags/%E5%88%86%E4%BA%AB/"/>
+    
+    <category term="音乐" scheme="https://liukun1111.github.io/tags/%E9%9F%B3%E4%B9%90/"/>
     
   </entry>
   
@@ -59,7 +73,7 @@
     <link href="https://liukun1111.github.io/2025/02/19/shi-jiao-he-jing-bie/"/>
     <id>https://liukun1111.github.io/2025/02/19/shi-jiao-he-jing-bie/</id>
     <published>2025-02-19T02:21:20.000Z</published>
-    <updated>2025-02-19T04:20:58.926Z</updated>
+    <updated>2025-02-19T04:22:57.142Z</updated>
     
     
       
@@ -72,8 +86,14 @@
     
     
     
-    <category term="未分类" scheme="https://liukun1111.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+    <category term="摄影" scheme="https://liukun1111.github.io/categories/%E6%91%84%E5%BD%B1/"/>
     
+    
+    <category term="选修课" scheme="https://liukun1111.github.io/tags/%E9%80%89%E4%BF%AE%E8%AF%BE/"/>
+    
+    <category term="笔记" scheme="https://liukun1111.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="摄影" scheme="https://liukun1111.github.io/tags/%E6%91%84%E5%BD%B1/"/>
     
   </entry>
   
@@ -101,9 +121,9 @@
     <category term="摄影" scheme="https://liukun1111.github.io/categories/%E6%91%84%E5%BD%B1/"/>
     
     
-    <category term="笔记" scheme="https://liukun1111.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
-    
     <category term="选修课" scheme="https://liukun1111.github.io/tags/%E9%80%89%E4%BF%AE%E8%AF%BE/"/>
+    
+    <category term="笔记" scheme="https://liukun1111.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
     
     <category term="摄影" scheme="https://liukun1111.github.io/tags/%E6%91%84%E5%BD%B1/"/>
     
@@ -132,9 +152,9 @@
     
     <category term="心理学" scheme="https://liukun1111.github.io/tags/%E5%BF%83%E7%90%86%E5%AD%A6/"/>
     
-    <category term="选修课" scheme="https://liukun1111.github.io/tags/%E9%80%89%E4%BF%AE%E8%AF%BE/"/>
-    
     <category term="作业" scheme="https://liukun1111.github.io/tags/%E4%BD%9C%E4%B8%9A/"/>
+    
+    <category term="选修课" scheme="https://liukun1111.github.io/tags/%E9%80%89%E4%BF%AE%E8%AF%BE/"/>
     
   </entry>
   
@@ -162,9 +182,9 @@
     
     <category term="心理学" scheme="https://liukun1111.github.io/tags/%E5%BF%83%E7%90%86%E5%AD%A6/"/>
     
-    <category term="笔记" scheme="https://liukun1111.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
-    
     <category term="选修课" scheme="https://liukun1111.github.io/tags/%E9%80%89%E4%BF%AE%E8%AF%BE/"/>
+    
+    <category term="笔记" scheme="https://liukun1111.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -191,9 +211,9 @@
     
     <category term="心理学" scheme="https://liukun1111.github.io/tags/%E5%BF%83%E7%90%86%E5%AD%A6/"/>
     
-    <category term="笔记" scheme="https://liukun1111.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
-    
     <category term="选修课" scheme="https://liukun1111.github.io/tags/%E9%80%89%E4%BF%AE%E8%AF%BE/"/>
+    
+    <category term="笔记" scheme="https://liukun1111.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -222,9 +242,9 @@
     
     <category term="心理学" scheme="https://liukun1111.github.io/tags/%E5%BF%83%E7%90%86%E5%AD%A6/"/>
     
-    <category term="笔记" scheme="https://liukun1111.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
-    
     <category term="选修课" scheme="https://liukun1111.github.io/tags/%E9%80%89%E4%BF%AE%E8%AF%BE/"/>
+    
+    <category term="笔记" scheme="https://liukun1111.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -251,9 +271,9 @@
     
     <category term="心理学" scheme="https://liukun1111.github.io/tags/%E5%BF%83%E7%90%86%E5%AD%A6/"/>
     
-    <category term="笔记" scheme="https://liukun1111.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
-    
     <category term="选修课" scheme="https://liukun1111.github.io/tags/%E9%80%89%E4%BF%AE%E8%AF%BE/"/>
+    
+    <category term="笔记" scheme="https://liukun1111.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -280,9 +300,9 @@
     
     <category term="心理学" scheme="https://liukun1111.github.io/tags/%E5%BF%83%E7%90%86%E5%AD%A6/"/>
     
-    <category term="笔记" scheme="https://liukun1111.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
-    
     <category term="选修课" scheme="https://liukun1111.github.io/tags/%E9%80%89%E4%BF%AE%E8%AF%BE/"/>
+    
+    <category term="笔记" scheme="https://liukun1111.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -309,9 +329,9 @@
     
     <category term="心理学" scheme="https://liukun1111.github.io/tags/%E5%BF%83%E7%90%86%E5%AD%A6/"/>
     
-    <category term="笔记" scheme="https://liukun1111.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
-    
     <category term="选修课" scheme="https://liukun1111.github.io/tags/%E9%80%89%E4%BF%AE%E8%AF%BE/"/>
+    
+    <category term="笔记" scheme="https://liukun1111.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -338,9 +358,9 @@
     
     <category term="心理学" scheme="https://liukun1111.github.io/tags/%E5%BF%83%E7%90%86%E5%AD%A6/"/>
     
-    <category term="笔记" scheme="https://liukun1111.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
-    
     <category term="选修课" scheme="https://liukun1111.github.io/tags/%E9%80%89%E4%BF%AE%E8%AF%BE/"/>
+    
+    <category term="笔记" scheme="https://liukun1111.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -367,9 +387,9 @@
     
     <category term="心理学" scheme="https://liukun1111.github.io/tags/%E5%BF%83%E7%90%86%E5%AD%A6/"/>
     
-    <category term="笔记" scheme="https://liukun1111.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
-    
     <category term="选修课" scheme="https://liukun1111.github.io/tags/%E9%80%89%E4%BF%AE%E8%AF%BE/"/>
+    
+    <category term="笔记" scheme="https://liukun1111.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -396,9 +416,9 @@
     
     <category term="心理学" scheme="https://liukun1111.github.io/tags/%E5%BF%83%E7%90%86%E5%AD%A6/"/>
     
-    <category term="笔记" scheme="https://liukun1111.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
-    
     <category term="选修课" scheme="https://liukun1111.github.io/tags/%E9%80%89%E4%BF%AE%E8%AF%BE/"/>
+    
+    <category term="笔记" scheme="https://liukun1111.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -425,9 +445,9 @@
     
     <category term="心理学" scheme="https://liukun1111.github.io/tags/%E5%BF%83%E7%90%86%E5%AD%A6/"/>
     
-    <category term="笔记" scheme="https://liukun1111.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
-    
     <category term="选修课" scheme="https://liukun1111.github.io/tags/%E9%80%89%E4%BF%AE%E8%AF%BE/"/>
+    
+    <category term="笔记" scheme="https://liukun1111.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -455,9 +475,9 @@
     
     <category term="心理学" scheme="https://liukun1111.github.io/tags/%E5%BF%83%E7%90%86%E5%AD%A6/"/>
     
-    <category term="笔记" scheme="https://liukun1111.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
-    
     <category term="选修课" scheme="https://liukun1111.github.io/tags/%E9%80%89%E4%BF%AE%E8%AF%BE/"/>
+    
+    <category term="笔记" scheme="https://liukun1111.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
