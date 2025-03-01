@@ -1,30 +1,33 @@
 .spoiler {
     margin: 25px 0;
     padding: 18px;
-    border: 2px solid #D4D4D4;
-    background: linear-gradient(135deg, #f7f7f7, #e0e0e0);
+    border: 2px solid #4CAF50; /* 绿色镶边 */
+    background: linear-gradient(135deg, #e8f0f8, #d4e4f0); /* 浅灰蓝渐变 */
     position: relative;
     clear: both;
-    border-radius: 6px;
+    border-radius: 8px;
     transition: all 0.4s ease-in-out;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 /* 标题样式 */
 .spoiler .spoiler-title {
     margin: 0 -18px;
-    padding: 10px 18px;
-    color: #333;
+    padding: 12px 18px;
+    color: #2c3e50;
     font-weight: bold;
     font-size: 18px;
     display: flex;
     align-items: center;
     cursor: pointer;
-    transition: color 0.3s;
+    transition: color 0.3s, background 0.3s;
+    background: linear-gradient(90deg, #cce5ff, #b3d7ff); /* 标题渐变 */
+    border-radius: 6px;
 }
 
 .spoiler .spoiler-title:hover {
     color: #007bff;
+    background: linear-gradient(90deg, #b3d7ff, #99c9ff); /* 悬停时渐变加强 */
 }
 
 .spoiler .spoiler-title:before {
@@ -41,24 +44,30 @@
 
 /* 默认折叠状态，隐藏内容 */
 .spoiler .spoiler-content {
-    display: none;  /* 关键代码：默认隐藏内容 */
-    padding: 10px;
+    display: none;  /* 默认隐藏 */
+    padding: 12px;
     margin-top: 10px;
+    background: rgba(255, 255, 255, 0.6); /* 轻微透明感 */
+    border-radius: 6px;
 }
 
 /* 只有 expanded 状态下才显示 */
 .spoiler.expanded .spoiler-content {
     display: block !important;
+    padding: 15px;
+    background: linear-gradient(135deg, #f7faff, #eef3fa); /* 层次感 */
+    border-radius: 6px;
 }
 
 /* 折叠和展开的区别 */
 .spoiler.collapsed {
     padding: 10px;
     background: #f0f0f0;
-    border-color: #ccc;
+    border: 2px solid #4CAF50; /* 保持绿色镶边 */
 }
 
 .spoiler.expanded {
     background: #ffffff;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    border: 2px solid #4CAF50;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* 展开时增加阴影 */
 }
