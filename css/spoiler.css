@@ -10,6 +10,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* 标题样式 */
 .spoiler .spoiler-title {
     margin: 0 -18px;
     padding: 10px 18px;
@@ -32,11 +33,25 @@
     transition: transform 0.3s ease-in-out;
 }
 
+/* 展开时修改箭头 */
 .spoiler.expanded .spoiler-title:before {
     content: "▼";
     transform: rotate(90deg);
 }
 
+/* 默认折叠状态，隐藏内容 */
+.spoiler .spoiler-content {
+    display: none;  /* 关键代码：默认隐藏内容 */
+    padding: 10px;
+    margin-top: 10px;
+}
+
+/* 只有 expanded 状态下才显示 */
+.spoiler.expanded .spoiler-content {
+    display: block !important;
+}
+
+/* 折叠和展开的区别 */
 .spoiler.collapsed {
     padding: 10px;
     background: #f0f0f0;
