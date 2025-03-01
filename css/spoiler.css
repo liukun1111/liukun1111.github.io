@@ -23,7 +23,6 @@
     cursor: pointer;
     transition: color 0.3s, background 0.3s;
     border-radius: 6px;
-    background: linear-gradient(90deg, #dce7f9, #cddff8); /* 微妙的渐变，让标题更有质感 */
     border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* 标题底部增加细边框，提升层次 */
 }
 
