@@ -2230,15 +2230,15 @@ footer .copy-right {
         transform: translateY(-7px);
     }
 }
-/*字体*/
-/* 在 CSS 中引入自定义字体 */
 @font-face {
     font-family: 'xingkai';
-    src: url('/fonts/YeZiGongChangZuiHanJiangXingCao-2.ttf') format('truetype'); /* 这里是字体文件路径 */
+    src: url('https://cdn.jsdelivr.net/gh/liukun1111/liukun1111.github.io@main/fonts/YeZiGongChangZuiHanJiangXingCao-2.woff2') format('woff2');
+    font-display: swap;
     font-weight: normal;
     font-style: normal;
-}
+  }
 
-#indexCard {
-    font-family: 'xingkai'; /* 设置默认字体 */
+.card-content,
+.card-content * {
+   font-family: 'xingkai', sans-serif; /* 添加后备字体 */
 }
