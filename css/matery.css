@@ -2238,7 +2238,7 @@ footer .copy-right {
     font-style: normal;
   }
 
-.card-content,
-.card-content * {
+.dream,
+.dream * {
    font-family: 'xingkai', sans-serif; /* 添加后备字体 */
 }
