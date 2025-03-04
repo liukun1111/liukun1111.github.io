@@ -478,7 +478,7 @@
                 <p>心理学家莫斯特因（Murstein）的“<strong>SVR理论</strong>”中，认为两人从认识到结婚，分为三个阶段：</p>
 <p><strong>S阶段（刺激阶段）：</strong>&nbsp;受到对方外表、行为、性格等刺激；（Stimulus）</p>
 <p><strong>V阶段（价值阶段）：</strong>&nbsp;思维方式和行为模式相似，对感情顺利发展很重要；（Value）</p>
-<p><strong>R阶段（角色阶段）：</strong>&nbsp;分配角色、相互补充。（Role）</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async=""></script>
+<p><strong>R阶段（角色阶段）：</strong>&nbsp;分配角色、相互补充。（Role）</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
                 
             </div>
             <hr/>
@@ -1561,12 +1561,12 @@ $(function () {
 </div>
 
 
-    <script src="/libs/materialize/materialize.min.js"></script>
-    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
-    <script src="/libs/aos/aos.js"></script>
-    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
-    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
-    <script src="/js/matery.js"></script>
+    <script defer src="/libs/materialize/materialize.min.js"></script>
+    <script defer src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script defer src="/libs/aos/aos.js"></script>
+    <script defer src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script defer src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script defer src="/js/matery.js"></script>
 
     <!-- Baidu Analytics -->
 
@@ -1667,7 +1667,13 @@ $(function () {
         }
   });
     </script>
-
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        document.querySelector("div.title.center-align").style.visibility = "visible";
+      });
+    </script>
+  
+  
 
         <style>
             [bg-lazy] {

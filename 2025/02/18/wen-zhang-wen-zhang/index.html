@@ -471,7 +471,7 @@
 <p>图片</p>
 <p>还没有文章，刘笋在写文章中</p>
 <p>参考</p>
-<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async=""></script>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
                 
             </div>
             <hr/>
@@ -1527,12 +1527,12 @@ $(function () {
 </div>
 
 
-    <script src="/libs/materialize/materialize.min.js"></script>
-    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
-    <script src="/libs/aos/aos.js"></script>
-    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
-    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
-    <script src="/js/matery.js"></script>
+    <script defer src="/libs/materialize/materialize.min.js"></script>
+    <script defer src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script defer src="/libs/aos/aos.js"></script>
+    <script defer src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script defer src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script defer src="/js/matery.js"></script>
 
     <!-- Baidu Analytics -->
 
@@ -1633,7 +1633,13 @@ $(function () {
         }
   });
     </script>
-
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        document.querySelector("div.title.center-align").style.visibility = "visible";
+      });
+    </script>
+  
+  
 
         <style>
             [bg-lazy] {

@@ -285,6 +285,13 @@
 
     
 <style>
+
+    div.title.center-align {
+      font-size: 2em;
+      font-weight: bold;
+      visibility: hidden;
+    }
+
     .carousel-control {
         width: 45px;
         height: 45px;
@@ -578,12 +585,12 @@
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/%E9%9F%B3%E4%B9%90/">
-                            <span class="chip bg-color">音乐</span>
-                        </a>
-                        
                         <a href="/tags/%E5%88%86%E4%BA%AB/">
                             <span class="chip bg-color">分享</span>
+                        </a>
+                        
+                        <a href="/tags/%E9%9F%B3%E4%B9%90/">
+                            <span class="chip bg-color">音乐</span>
                         </a>
                         
                     </div>
@@ -628,12 +635,12 @@
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/%E9%9F%B3%E4%B9%90/">
-                            <span class="chip bg-color">音乐</span>
-                        </a>
-                        
                         <a href="/tags/%E5%88%86%E4%BA%AB/">
                             <span class="chip bg-color">分享</span>
+                        </a>
+                        
+                        <a href="/tags/%E9%9F%B3%E4%B9%90/">
+                            <span class="chip bg-color">音乐</span>
                         </a>
                         
                     </div>
@@ -1515,12 +1522,12 @@ $(function () {
 </div>
 
 
-    <script src="/libs/materialize/materialize.min.js"></script>
-    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
-    <script src="/libs/aos/aos.js"></script>
-    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
-    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
-    <script src="/js/matery.js"></script>
+    <script defer src="/libs/materialize/materialize.min.js"></script>
+    <script defer src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script defer src="/libs/aos/aos.js"></script>
+    <script defer src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script defer src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script defer src="/js/matery.js"></script>
 
     <!-- Baidu Analytics -->
 
@@ -1621,7 +1628,13 @@ $(function () {
         }
   });
     </script>
-
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        document.querySelector("div.title.center-align").style.visibility = "visible";
+      });
+    </script>
+  
+  
 
         <style>
             [bg-lazy] {

@@ -1192,12 +1192,12 @@ $(function () {
 </div>
 
 
-    <script src="/libs/materialize/materialize.min.js"></script>
-    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
-    <script src="/libs/aos/aos.js"></script>
-    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
-    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
-    <script src="/js/matery.js"></script>
+    <script defer src="/libs/materialize/materialize.min.js"></script>
+    <script defer src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script defer src="/libs/aos/aos.js"></script>
+    <script defer src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script defer src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script defer src="/js/matery.js"></script>
 
     <!-- Baidu Analytics -->
 
@@ -1298,7 +1298,13 @@ $(function () {
         }
   });
     </script>
-
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        document.querySelector("div.title.center-align").style.visibility = "visible";
+      });
+    </script>
+  
+  
 
         <style>
             [bg-lazy] {

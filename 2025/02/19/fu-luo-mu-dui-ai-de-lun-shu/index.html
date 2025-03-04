@@ -475,7 +475,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><strong>爱</strong>是人与人之间的创造力，而不是感情。<br><strong>把</strong>各种经常来当作“真爱”的证明的自恋神经症和性虐待倾向区别开来。<br>例如：”我爱你是因为我爱我自己。“ 屁话，你爱的是一种感觉，爱别人的感觉，满足自己的自恋自卑。<br><strong>幼</strong>稚的爱是”我爱你，因为我需要你。” 而成熟的爱是“我需要你，因为我爱你。”<br>例如：“墙，想谈恋爱了，找一个……” 为了得到爱而爱 还是 因为爱而得到爱？幼稚的爱。<br><strong>爱</strong>的五种形式：博爱、母爱、性爱、自爱、神爱。<br><strong>弗</strong>洛姆相信爱的本质有四大元素： 关怀、责任、尊重和了解。<br>弗洛姆著作<a target="_blank" rel="noopener" href="https://pan.xunlei.com/s/VNsqtYy6WAm0sgG7N2ljSVxhA1?pwd=axyr">《爱的艺术》</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async=""></script>
+                <p><strong>爱</strong>是人与人之间的创造力，而不是感情。<br><strong>把</strong>各种经常来当作“真爱”的证明的自恋神经症和性虐待倾向区别开来。<br>例如：”我爱你是因为我爱我自己。“ 屁话，你爱的是一种感觉，爱别人的感觉，满足自己的自恋自卑。<br><strong>幼</strong>稚的爱是”我爱你，因为我需要你。” 而成熟的爱是“我需要你，因为我爱你。”<br>例如：“墙，想谈恋爱了，找一个……” 为了得到爱而爱 还是 因为爱而得到爱？幼稚的爱。<br><strong>爱</strong>的五种形式：博爱、母爱、性爱、自爱、神爱。<br><strong>弗</strong>洛姆相信爱的本质有四大元素： 关怀、责任、尊重和了解。<br>弗洛姆著作<a target="_blank" rel="noopener" href="https://pan.xunlei.com/s/VNsqtYy6WAm0sgG7N2ljSVxhA1?pwd=axyr">《爱的艺术》</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
                 
             </div>
             <hr/>
@@ -1558,12 +1558,12 @@ $(function () {
 </div>
 
 
-    <script src="/libs/materialize/materialize.min.js"></script>
-    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
-    <script src="/libs/aos/aos.js"></script>
-    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
-    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
-    <script src="/js/matery.js"></script>
+    <script defer src="/libs/materialize/materialize.min.js"></script>
+    <script defer src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script defer src="/libs/aos/aos.js"></script>
+    <script defer src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script defer src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script defer src="/js/matery.js"></script>
 
     <!-- Baidu Analytics -->
 
@@ -1664,7 +1664,13 @@ $(function () {
         }
   });
     </script>
-
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        document.querySelector("div.title.center-align").style.visibility = "visible";
+      });
+    </script>
+  
+  
 
         <style>
             [bg-lazy] {
