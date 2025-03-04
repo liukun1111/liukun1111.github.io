@@ -289,8 +289,7 @@
     div.title.center-align {
       font-size: 2em;
       font-weight: bold;
-      opacity: 0;
-      transition: opacity 0.3s ease-in-out;
+      opacity: 1;  /* 直接显示，避免 LCP 计算不到 */
     }
 
     .carousel-control {
@@ -436,11 +435,7 @@
 
     
 </div>
-<script>
-  setTimeout(() => {
-    document.querySelector("div.title.center-align").style.opacity = "1";
-  }, 100);  /* 确保 LCP 计算完成后再显示 */
-</script>
+
 <script>
     $(function () {
         let coverSlider = $('.carousel');
