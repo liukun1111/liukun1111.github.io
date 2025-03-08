@@ -4,6 +4,44 @@
   
     
     <entry>
+      <title>置顶文章</title>
+      <link href="/2025/03/09/zhi-ding-wen-zhang/"/>
+      <url>/2025/03/09/zhi-ding-wen-zhang/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>（此分类页面下的所有文章都不会出现在主页和更新日志中）</p></blockquote><p>&nbsp; &nbsp; &nbsp; &nbsp;2025年到了，今年给自己立一个flag吧：每天学习一个新的知识！可以是弄懂一个似懂非懂的知识，可以是了解一个新的概念，或者是认识一个新的英语单词，总之每天都要学一点东西，或深或浅，这个页面就用来记录打卡，1防止我忘记了2输出倒逼输入3看看积少成多的过程。</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 未分类 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>最小作用量原理</title>
+      <link href="/2025/03/09/zui-xiao-zuo-yong-liang-yuan-li/"/>
+      <url>/2025/03/09/zui-xiao-zuo-yong-liang-yuan-li/</url>
+      
+        <content type="html"><![CDATA[<p>‌‌‌‌　　光的反射和折射路径是为了时间最短，这个现象具有普适性，系统在运动时，会选择一个最优路径，这个路径让系统所需的“总努力”（作用量）最小。电子在原子中总是趋向于最低能量轨道，肥皂泡趋向表面积最小的球形，这是最小作用量原理的特殊表现形式，分别表现为能量最小，表面自由能最小，在背后有一个更基础更本质的量，最小量。(p.s.这个概念比动量还抽象啊)<br>‌‌‌‌　　最小量：action（A）<br>‌‌‌‌　　莫佩尔蒂最先提出A=∑mvs<br>‌‌‌‌　　欧拉提出A=∫mvdsA<br>‌‌‌‌　　经典力学中的拉格朗日形式S=∫Ldt<br>‌‌‌‌　　L 是拉格朗日量（系统的动能减去势能），积分在系统的运动路径上计算</p><p>‌‌‌‌参考资料<br><a href="https://www.bilibili.com/video/BV11x6xYpEMU/">这道简单的数学题彻底改变了物理学——bilibili@Veritasium真理元素</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>摄影构图法（一）</title>
       <link href="/2025/03/08/she-ying-gou-tu-fa-yi/"/>
       <url>/2025/03/08/she-ying-gou-tu-fa-yi/</url>
@@ -49,9 +87,9 @@
       
         <tags>
             
-            <tag> 分享 </tag>
-            
             <tag> 音乐 </tag>
+            
+            <tag> 分享 </tag>
             
         </tags>
       
@@ -76,9 +114,9 @@
       
         <tags>
             
-            <tag> 分享 </tag>
-            
             <tag> 音乐 </tag>
+            
+            <tag> 分享 </tag>
             
         </tags>
       

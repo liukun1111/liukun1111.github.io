@@ -6,7 +6,7 @@
   <link href="https://blog.liukun.us.kg/atom.xml" rel="self"/>
   
   <link href="https://blog.liukun.us.kg/"/>
-  <updated>2025-03-08T15:37:40.157Z</updated>
+  <updated>2025-03-08T16:04:27.958Z</updated>
   <id>https://blog.liukun.us.kg/</id>
   
   <author>
@@ -15,6 +15,55 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>置顶文章</title>
+    <link href="https://blog.liukun.us.kg/2025/03/09/zhi-ding-wen-zhang/"/>
+    <id>https://blog.liukun.us.kg/2025/03/09/zhi-ding-wen-zhang/</id>
+    <published>2025-03-08T16:02:39.000Z</published>
+    <updated>2025-03-08T16:04:27.958Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;（此分类页面下的所有文章都不会出现在主页和更新日志中）&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp;</summary>
+        
+      
+    
+    
+    
+    <category term="未分类" scheme="https://blog.liukun.us.kg/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>最小作用量原理</title>
+    <link href="https://blog.liukun.us.kg/2025/03/09/zui-xiao-zuo-yong-liang-yuan-li/"/>
+    <id>https://blog.liukun.us.kg/2025/03/09/zui-xiao-zuo-yong-liang-yuan-li/</id>
+    <published>2025-03-08T16:00:09.000Z</published>
+    <updated>2025-03-08T16:01:34.570Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;‌‌‌‌　　光的反射和折射路径是为了时间最短，这个现象具有普适性，系统在运动时，会选择一个最优路径，这个路径让系统所需的“总努力”（作用量）最小。电子在原子中总是趋向于最低能量轨道，肥皂泡趋向表面积最小的球形，这是最小作用量原理的特殊表现形式，分别表现为能量最小，表面自由能</summary>
+        
+      
+    
+    
+    
+    <category term="每日一学" scheme="https://blog.liukun.us.kg/categories/%E6%AF%8F%E6%97%A5%E4%B8%80%E5%AD%A6/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>摄影构图法（一）</title>
@@ -69,9 +118,9 @@
     <category term="音乐故事厅" scheme="https://blog.liukun.us.kg/categories/%E9%9F%B3%E4%B9%90%E6%95%85%E4%BA%8B%E5%8E%85/"/>
     
     
-    <category term="分享" scheme="https://blog.liukun.us.kg/tags/%E5%88%86%E4%BA%AB/"/>
-    
     <category term="音乐" scheme="https://blog.liukun.us.kg/tags/%E9%9F%B3%E4%B9%90/"/>
+    
+    <category term="分享" scheme="https://blog.liukun.us.kg/tags/%E5%88%86%E4%BA%AB/"/>
     
   </entry>
   
@@ -97,9 +146,9 @@
     <category term="音乐故事厅" scheme="https://blog.liukun.us.kg/categories/%E9%9F%B3%E4%B9%90%E6%95%85%E4%BA%8B%E5%8E%85/"/>
     
     
-    <category term="分享" scheme="https://blog.liukun.us.kg/tags/%E5%88%86%E4%BA%AB/"/>
-    
     <category term="音乐" scheme="https://blog.liukun.us.kg/tags/%E9%9F%B3%E4%B9%90/"/>
+    
+    <category term="分享" scheme="https://blog.liukun.us.kg/tags/%E5%88%86%E4%BA%AB/"/>
     
   </entry>
   
