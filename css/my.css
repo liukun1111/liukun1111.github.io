@@ -1,1 +1,10 @@
 /* Here is your custom css styles. */
+/*设置网站字体*/
+/*原则上你可以设置多个字体，然后在不同的部位使用不同的字体*/
+@font-face{
+    font-family:btfFont;
+    src: url(https://fs-im-kefu.7moor-fs1.com/ly/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/1741530217331/13.woff2) format('woff2')
+}
+body{
+    font-family:"btfFont" !important
+}
