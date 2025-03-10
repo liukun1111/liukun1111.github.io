@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="分类: 每日一学, lkii&#39;s Blog">
+    <meta name="keywords" content="相册2, lkii&#39;s Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>分类: 每日一学 | lkii&#39;s Blog</title>
+    <title>相册2 | lkii&#39;s Blog</title>
     <link rel="icon" type="image/jpeg" href="https://img.liukun.us.kg/file/1739792067164_cropped-atri2-300x300.jpg">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -371,7 +371,24 @@
 
 </header>
 
-    <div class="bg-cover pd-header about-cover">
+    <!-- 加密功能 -->
+
+    <script src="/libs/cryptojs/crypto-js.min.js"></script>
+    <script>
+        (function() {
+            let pwd = '';
+
+            if (pwd && pwd.length > 0) {
+                if (pwd !== CryptoJS.SHA256(prompt('该相册已加密，请输入密码访问')).toString(CryptoJS.enc.Hex)) {
+                    alert('密码错误，将返回主页！');
+                    location.href = '/';
+                }
+            }
+        })();
+    </script>
+
+
+<div class="bg-cover pd-header about-cover">
     <div class="container">
     <div class="row">
     <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
@@ -421,167 +438,107 @@
     </div>
 </div>
 
+<link rel="stylesheet" href="">
+<!-- 该主题自带的lightGallery.js在图片多的时候会很卡，所以弃用，使用了一个我在网上找的baguetteBox，很轻量级，就是功能少了点 -->
+<script src=""></script> 
+<style>    
+    .my-gallery .photo img {
+        transition: all 0.3s ease-in-out; 
+    }     
+    .my-gallery .photo:hover img {
+        opacity: 0.6;
+        transform: scale(1.05);
+    }                
+</style>
+
 <main class="content">
+    <div class="container chip-container">
+        <div class="card">
+            <div class="card-content">
+                <div class="tag-title center-align">
+                    <i class="fa fa-image"></i>
+                      相册2
+                </div>
 
-    
-
-<div id="category-cloud" class="container chip-container">
-    <div class="card">
-        <div class="card-content">
-            <div class="tag-title center-align">
-                <i class="fas fa-bookmark"></i>&nbsp;&nbsp;文章分类
-            </div>
-            <div class="tag-chips">
-                
-                
-                
-                <a href="/categories/%E9%9F%B3%E4%B9%90%E6%95%85%E4%BA%8B%E5%8E%85/" title="音乐故事厅: 2">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #F9EBEA;">音乐故事厅
-                        <span class="tag-length">2</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/%E9%9D%92%E5%B9%B4%E5%BF%83%E7%90%86%E5%AD%A6/" title="青年心理学: 6">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #F5EEF8;">青年心理学
-                        <span class="tag-length">6</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/%E7%88%B1%E6%83%85%E5%BF%83%E7%90%86%E5%AD%A6/" title="爱情心理学: 6">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #D5F5E3;">爱情心理学
-                        <span class="tag-length">6</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/%E6%91%84%E5%BD%B1/" title="摄影: 3">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #E8F8F5;">摄影
-                        <span class="tag-length">3</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/%E6%B5%8B%E8%AF%95/" title="测试: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #FEF9E7;">测试
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/%E6%AF%8F%E6%97%A5%E4%B8%80%E5%AD%A6/" title="每日一学: 2">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-active "
-                            style="background-color: #F8F9F9;">每日一学
-                        <span class="tag-length">2</span>
-                    </span>
-                </a>
-                
-                
+                <!-- 相册 -->
+                <section class="gallery">
+                    <div id="myGallery" class="my-gallery">
+                        <div class="row">
+                            
+                                
+                                
+                                    
+                                    <div class="photo col s12 m6 l4" data-aos="fade-up">
+                                        <a href="/medias/avatar.jpg" data-caption="3">
+                                            <img class="mat" src="/medias/loading/miku.gif# optional eg ./images/loading.gif" data-original="/medias/loading.gif" data-src="/medias/avatar.jpg" alt="img"+0 >
+                                        </a>
+                                    </div>
+                                
+                                    
+                                    <div class="photo col s12 m6 l4" data-aos="fade-up">
+                                        <a href="/medias/avatar.jpg" data-caption="4">
+                                            <img class="mat" src="/medias/loading/miku.gif# optional eg ./images/loading.gif" data-original="/medias/loading.gif" data-src="/medias/avatar.jpg" alt="img"+1 >
+                                        </a>
+                                    </div>
+                                
+                            
+                        </div>
+                    </div>
+                </section>
             </div>
         </div>
     </div>
-</div>
 
+<script>
+    baguetteBox.run('.gallery', {
+        // 配置参数
+        buttons:Boolean,//是否显示导航按钮。
+        noScrollbars:true,//是否在显示时隐藏滚动条。
+        titleTag:true,//是否使用图片上的title属性作为图片标题
+        async:false,//是否异步加载文件。
+        /*
+        afterShow:function(){//显示遮罩层之后的回调函数。   
+           $(".pressing").fadeIn();
+        },
+        afterHide:function(){//隐藏遮罩层之后的回调函数。 
+           $(".pressing").fadeOut(); 
+        }
+        //preload:5 预加载多少个文件。
+        // onChange: function(currentIndex, imagesCount){} 图片改变时的回调函数 
+        // overlayBackgroundColor:'rgba(0,0,0,0.8)' 遮罩层的背景颜色
+        */
+    });
 
-    
+    start()
+        $(window).on('scroll', function(){
+         start();
+    })
 
-    <article id="articles" class="container articles">
-        <div class="row tags-posts">
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2099/03/09/zhi-ding-wen-zhang/">
-                        <div class="card-image tag-image">
-                            
-                            
-                            <img src="/medias/loading/miku.gif# optional eg ./images/loading.gif" data-original="/medias/featureimages/9.jpg" class="responsive-img" alt="置顶文章">
-                            
-                            <span class="card-title">置顶文章</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                这个页面的来源
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2099-03-09
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E6%AF%8F%E6%97%A5%E4%B8%80%E5%AD%A6/" class="post-category">
-                                    每日一学
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
+    function start(){
+          //.not('[data-isLoaded]')选中已加载的图片不需要重新加载
+        $('.container img').not('[data-isLoaded]').each(function(){
+            var $node = $(this)
+            if( isShow($node) ){
+                loadImg($node);
+            }
+        });
+     }
 
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2025/03/09/zui-xiao-zuo-yong-liang-yuan-li/">
-                        <div class="card-image tag-image">
-                            
-                            
-                            <img src="/medias/loading/miku.gif# optional eg ./images/loading.gif" data-original="/medias/featureimages/3.jpg" class="responsive-img" alt="最小作用量原理">
-                            
-                            <span class="card-title">最小作用量原理</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                打卡第一天
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2025-03-09
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E6%AF%8F%E6%97%A5%E4%B8%80%E5%AD%A6/" class="post-category">
-                                    每日一学
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
+    //判断一个元素是不是出现在窗口(视野)
+    function isShow($node){
+        return $node.offset().top <= $(window).height() + $(window).scrollTop();
+    }
+    //加载图片
+    function loadImg($img){
+    //.attr(值)
+    //.attr(属性名称,值)
+        $img.attr('src', $img.attr('data-src')); //把data-src的值 赋值给src
+        $img.attr('data-isLoaded', 1);//已加载的图片做标记
+    }
 
-                    
-                </div>
-            </div>
-            
-        </div>
-    </article>
+</script>
+
 </main>
-
-
-
 
     <footer class="page-footer bg-color">
     
