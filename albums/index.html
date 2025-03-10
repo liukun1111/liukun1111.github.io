@@ -387,60 +387,133 @@
 
 
 <style>
-  .album-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 2rem;
-    padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
+.album-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
-  .album-card {
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-  }
+.album-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+  position: relative;
+  cursor: pointer;
+}
 
-  .album-card:hover {
-    transform: translateY(-5px);
-  }
+.album-card:hover {
+  transform: translateY(-5px);
+}
 
-  .album-cover {
-    height: 200px;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-  }
+.album-cover {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+}
 
-  .album-info {
-    padding: 1.5rem;
-  }
+.album-info {
+  padding: 1.5rem;
+}
+
+.lock-icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  color: #fff;
+  font-size: 1.5rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  z-index: 2;
+}
+
+.password-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
 </style>
+
+<script>
+function checkPassword(albumSlug, encryptedPwd) {
+  const password = prompt('请输入访问密码：');
+  if(btoa(password) === encryptedPwd) {
+    sessionStorage.setItem(`album_${albumSlug}_pwd`, encryptedPwd);
+    window.location.href = `/albums/${albumSlug}/`;
+  } else {
+    alert('密码错误！');
+  }
+}
+</script>
 
 <div class="album-grid">
   
-    <a href="/albums/travel/" class="album-card">
-      <div class="album-cover" 
-           style="background-image: url(https://example.com/cover1.jpg)"></div>
-      <div class="album-info">
-        <h3>旅行记忆</h3>
-        <p>世界那么大，我们去看看</p>
-        <small>Sun Aug 20 2023 08:00:00 GMT+0800 (中国标准时间)</small>
+    
+      <div class="album-card" 
+           
+             onclick="window.location='/albums/travel/'"
+           >
+        
+        <div class="album-cover" 
+             style="background-image: url(https://cloudflare-imgbed-8lm.pages.dev/file/1733066491157_绪山真寻打招呼.jpg)"></div>
+        
+        
+
+        <div class="album-info">
+          <h3>旅行记忆</h3>
+          <p>世界那么大，我们去看看</p>
+          <small>Sun Aug 20 2023 08:00:00 GMT+0800 (中国标准时间)</small>
+        </div>
       </div>
-    </a>
-  
-    <a href="/albums/food/" class="album-card">
-      <div class="album-cover" 
-           style="background-image: url(/images/albums/food-cover.jpg)"></div>
-      <div class="album-info">
-        <h3>美食日记</h3>
-        <p>舌尖上的美味</p>
-        <small>Sat Jul 15 2023 08:00:00 GMT+0800 (中国标准时间)</small>
+    
+      <div class="album-card" 
+           
+             onclick="window.location='/albums/food/'"
+           >
+        
+        <div class="album-cover" 
+             style="background-image: url(https://cloudflare-imgbed-8lm.pages.dev/file/1733066493286_鹿目圆贴图.png)"></div>
+        
+        
+
+        <div class="album-info">
+          <h3>美食日记</h3>
+          <p>舌尖上的美味</p>
+          <small>Sat Jul 15 2023 08:00:00 GMT+0800 (中国标准时间)</small>
+        </div>
       </div>
-    </a>
+    
+      <div class="album-card" 
+           
+             onclick="checkPassword('private', 'MTIzNDU2')"
+           >
+        
+        <div class="album-cover" 
+             style="background-image: url(/images/lock-cover.jpg)"></div>
+        
+        
+          <div class="lock-icon">
+            <i class="fas fa-lock"></i>
+          </div>
+        
+
+        <div class="album-info">
+          <h3>私人相册</h3>
+          <p>需要密码访问</p>
+          <small></small>
+        </div>
+      </div>
+    
   
 </div>
 
