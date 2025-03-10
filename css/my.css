@@ -8,3 +8,30 @@
 body{
     font-family:"btfFont" !important
 }
+
+
+.photo-frame {
+    position: relative;
+    background: #fff;
+  }
+  
+  .photo-frame::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 2px solid #fff;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    z-index: 1;
+    pointer-events: none;
+  }
+  
+  .photo-caption {
+    padding: 8px;
+    text-align: center;
+    font-size: 0.9em;
+    color: #666;
+  }
