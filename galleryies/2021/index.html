@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="gallery, lkii&#39;s Blog">
+    <meta name="keywords" content="2021, lkii&#39;s Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>gallery | lkii&#39;s Blog</title>
+    <title>2021 | lkii&#39;s Blog</title>
     <link rel="icon" type="image/jpeg" href="https://img.liukun.us.kg/file/1739792067164_cropped-atri2-300x300.jpg">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -173,7 +173,7 @@
       </li>
       
       <li>
-        <a href="/gallery">
+        <a href="/galleries">
           
           <i class="fas fa-image" style="margin-top: -20px; zoom: 0.6;"></i>
           
@@ -321,7 +321,7 @@
               
                 <li>
 
-                  <a href="/gallery " style="margin-left:75px">
+                  <a href="/galleries " style="margin-left:75px">
 				  
 				   <i class="fa fas fa-image" style="position: absolute;left:50px" ></i>
 			      
@@ -371,7 +371,9 @@
 
 </header>
 
-    <div class="bg-cover pd-header about-cover">
+    <link rel="stylesheet" href="/css/gallery.css">
+
+<div class="bg-cover pd-header about-cover">
     <div class="container">
     <div class="row">
     <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
@@ -421,193 +423,12 @@
     </div>
 </div>
 
-<!-- Created by hehung on 20191208 -- >
-<!-- 增加相册显示的特效样式 -->
-<style>
-    .text_des{
-        position: absolute;
-        width: 92%;
-        height: 100%;
-        top: 0;
-        color: #000;
-    /*    opacity: 0;     */
-        overflow: hidden;
-    }
-    .text_des h3{
-        margin: 5px 0 8px 0px;
-        right: 40px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1.7rem;
-        position: absolute;
-        top: 10%;
-        font-style: italic;
-        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
-    /*    transform: translateX(200px);  */
-    }
-    .text_des p{
-        left: 15px;
-        position: absolute;
-        top: 50%;
-    /*    transform: translateX(-200px); 
-        transition-delay: 0.2s;    */
-    }
-    .my-gallery .photo img {
-        border-radius: 1px;
-    }
-
-     /*大屏幕下(桌面类)的样式*/
-    @media only screen and (min-width: 993px) {
-        .text_des h3{
-            transform: translateX(200px);
-        }
-        .text_des p{
-            transform: translateX(-200px); 
-            transition-delay: 0.2s;
-        }
-        .animate-text {
-            opacity: 0;
-            transition: all 0.6s ease-in-out; 
-        }
-        .img-item {
-            transition: all 0.4s ease-out;
-        }
-        .img-item a img{
-            opacity: 1;
-            transition: all 0.4s ease-out;
-        }
-        .img-item a:hover img{
-            opacity: 0.5;
-            transform: scale(1.05);
-        }
-        .img-item a:hover .text_des{
-        /*    opacity: 1;   */
-            transform: scale(1.05); 
-        }
-        .img-item a:hover .animate-text{
-            transform: translateX(0);
-            opacity: 1; 
-        }
-    }
-
-
-    /*小屏幕下(桌面类)的样式*/
-    @media only screen and (max-width: 992px) {
-        .img-item a img{
-            opacity: 0.75;
-        }
-        .animate-text {
-            opacity: 1;
-        }
-    }
-
-</style>
-
 <main class="content">
-    <div class="container chip-container">
-        <div class="card">
-            <div class="card-content">
-                <div class="tag-title center-align">
-                    <i class="fa fa-images"></i>
-                      相册
-                </div>
-                <div class="my-gallery">
-                    <div class="row">
-                    <!-- <li class="grid-sizer"></li> --><!-- for Masonry column width -->
-                    
-                        
-                        
-                            
-                            
-                            <div class="photo col s12 m6 l4" data-aos="zoom-in-up">
-                                <div class="img-item">
-                                    <a href="./2020/index.md">
-                                        <img src="/medias/loading/miku.gif# optional eg ./images/loading.gif" data-original="/medias/loading.gif" data-src="/medias/featureimages/1.jpg" class="responsive-img" alt="img"+0 />
-                                        <div class="text_des">
-                                            
-                                                <h3 class="animate-text">2020</h3>
-                                                <p class="animate-text">test</p>
-                                            
-                                            
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            
-                        
-                            
-                            
-                            <div class="photo col s12 m6 l4" data-aos="zoom-in-up">
-                                <div class="img-item">
-                                    <a href="./2021/index.md">
-                                        <img src="/medias/loading/miku.gif# optional eg ./images/loading.gif" data-original="/medias/loading.gif" data-src="/medias/featureimages/4.jpg" class="responsive-img" alt="img"+1 />
-                                        <div class="text_des">
-                                            
-                                                <h3 class="animate-text">2021</h3>
-                                                <p class="animate-text">testtest</p>
-                                            
-                                            
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            
-                        
-                            
-                            
-                            <div class="photo col s12 m6 l4" data-aos="zoom-in-up">
-                                <div class="img-item">
-                                    <a href="./2022">
-                                        <img src="/medias/loading/miku.gif# optional eg ./images/loading.gif" data-original="/medias/loading.gif" data-src="/medias/featureimages/7.jpg" class="responsive-img" alt="img"+2 />
-                                        <div class="text_des">
-                                            
-                                                <h3 class="animate-text">2022</h3>
-                                                <p class="animate-text">testtesttest</p>
-                                            
-                                            
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            
-                        
-                    
-                </div>
-            </div>
-        </div>
+    <div class="container">
+        
     </div>
-
-    <script>
-        start()
-            $(window).on('scroll', function(){
-             start();
-        })
-
-        function start(){
-              //.not('[data-isLoaded]')选中已加载的图片不需要重新加载
-            $('.container img').not('[data-isLoaded]').each(function(){
-                var $node = $(this)
-                if( isShow($node) ){
-                    loadImg($node);
-                }
-            });
-         }
-
-        //判断一个元素是不是出现在窗口(视野)
-        function isShow($node){
-            return $node.offset().top <= $(window).height() + $(window).scrollTop();
-        }
-        //加载图片
-        function loadImg($img){
-        //.attr(值)
-        //.attr(属性名称,值)
-            $img.attr('src', $img.attr('data-src')); //把data-src的值 赋值给src
-            $img.attr('data-isLoaded', 1);//已加载的图片做标记
-        }
-
-    </script>
-    
 </main>
+
 
     <footer class="page-footer bg-color">
     
