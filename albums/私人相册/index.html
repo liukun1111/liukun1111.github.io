@@ -30,9 +30,9 @@
     <script src="/libs/jquery/jquery.min.js"></script>
 
 
-<meta name="generator" content="Hexo 7.3.0">
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="lkii's Blog" type="application/atom+xml">
+
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
-<link rel="alternate" href="/atom.xml" title="lkii's Blog" type="application/atom+xml">
 </head>
 
 
@@ -386,6 +386,8 @@
 </div>
 
 
+
+
 <style>
 .password-container {
   max-width: 400px;
@@ -395,15 +397,6 @@
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(0,0,0,0.1);
   text-align: center;
-}
-
-#pwdInput {
-  width: 80%;
-  padding: 12px;
-  margin: 20px 0;
-  border: 2px solid #eee;
-  border-radius: 6px;
-  font-size: 16px;
 }
 
 .photo-grid {
@@ -434,107 +427,15 @@
   object-fit: cover;
   border-radius: 4px;
 }
-
-.photo-caption {
-  padding: 8px;
-  text-align: center;
-  color: #666;
-  font-size: 0.9em;
-}
 </style>
 
-<div id="passwordForm" style="display:none;">
-  <div class="password-container">
-    <h3><i class="fas fa-lock"></i> 该相册需要密码访问</h3>
-    <input type="password" id="pwdInput" placeholder="请输入访问密码">
-    <button onclick="verifyPassword()" style="
-      background: #007bff;
-      color: white;
-      padding: 12px 30px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-top: 10px;
-    ">验证</button>
-    <p id="errorMsg" style="color:red; margin-top:15px;"></p>
+
+  <div class="album-error">
+    <h3><i class="fas fa-exclamation-triangle"></i> 相册加载失败</h3>
+    <p>该相册不存在或已被删除</p>
+    <a href="/albums/" class="btn">返回相册列表</a>
   </div>
-</div>
 
-<div id="photoContent" style="display:none;">
-  <div class="photo-grid">
-    
-      <div class="photo-frame">
-        <div class="photo-item">
-          <a href="/secret.jpg" data-fancybox="gallery">
-            <img src="/secret.jpg" 
-                 alt="加密内容"
-                 loading="lazy">
-          </a>
-          
-            <div class="photo-caption">加密内容</div>
-          
-        </div>
-      </div>
-    
-  </div>
-</div>
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css">
-<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
-
-<script>
-const albumData = &#34;&lt;%= JSON.stringify(site.data.albums.find(a =&gt; a.slug === &#39;private&#39;)) %&gt;&#34;;
-const albumSlug = '';
-
-function initAuth() {
-  const savedPwd = sessionStorage.getItem(`album_${albumSlug}_pwd`);
-  
-  if(albumData.password && savedPwd !== albumData.password) {
-    showPasswordForm();
-  } else {
-    showContent();
-    initFancybox();
-  }
-}
-
-function showPasswordForm() {
-  document.getElementById('passwordForm').style.display = 'block';
-  document.getElementById('photoContent').style.display = 'none';
-}
-
-function showContent() {
-  document.getElementById('passwordForm').style.display = 'none';
-  document.getElementById('photoContent').style.display = 'block';
-}
-
-function verifyPassword() {
-  const input = btoa(document.getElementById('pwdInput').value);
-  if(input === albumData.password) {
-    sessionStorage.setItem(`album_${albumSlug}_pwd`, input);
-    showContent();
-    initFancybox();
-  } else {
-    document.getElementById('errorMsg').innerText = '密码错误，请重试！';
-  }
-}
-
-function initFancybox() {
-  Fancybox.bind("[data-fancybox]", {
-    Thumbs: {
-      type: "classic",
-    },
-    Toolbar: {
-      display: {
-        left: ["infobar"],
-        middle: [],
-        right: ["close"],
-      },
-    },
-  });
-}
-
-window.onload = initAuth;
-</script>
 
     <footer class="page-footer bg-color">
     
