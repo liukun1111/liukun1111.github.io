@@ -26,7 +26,7 @@
     <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
     <link rel="stylesheet" type="text/css" href="/css/matery.css">
     <link rel="stylesheet" type="text/css" href="/css/my.css">
-
+    <link rel="stylesheet" type="text/css" href="/css/loading.css">
     <script src="/libs/jquery/jquery.min.js"></script>
 
 
@@ -49,6 +49,29 @@
 
 
 <body>
+    
+  <div id="loading-box">
+    <div class="loading-left-bg"></div>
+    <div class="loading-right-bg"></div>
+    <div class="spinner-box">
+      <div class="configure-border-1">
+        <div class="configure-core"></div>
+      </div>
+      <div class="configure-border-2">
+        <div class="configure-core"></div>
+      </div>
+      <div class="loading-word">加载中...</div>
+    </div>
+  </div>
+  <!-- 页面加载动画 -->
+  <script>
+    $(document).ready(function () {
+      document.body.style.overflow = 'auto';
+      document.getElementById('loading-box').classList.add("loaded")
+    })
+  </script>
+
+
     <header class="navbar-fixed">
     <nav id="headNav" class="bg-color nav-transparent">
         <div id="navContainer" class="nav-wrapper container">
@@ -435,19 +458,10 @@
                 
                 
                 
-                <a href="/categories/%E9%9F%B3%E4%B9%90%E6%95%85%E4%BA%8B%E5%8E%85/" title="音乐故事厅: 2">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #F9EBEA;">音乐故事厅
-                        <span class="tag-length">2</span>
-                    </span>
-                </a>
-                
-                
                 <a href="/categories/%E7%88%B1%E6%83%85%E5%BF%83%E7%90%86%E5%AD%A6/" title="爱情心理学: 6">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #F5EEF8;">爱情心理学
+                            style="background-color: #F9EBEA;">爱情心理学
                         <span class="tag-length">6</span>
                     </span>
                 </a>
@@ -456,7 +470,7 @@
                 <a href="/categories/%E9%9D%92%E5%B9%B4%E5%BF%83%E7%90%86%E5%AD%A6/" title="青年心理学: 6">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #D5F5E3;">青年心理学
+                            style="background-color: #F5EEF8;">青年心理学
                         <span class="tag-length">6</span>
                     </span>
                 </a>
@@ -465,17 +479,17 @@
                 <a href="/categories/%E6%91%84%E5%BD%B1/" title="摄影: 3">
                     <span class="chip center-align waves-effect waves-light
                              chip-active "
-                            style="background-color: #E8F8F5;">摄影
+                            style="background-color: #D5F5E3;">摄影
                         <span class="tag-length">3</span>
                     </span>
                 </a>
                 
                 
-                <a href="/categories/%E6%B5%8B%E8%AF%95/" title="测试: 1">
+                <a href="/categories/%E9%9F%B3%E4%B9%90%E6%95%85%E4%BA%8B%E5%8E%85/" title="音乐故事厅: 2">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #FEF9E7;">测试
-                        <span class="tag-length">1</span>
+                            style="background-color: #E8F8F5;">音乐故事厅
+                        <span class="tag-length">2</span>
                     </span>
                 </a>
                 
@@ -483,8 +497,17 @@
                 <a href="/categories/%E6%AF%8F%E6%97%A5%E4%B8%80%E5%AD%A6/" title="每日一学: 2">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #F8F9F9;">每日一学
+                            style="background-color: #FEF9E7;">每日一学
                         <span class="tag-length">2</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/categories/%E6%B5%8B%E8%AF%95/" title="测试: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            style="background-color: #F8F9F9;">测试
+                        <span class="tag-length">1</span>
                     </span>
                 </a>
                 
