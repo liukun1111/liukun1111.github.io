@@ -409,37 +409,43 @@
 </div>
 
 
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    let albumSlug = "";
-    let correctPassword = "";
-    if (correctPassword && localStorage.getItem(`album_${albumSlug}_password`) !== correctPassword) {
-      document.getElementById("album-content").style.display = "none";
-      document.getElementById("password-prompt").style.display = "block";
-    }
-  });
-
-  function validateAlbumPassword() {
-    let albumSlug = "";
-    let correctPassword = "";
-    let inputPassword = document.getElementById("password-input").value;
-    if (inputPassword === correctPassword) {
-      localStorage.setItem(`album_${albumSlug}_password`, correctPassword);
-      document.getElementById("password-prompt").style.display = "none";
-      document.getElementById("album-content").style.display = "block";
-    } else {
-      alert("密码错误！");
-    }
+<style>
+  .password-container {
+    text-align: center;
+    margin-top: 50px;
   }
-</script>
+  .password-input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  .password-button {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  .password-error {
+    color: red;
+    margin-top: 10px;
+  }
+  .hidden {
+    display: none;
+  }
+</style>
 
-<div id="password-prompt" style="display: none; text-align: center; padding: 20px;">
-  <p>该相册受密码保护，请输入密码：</p>
-  <input type="password" id="password-input" placeholder="输入密码">
-  <button onclick="validateAlbumPassword()">提交</button>
+<div id="password-protect" class="password-container">
+  <h2>请输入密码访问此相册</h2>
+  <input type="password" id="album-password" class="password-input" placeholder="输入密码">
+  <button class="password-button" onclick="checkPassword()">提交</button>
+  <div id="password-error" class="password-error hidden">密码错误，请重试！</div>
 </div>
 
-<div id="album-content">
+<div id="photo-gallery" class="hidden">
   <style>
     .photo-frame {
       padding: 12px;
@@ -495,6 +501,43 @@
     
   </div>
 </div>
+
+<script>
+  async function hashPassword(password) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password);
+    const hash = await crypto.subtle.digest("SHA-256", data);
+    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, "0")).join("");
+  }
+
+  async function checkPassword() {
+    const inputPassword = document.getElementById("album-password").value;
+    const inputHash = await hashPassword(inputPassword);
+
+    // 这里用 EJS 传入相册的哈希值
+    const albumPasswordHash = "";
+
+    if (inputHash === albumPasswordHash) {
+      localStorage.setItem("-password", inputHash);
+      document.getElementById("password-protect").classList.add("hidden");
+      document.getElementById("photo-gallery").classList.remove("hidden");
+    } else {
+      document.getElementById("password-error").classList.remove("hidden");
+    }
+  }
+
+  // 页面加载时检查是否已输入密码
+  async function verifyStoredPassword() {
+    const storedHash = localStorage.getItem("-password");
+    if (storedHash && storedHash === "") {
+      document.getElementById("password-protect").classList.add("hidden");
+      document.getElementById("photo-gallery").classList.remove("hidden");
+    }
+  }
+
+  verifyStoredPassword();
+</script>
+
 
     <footer class="page-footer bg-color">
     
