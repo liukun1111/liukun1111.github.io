@@ -14,18 +14,21 @@ body{
 .photo-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1.5rem;
+  gap: 2rem;
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
   perspective: 1000px;
+  background: url('https://cloudflare-imgbed-8lm.pages.dev/file/wood-texture.jpg'); /* 木质背景 */
+  background-size: cover;
 }
 
+/* 照片相框 */
 .photo-frame {
   position: relative;
   display: inline-block;
   padding: 12px;
-  background: #fdf6e3;  /* 柔和米黄色，模拟纸张 */
+  background: #fdf6e3; /* 柔和的纸张色 */
   border-radius: 10px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -33,9 +36,16 @@ body{
   width: fit-content;
   max-width: 100%;
   overflow: hidden;
+  animation: sway 3s infinite alternate ease-in-out;
 }
 
-/* 照片边框细节 */
+/* 轻微摇摆动画 */
+@keyframes sway {
+  0% { transform: rotate(calc(var(--rotate-angle, 0deg))) translateY(0px); }
+  100% { transform: rotate(calc(var(--rotate-angle, 0deg))) translateY(3px); }
+}
+
+/* 立体感：给照片一个额外的内阴影 */
 .photo-frame::before {
   content: "";
   position: absolute;
@@ -47,31 +57,26 @@ body{
   z-index: -1;
   border-radius: 12px;
   opacity: 0.8;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-/* 让照片带一点翻起的感觉 */
-.photo-frame:hover {
-  transform: scale(1.05) rotate(calc(var(--rotate-angle, 0deg))) translateZ(10px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
-}
-
-/* 让照片贴在墙上的效果 */
+/* 藤蔓装饰 */
 .photo-frame::after {
   content: "";
   position: absolute;
-  top: -18px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 20px;
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
-  opacity: 0.8;
-  z-index: 2;
+  top: -10px;
+  left: -10px;
+  width: 120%;
+  height: 120%;
+  background: url('https://cloudflare-imgbed-8lm.pages.dev/file/vine-border.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.9;
 }
 
-/* 图片展示，保证完整显示 */
+/* 照片 */
 .photo-item img {
   display: block;
   max-width: 100%;
@@ -88,16 +93,22 @@ body{
 .photo-grid > .photo-frame:nth-child(4) { --rotate-angle: 6deg; --image-angle: 3deg; }
 .photo-grid > .photo-frame:nth-child(5) { --rotate-angle: -7deg; --image-angle: -4deg; }
 
-/* 让胶带颜色随机变化 */
-.photo-grid > .photo-frame:nth-child(odd)::after {
-  background: rgba(255, 215, 0, 0.8);  /* 金色 */
+/* **图钉效果** */
+.photo-frame::before {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle, #ccc 20%, #888 80%);
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  z-index: 3;
 }
 
-.photo-grid > .photo-frame:nth-child(even)::after {
-  background: rgba(173, 216, 230, 0.8);  /* 浅蓝 */
-}
-
-/* 照片描述文字 */
+/* 照片标题 */
 .photo-caption {
   margin-top: 8px;
   text-align: center;
