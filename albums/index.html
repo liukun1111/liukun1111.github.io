@@ -410,166 +410,116 @@
 
 
 <style>
-  .album-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 2rem;
-    padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .album-card {
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-    cursor: pointer;
-  }
-
-  .album-card:hover {
-    transform: translateY(-5px);
-  }
-
-  .album-cover {
-    height: 200px;
-    background-size: cover;
-    background-position: center;
-  }
-
-  .album-info {
-    padding: 1.5rem;
-  }
-
   /* 新增密码弹窗样式 */
   .password-modal {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
+    width: 100%;
+    height: 100%;
     background: rgba(0,0,0,0.5);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
+    z-index: 1000;
   }
+
   .password-box {
+    position: relative;
+    top: 30%;
     background: white;
     padding: 2rem;
-    border-radius: 8px;
-    text-align: center;
     width: 300px;
-  }
-  #passwordInput {
-    padding: 10px;
-    margin: 15px 0;
-    width: 100%;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-  .password-box button {
-    background: #2196F3;
-    color: white;
-    border: none;
-    padding: 10px 25px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  .password-box button:hover {
-    background: #1976D2;
-  }
-  #errorMsg {
-    color: #ff4444;
-    margin-top: 10px;
-    display: none;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   }
 </style>
 
 <div class="album-grid">
   
-    <div class="album-card" 
-         data-slug="travel"
-         data-password=&#34;123456&#34;>
+    <a href="/albums/travel/" 
+       class="album-card"
+       data-password="123456"
+       data-slug="travel">
       <div class="album-cover" 
            style="background-image: url(https://cloudflare-imgbed-8lm.pages.dev/file/1733066491157_绪山真寻打招呼.jpg)"></div>
       <div class="album-info">
         <h3>旅行记忆</h3>
         <p>世界那么大，我们去看看</p>
         <small>Sun Aug 20 2023 08:00:00 GMT+0800 (中国标准时间)</small>
+        
+          <div class="locked-icon">🔒</div>
+        
       </div>
-    </div>
+    </a>
   
-    <div class="album-card" 
-         data-slug="food"
-         >
+    <a href="/albums/food/" 
+       class="album-card"
+       data-password=""
+       data-slug="food">
       <div class="album-cover" 
            style="background-image: url(https://cloudflare-imgbed-8lm.pages.dev/file/1733066493286_鹿目圆贴图.png)"></div>
       <div class="album-info">
         <h3>美食日记</h3>
         <p>舌尖上的美味</p>
         <small>Sat Jul 15 2023 08:00:00 GMT+0800 (中国标准时间)</small>
+        
       </div>
-    </div>
+    </a>
   
 </div>
 
-<div class="password-modal" id="passwordModal">
+<div class="password-modal">
   <div class="password-box">
-    <h3>🔒 加密相册</h3>
-    <input type="password" id="passwordInput" placeholder="输入访问密码">
-    <button onclick="checkPassword()">解锁相册</button>
-    <p id="errorMsg">密码错误，请重试！</p>
+    <h3>请输入访问密码</h3>
+    <input type="password" id="password-input" placeholder="输入相册密码">
+    <button onclick="checkPassword()">确认</button>
+    <p class="error-msg" style="color: red; display: none;">密码错误！</p>
   </div>
 </div>
 
 <script>
-  let currentAlbum = null;
-
-  // 绑定相册点击事件
-  document.querySelectorAll('.album-card').forEach(card => {
-    card.addEventListener('click', () => {
-      const slug = card.dataset.slug;
-      const password = card.dataset.password;
+document.querySelectorAll('.album-card').forEach(card => {
+  card.addEventListener('click', function(e) {
+    const password = this.dataset.password;
+    if (password) {
+      e.preventDefault();
+      const slug = this.dataset.slug;
+      const stored = sessionStorage.getItem(`album-${slug}`);
       
-      if(password) {
-        currentAlbum = slug;
-        document.getElementById('passwordModal').style.display = 'flex';
-        document.getElementById('passwordInput').focus();
+      if (stored === password) {
+        window.location.href = this.href;
       } else {
-        window.location.href = `/albums/${slug}/`;
+        showPasswordModal(slug, password);
       }
-    });
+    }
   });
+});
 
-  // 密码验证函数
-  function checkPassword() {
-    const input = document.getElementById('passwordInput').value;
-    const correctPassword = document.querySelector(`[data-slug="${currentAlbum}"]`).dataset.password;
-    const errorMsg = document.getElementById('errorMsg');
-
-    if(input === correctPassword) {
-      sessionStorage.setItem(`album-${currentAlbum}`, 'true');
-      window.location.href = `/albums/${currentAlbum}/`;
+function showPasswordModal(slug, correctPassword) {
+  const modal = document.querySelector('.password-modal');
+  modal.style.display = 'block';
+  
+  window.checkPassword = function() {
+    const input = document.getElementById('password-input');
+    const errorMsg = document.querySelector('.error-msg');
+    
+    if (input.value === correctPassword) {
+      sessionStorage.setItem(`album-${slug}`, correctPassword);
+      modal.style.display = 'none';
+      window.location.href = document.querySelector(`[data-slug="${slug}"]`).href;
     } else {
       errorMsg.style.display = 'block';
-      setTimeout(() => errorMsg.style.display = 'none', 2000);
+      input.value = '';
     }
   }
+}
 
-  // 点击蒙层关闭弹窗
-  document.getElementById('passwordModal').addEventListener('click', (e) => {
-    if(e.target.classList.contains('password-modal')) {
-      document.getElementById('passwordModal').style.display = 'none';
-    }
-  });
-
-  // 回车键支持
-  document.getElementById('passwordInput').addEventListener('keypress', (e) => {
-    if(e.key === 'Enter') checkPassword();
-  });
+// 点击遮罩关闭弹窗
+document.querySelector('.password-modal').addEventListener('click', function(e) {
+  if (e.target === this) {
+    this.style.display = 'none';
+  }
+});
 </script>
 
     <footer class="page-footer bg-color">
