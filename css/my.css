@@ -11,6 +11,7 @@ body{
 
 
 
+/* 照片墙容器 */
 .photo-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -19,77 +20,30 @@ body{
   max-width: 1200px;
   margin: 0 auto;
   perspective: 1000px;
-  background: url('https://cdn.jsdelivr.net/gh/liukun1111/img@main/img/wood-texture.jpg'); /* 木质背景 */
+  background: url('https://cloudflare-imgbed-8lm.pages.dev/file/wood-texture.jpg'); /* 木质背景 */
   background-size: cover;
+  background-attachment: fixed;
 }
 
 /* 照片相框 */
 .photo-frame {
   position: relative;
-  display: inline-block;
-  padding: 24px; /* 增加 padding，腾出空间 */
-  background: #fdf6e3; /* 柔和的纸张色 */
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(240, 240, 240, 0.6)); /* 渐变透明效果 */
   border-radius: 10px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1); /* 外阴影 */
+  border: 1px solid rgba(255, 255, 255, 0.6); /* 细衬线 */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   transform: rotate(calc(var(--rotate-angle, 0deg))) translateZ(0);
   width: fit-content;
   max-width: 100%;
-  overflow: visible; /* 确保藤蔓不会被裁剪 */
-  animation: sway 3s infinite alternate ease-in-out;
+  overflow: hidden;
 }
 
-/* 轻微摇摆动画 */
-@keyframes sway {
-  0% { transform: rotate(calc(var(--rotate-angle, 0deg))) translateY(0px); }
-  100% { transform: rotate(calc(var(--rotate-angle, 0deg))) translateY(3px); }
-}
-
-/* 立体感：给照片一个额外的内阴影 */
-.photo-frame::before {
-  content: "";
-  position: absolute;
-  top: -15px;
-  left: -15px;
-  right: -15px;
-  bottom: -15px;
-  background: linear-gradient(135deg, #fff5e1, #ffdad5);
-  z-index: -1;
-  border-radius: 12px;
-  opacity: 0.8;
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-/* **图钉效果** */
-.photo-frame::after {
-  content: "";
-  position: absolute;
-  top: -20px; /* 让图钉露出来 */
-  left: 50%;
-  transform: translateX(-50%);
-  width: 26px; /* 调大图钉 */
-  height: 26px;
-  background: radial-gradient(circle, #ddd 30%, #888 80%);
-  border-radius: 50%;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
-  z-index: 3;
-}
-
-/* **藤蔓装饰** */
-.photo-frame::after {
-  content: "";
-  position: absolute;
-  top: -15px;
-  left: -15px;
-  width: calc(100% + 30px);
-  height: calc(100% + 30px);
-  background: url('https://cdn.jsdelivr.net/gh/liukun1111/img@main/img/39d55b89e7400727.png');
-  background-size: 120%; /* 调整尺寸，确保藤蔓可见 */
-  background-repeat: no-repeat;
-  background-position: center;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0.9;
+/* 鼠标悬停：立体感增强 */
+.photo-frame:hover {
+  transform: scale(1.03) rotate(calc(var(--rotate-angle, 0deg)));
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3), 0 6px 12px rgba(0, 0, 0, 0.2); /* 更强的阴影 */
+  border: 1px solid rgba(255, 255, 255, 0.8); /* 更加明显的边框 */
 }
 
 /* 照片 */
@@ -97,24 +51,31 @@ body{
   display: block;
   max-width: 100%;
   height: auto;
-  border-radius: 6px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+  border-radius: 6px; /* 轻微圆角 */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); /* 照片本身的阴影 */
   transform: rotate(calc(var(--image-angle, 0deg)));
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 鼠标悬停：照片微微凸起 */
+.photo-item img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* 照片墙的随机角度 */
-.photo-grid > .photo-frame:nth-child(1) { --rotate-angle: -5deg; --image-angle: -3deg; }
-.photo-grid > .photo-frame:nth-child(2) { --rotate-angle: 4deg; --image-angle: 2deg; }
-.photo-grid > .photo-frame:nth-child(3) { --rotate-angle: -2deg; --image-angle: -1deg; }
-.photo-grid > .photo-frame:nth-child(4) { --rotate-angle: 6deg; --image-angle: 3deg; }
-.photo-grid > .photo-frame:nth-child(5) { --rotate-angle: -7deg; --image-angle: -4deg; }
+.photo-grid > .photo-frame:nth-child(1) { --rotate-angle: -3deg; --image-angle: -1deg; }
+.photo-grid > .photo-frame:nth-child(2) { --rotate-angle: 2deg; --image-angle: 1deg; }
+.photo-grid > .photo-frame:nth-child(3) { --rotate-angle: -1deg; --image-angle: 0deg; }
+.photo-grid > .photo-frame:nth-child(4) { --rotate-angle: 3deg; --image-angle: 2deg; }
+.photo-grid > .photo-frame:nth-child(5) { --rotate-angle: -2deg; --image-angle: -1deg; }
 
 /* 照片标题 */
 .photo-caption {
   margin-top: 8px;
   text-align: center;
   font-size: 0.9em;
-  color: #333;
+  color: #444;
   font-style: italic;
   font-weight: bold;
 }
