@@ -11,28 +11,63 @@ body{
 
 
 
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 .photo-frame {
-    position: relative;
-    background: #fff;
-  }
-  
-  .photo-frame::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border: 2px solid #fff;
-    box-shadow: inset 0 0 8px rgba(0,0,0,0.1);
-    border-radius: 8px;
-    z-index: 1;
-    pointer-events: none;
-  }
-  
-  .photo-caption {
-    padding: 8px;
-    text-align: center;
-    font-size: 0.9em;
-    color: #666;
-  }
+  position: relative;
+  background: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform: rotate(calc(var(--rotate-angle, 0deg)));
+}
+
+.photo-frame:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1);
+  transform: scale(1.05) rotate(calc(var(--rotate-angle, 0deg)));
+}
+
+.photo-frame::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  background: linear-gradient(135deg, #fdfbfb, #ebedee);
+  z-index: -1;
+  filter: blur(8px);
+  border-radius: 12px;
+}
+
+.photo-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  transform: rotate(calc(var(--image-angle, 0deg)));
+}
+
+.photo-caption {
+  margin-top: 8px;
+  text-align: center;
+  font-size: 0.9em;
+  color: #555;
+  font-style: italic;
+}
+
+.photo-grid > .photo-frame:nth-child(odd) {
+  --rotate-angle: -3deg;
+  --image-angle: -2deg;
+}
+
+.photo-grid > .photo-frame:nth-child(even) {
+  --rotate-angle: 2deg;
+  --image-angle: 1deg;
+}
