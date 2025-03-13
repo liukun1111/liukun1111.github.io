@@ -18,63 +18,91 @@ body{
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  perspective: 1000px;
 }
 
 .photo-frame {
   position: relative;
   display: inline-block;
   padding: 12px;
-  background: linear-gradient(135deg, #ffddc1, #ff9a9e, #fad0c4);
-  border-radius: 12px;
+  background: #fdf6e3;  /* 柔和米黄色，模拟纸张 */
+  border-radius: 10px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  transform: rotate(calc(var(--rotate-angle, 0deg)));
+  transform: rotate(calc(var(--rotate-angle, 0deg))) translateZ(0);
   width: fit-content;
   max-width: 100%;
+  overflow: hidden;
 }
 
-.photo-frame:hover {
-  transform: scale(1.05) rotate(calc(var(--rotate-angle, 0deg)));
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
-}
-
+/* 照片边框细节 */
 .photo-frame::before {
   content: "";
   position: absolute;
-  top: -8px;
-  left: -8px;
-  right: -8px;
-  bottom: -8px;
-  background: linear-gradient(135deg, #f3ec78, #af4261);
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  background: linear-gradient(135deg, #fff5e1, #ffdad5);
   z-index: -1;
-  border-radius: 14px;
-  opacity: 0.6;
+  border-radius: 12px;
+  opacity: 0.8;
 }
 
+/* 让照片带一点翻起的感觉 */
+.photo-frame:hover {
+  transform: scale(1.05) rotate(calc(var(--rotate-angle, 0deg))) translateZ(10px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* 让照片贴在墙上的效果 */
+.photo-frame::after {
+  content: "";
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
+  opacity: 0.8;
+  z-index: 2;
+}
+
+/* 图片展示，保证完整显示 */
 .photo-item img {
   display: block;
   max-width: 100%;
   height: auto;
-  border-radius: 8px;
+  border-radius: 6px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
   transform: rotate(calc(var(--image-angle, 0deg)));
 }
 
+/* 照片墙的随机角度 */
+.photo-grid > .photo-frame:nth-child(1) { --rotate-angle: -5deg; --image-angle: -3deg; }
+.photo-grid > .photo-frame:nth-child(2) { --rotate-angle: 4deg; --image-angle: 2deg; }
+.photo-grid > .photo-frame:nth-child(3) { --rotate-angle: -2deg; --image-angle: -1deg; }
+.photo-grid > .photo-frame:nth-child(4) { --rotate-angle: 6deg; --image-angle: 3deg; }
+.photo-grid > .photo-frame:nth-child(5) { --rotate-angle: -7deg; --image-angle: -4deg; }
+
+/* 让胶带颜色随机变化 */
+.photo-grid > .photo-frame:nth-child(odd)::after {
+  background: rgba(255, 215, 0, 0.8);  /* 金色 */
+}
+
+.photo-grid > .photo-frame:nth-child(even)::after {
+  background: rgba(173, 216, 230, 0.8);  /* 浅蓝 */
+}
+
+/* 照片描述文字 */
 .photo-caption {
   margin-top: 8px;
   text-align: center;
   font-size: 0.9em;
-  color: #444;
+  color: #333;
   font-style: italic;
   font-weight: bold;
-}
-
-.photo-grid > .photo-frame:nth-child(odd) {
-  --rotate-angle: -4deg;
-  --image-angle: -2deg;
-}
-
-.photo-grid > .photo-frame:nth-child(even) {
-  --rotate-angle: 3deg;
-  --image-angle: 2deg;
 }
