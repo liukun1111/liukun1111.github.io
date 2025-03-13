@@ -410,117 +410,77 @@
 
 
 <style>
-  /* 新增密码弹窗样式 */
-  .password-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    z-index: 1000;
-  }
-
-  .password-box {
-    position: relative;
-    top: 30%;
-    background: white;
+  .album-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
     padding: 2rem;
-    width: 300px;
+    max-width: 1200px;
     margin: 0 auto;
-    border-radius: 8px;
+  }
+  .album-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+  }
+  .album-card:hover {
+    transform: translateY(-5px);
+  }
+  .album-cover {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+  .album-info {
+    padding: 1.5rem;
   }
 </style>
 
+<script>
+  function checkPassword(albumSlug, correctPassword) {
+    let savedPassword = localStorage.getItem(`album_${albumSlug}_password`);
+    if (savedPassword === correctPassword) {
+      window.location.href = `/albums/${albumSlug}/`;
+      return;
+    }
+    let userInput = prompt("请输入该相册的密码：");
+    if (userInput === correctPassword) {
+      localStorage.setItem(`album_${albumSlug}_password`, correctPassword);
+      window.location.href = `/albums/${albumSlug}/`;
+    } else if (userInput !== null) {
+      alert("密码错误！");
+    }
+  }
+</script>
+
 <div class="album-grid">
   
-    <a href="/albums/travel/" 
-       class="album-card"
-       data-password="123456"
-       data-slug="travel">
-      <div class="album-cover" 
-           style="background-image: url(https://cloudflare-imgbed-8lm.pages.dev/file/1733066491157_绪山真寻打招呼.jpg)"></div>
+    
+      <a href="javascript:void(0);" class="album-card" onclick="checkPassword('travel', '123456')">
+    
+      <div class="album-cover" style="background-image: url(https://cloudflare-imgbed-8lm.pages.dev/file/1733066491157_绪山真寻打招呼.jpg)"></div>
       <div class="album-info">
         <h3>旅行记忆</h3>
         <p>世界那么大，我们去看看</p>
         <small>Sun Aug 20 2023 08:00:00 GMT+0800 (中国标准时间)</small>
-        
-          <div class="locked-icon">🔒</div>
-        
       </div>
     </a>
   
-    <a href="/albums/food/" 
-       class="album-card"
-       data-password=""
-       data-slug="food">
-      <div class="album-cover" 
-           style="background-image: url(https://cloudflare-imgbed-8lm.pages.dev/file/1733066493286_鹿目圆贴图.png)"></div>
+    
+      <a href="/albums/food/" class="album-card">
+    
+      <div class="album-cover" style="background-image: url(https://cloudflare-imgbed-8lm.pages.dev/file/1733066493286_鹿目圆贴图.png)"></div>
       <div class="album-info">
         <h3>美食日记</h3>
         <p>舌尖上的美味</p>
         <small>Sat Jul 15 2023 08:00:00 GMT+0800 (中国标准时间)</small>
-        
       </div>
     </a>
   
 </div>
-
-<div class="password-modal">
-  <div class="password-box">
-    <h3>请输入访问密码</h3>
-    <input type="password" id="password-input" placeholder="输入相册密码">
-    <button onclick="checkPassword()">确认</button>
-    <p class="error-msg" style="color: red; display: none;">密码错误！</p>
-  </div>
-</div>
-
-<script>
-document.querySelectorAll('.album-card').forEach(card => {
-  card.addEventListener('click', function(e) {
-    const password = this.dataset.password;
-    if (password) {
-      e.preventDefault();
-      const slug = this.dataset.slug;
-      const stored = sessionStorage.getItem(`album-${slug}`);
-      
-      if (stored === password) {
-        window.location.href = this.href;
-      } else {
-        showPasswordModal(slug, password);
-      }
-    }
-  });
-});
-
-function showPasswordModal(slug, correctPassword) {
-  const modal = document.querySelector('.password-modal');
-  modal.style.display = 'block';
-  
-  window.checkPassword = function() {
-    const input = document.getElementById('password-input');
-    const errorMsg = document.querySelector('.error-msg');
-    
-    if (input.value === correctPassword) {
-      sessionStorage.setItem(`album-${slug}`, correctPassword);
-      modal.style.display = 'none';
-      window.location.href = document.querySelector(`[data-slug="${slug}"]`).href;
-    } else {
-      errorMsg.style.display = 'block';
-      input.value = '';
-    }
-  }
-}
-
-// 点击遮罩关闭弹窗
-document.querySelector('.password-modal').addEventListener('click', function(e) {
-  if (e.target === this) {
-    this.style.display = 'none';
-  }
-});
-</script>
 
     <footer class="page-footer bg-color">
     
