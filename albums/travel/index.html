@@ -410,13 +410,18 @@
 
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    let albumUrl = window.location.pathname;
-    if (!sessionStorage.getItem(albumUrl)) {
-      alert("未授权访问！请返回相册页输入密码。");
-      window.location.href = "/albums";
+  (function() {
+    const slug = "";
+    const storedHash = "";
+    
+    if (storedHash) {
+      let storedPass = localStorage.getItem(`album_pass_${slug}`);
+      if (storedPass !== storedHash) {
+        alert("请先输入密码访问相册！");
+        location.href = "/albums/";
+      }
     }
-  });
+  })();
 </script>
 
 <style>
@@ -456,9 +461,7 @@
     <div class="photo-frame">
       <div class="photo-item">
         <a target="_blank" rel="noopener" href="https://cloudflare-imgbed-8lm.pages.dev/file/1733066491157_绪山真寻打招呼.jpg" data-fancybox="gallery">
-          <img src="https://cloudflare-imgbed-8lm.pages.dev/file/1733066491157_绪山真寻打招呼.jpg" 
-               alt="雪山美景"
-               loading="lazy">
+          <img src="/medias/loading/miku.gif# optional eg ./images/loading.gif" data-original="https://cloudflare-imgbed-8lm.pages.dev/file/1733066491157_绪山真寻打招呼.jpg" alt="雪山美景" loading="lazy">
         </a>
         
           <div class="photo-caption">雪山美景</div>
@@ -469,9 +472,7 @@
     <div class="photo-frame">
       <div class="photo-item">
         <a target="_blank" rel="noopener" href="https://cloudflare-imgbed-8lm.pages.dev/file/1733066493286_鹿目圆贴图.png" data-fancybox="gallery">
-          <img src="https://cloudflare-imgbed-8lm.pages.dev/file/1733066493286_鹿目圆贴图.png" 
-               alt="海边日落"
-               loading="lazy">
+          <img src="/medias/loading/miku.gif# optional eg ./images/loading.gif" data-original="https://cloudflare-imgbed-8lm.pages.dev/file/1733066493286_鹿目圆贴图.png" alt="海边日落" loading="lazy">
         </a>
         
           <div class="photo-caption">海边日落</div>
