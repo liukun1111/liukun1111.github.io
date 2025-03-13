@@ -10,7 +10,6 @@ body{
 }
 
 
-
 .photo-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -23,35 +22,27 @@ body{
 
 .photo-frame {
   position: relative;
-  background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #ffdde1); /* 初始渐变 */
+  padding: 10px;
   border-radius: 12px;
+  background: linear-gradient(45deg, #ff9a9e, #fad0c4, #ffdde1, #c3cfe2, #a1c4fd);
+  background-size: 300% 300%;
+  animation: gradient-flow 5s infinite linear; /* 让渐变动起来 */
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.1);
-  transform: rotate(calc(-3deg + 6deg * var(--tilt))); /* 轻微倾斜 */
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background 3s ease;
-  padding: 8px;
+  transform: rotate(calc(-3deg + 6deg * var(--tilt))); /* 随机角度 */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+@keyframes gradient-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .photo-frame:hover {
   box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3), 0 6px 10px rgba(0, 0, 0, 0.15);
   transform: rotate(0deg) scale(1.05);
-  background: linear-gradient(45deg, #ffdde1, #fad0c4, #ff9a9e, #ffdde1); /* 渐变动态变化 */
 }
 
-.photo-frame::before {
-  content: "";
-  position: absolute;
-  top: -6px;
-  left: -6px;
-  right: -6px;
-  bottom: -6px;
-  border-radius: 16px;
-  background: linear-gradient(120deg, #ffdde1, #fad0c4, #ff9a9e);
-  z-index: -1;
-  filter: blur(10px);
-  opacity: 0.7;
-}
-
-/* 让相框大小自适应图片 */
 .photo-item {
   display: flex;
   justify-content: center;
@@ -64,23 +55,21 @@ body{
   height: auto;
   display: block;
   border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* 让图片有立体感 */
 }
 
-/* 添加相框阴影，让图片更有立体感 */
-.photo-frame .photo-item img {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-}
-
-/* 文字描述 */
+/* 文字描述放在图片下面 */
 .photo-caption {
-  padding: 10px;
+  padding: 8px 0;
   text-align: center;
   font-size: 1em;
   color: #444;
   font-style: italic;
+  background: rgba(255, 255, 255, 0.8); /* 轻微背景，增强可读性 */
+  border-radius: 0 0 10px 10px;
 }
 
-/* 顶部图钉装饰 */
+/* 顶部图钉 */
 .photo-frame::after {
   content: "";
   position: absolute;
@@ -95,7 +84,7 @@ body{
   z-index: 2;
 }
 
-/* 让相框有不同的倾斜角度，增加随意性 */
+/* 不同相框倾斜角度 */
 .photo-grid .photo-frame:nth-child(4n + 1) {
   --tilt: -2;
 }
