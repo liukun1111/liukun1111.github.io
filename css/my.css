@@ -11,7 +11,7 @@ body{
 
 
 
-/* 照片墙容器 */
+/* === 照片墙背景 === */
 .photo-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -19,60 +19,65 @@ body{
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
-  perspective: 1000px;
-  background: url('https://cloudflare-imgbed-8lm.pages.dev/file/wood-texture.jpg'); /* 木质背景 */
+  background: url('https://cdn.jsdelivr.net/gh/liukun1111/img@main/img/wood-texture.jpg'); /* 木质背景 */
   background-size: cover;
   background-attachment: fixed;
 }
 
-/* 照片相框 */
+/* === 相框基础样式 === */
 .photo-frame {
   position: relative;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(240, 240, 240, 0.6)); /* 渐变透明效果 */
-  border-radius: 10px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1); /* 外阴影 */
-  border: 1px solid rgba(255, 255, 255, 0.6); /* 细衬线 */
+  padding: 8px;
+  border-radius: 12px;
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3), 1px 1px 4px rgba(0, 0, 0, 0.2) inset; /* 立体感 */
+  border: 2px solid rgba(255, 255, 255, 0.6); /* 细衬线 */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   transform: rotate(calc(var(--rotate-angle, 0deg))) translateZ(0);
-  width: fit-content;
   max-width: 100%;
   overflow: hidden;
 }
 
-/* 鼠标悬停：立体感增强 */
+/* === 让相框颜色更丰富（随机颜色）=== */
+.photo-grid > .photo-frame:nth-child(1) { background: linear-gradient(135deg, #F4E3C1, #EAD1A8); } /* 浅米色 */
+.photo-grid > .photo-frame:nth-child(2) { background: linear-gradient(135deg, #E3D5CA, #D6C7B1); } /* 浅棕色 */
+.photo-grid > .photo-frame:nth-child(3) { background: linear-gradient(135deg, #D1D5DB, #BDC3C7); } /* 淡灰色 */
+.photo-grid > .photo-frame:nth-child(4) { background: linear-gradient(135deg, #E8C6A7, #D4B185); } /* 复古棕 */
+.photo-grid > .photo-frame:nth-child(5) { background: linear-gradient(135deg, #CACFD2, #BFC5CA); } /* 冷色系灰蓝 */
+
+/* === 悬停效果：增强立体感 === */
 .photo-frame:hover {
-  transform: scale(1.03) rotate(calc(var(--rotate-angle, 0deg)));
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3), 0 6px 12px rgba(0, 0, 0, 0.2); /* 更强的阴影 */
-  border: 1px solid rgba(255, 255, 255, 0.8); /* 更加明显的边框 */
+  transform: scale(1.05) rotate(calc(var(--rotate-angle, 0deg)));
+  box-shadow: 5px 5px 12px rgba(0, 0, 0, 0.4), 2px 2px 6px rgba(0, 0, 0, 0.3) inset;
+  border: 2px solid rgba(255, 255, 255, 1);
 }
 
-/* 照片 */
+/* === 照片样式 === */
 .photo-item img {
   display: block;
-  max-width: 100%;
+  width: 100%;
   height: auto;
-  border-radius: 6px; /* 轻微圆角 */
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); /* 照片本身的阴影 */
+  border-radius: 6px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
   transform: rotate(calc(var(--image-angle, 0deg)));
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* 鼠标悬停：照片微微凸起 */
+/* === 鼠标悬停时，照片微微凸起 === */
 .photo-item img:hover {
   transform: scale(1.02);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.25);
 }
 
-/* 照片墙的随机角度 */
+/* === 让相框倾斜角度不同，模拟真实照片墙效果 === */
 .photo-grid > .photo-frame:nth-child(1) { --rotate-angle: -3deg; --image-angle: -1deg; }
 .photo-grid > .photo-frame:nth-child(2) { --rotate-angle: 2deg; --image-angle: 1deg; }
 .photo-grid > .photo-frame:nth-child(3) { --rotate-angle: -1deg; --image-angle: 0deg; }
 .photo-grid > .photo-frame:nth-child(4) { --rotate-angle: 3deg; --image-angle: 2deg; }
 .photo-grid > .photo-frame:nth-child(5) { --rotate-angle: -2deg; --image-angle: -1deg; }
 
-/* 照片标题 */
+/* === 照片标题 === */
 .photo-caption {
-  margin-top: 8px;
+  margin-top: 6px;
   text-align: center;
   font-size: 0.9em;
   color: #444;
