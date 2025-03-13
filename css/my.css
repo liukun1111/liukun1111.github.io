@@ -11,31 +11,65 @@ body{
 
 
 
-/* === 照片墙背景 === */
+/* === 整个相册区域的木纹背景 === */
 .photo-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 2rem;
-  padding: 2rem;
-  max-width: 1200px;
+  padding: 3rem;
+  width: 100vw; /* 确保填充整个视口宽度 */
+  min-height: 100vh; /* 让背景足够大，避免裁剪 */
   margin: 0 auto;
-  background: url('https://cdn.jsdelivr.net/gh/liukun1111/img@main/img/wood-texture.jpg'); /* 替换成更大的木纹背景 */
+  
+  background: url('https://cdn.jsdelivr.net/gh/liukun1111/img@main/img/wood-texture.jpg') no-repeat center center fixed;
   background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
 }
 
-/* === 相框基础样式 === */
+/* === 确保 .main 容器没有影响相册区域 === */
+.main {
+  width: 100vw !important; /* 让 .main 也占满整个视口 */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* === 让相框层次感更强，避免背景抢眼 === */
 .photo-frame {
   position: relative;
-  padding: 10px;
+  padding: 12px;
   border-radius: 10px;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3), inset 2px 2px 5px rgba(0, 0, 0, 0.15);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   transform: rotate(calc(var(--rotate-angle, 0deg))) translateZ(0);
-  max-width: 100%;
+  background: linear-gradient(145deg, rgba(215, 196, 183, 0.9), rgba(191, 163, 145, 0.9)); /* 透明渐变 */
   overflow: hidden;
 }
+
+/* === 相框阴影增强，让照片更立体 === */
+.photo-frame::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid rgba(255, 255, 255, 0.6); /* 细衬线 */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* === 调整照片整体区域，避免背景干扰 === */
+.photo-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
 
 /* === 相框高级渐变配色（不同相框颜色）=== */
 .photo-grid > .photo-frame:nth-child(1) { background: linear-gradient(145deg, #D7C4B7, #BFA391); } /* 高级米金色 */
