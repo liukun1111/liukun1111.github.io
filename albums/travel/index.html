@@ -395,6 +395,14 @@
 </header>
 
     
+  <script>
+    if(!sessionStorage.getItem(`album-`)) {
+      window.location.href = '/albums/';
+    }
+  </script>
+
+
+
 
 <div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
@@ -417,11 +425,21 @@
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
     margin: 10px;
+    position: relative;
   }
 
-  .photo-frame:hover {
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-    transform: scale(1.03);
+  .photo-frame::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 2px solid #fff;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    z-index: 1;
+    pointer-events: none;
   }
 
   .photo-grid {
@@ -438,6 +456,13 @@
     height: 200px;
     object-fit: cover;
     border-radius: 4px;
+  }
+
+  .photo-caption {
+    padding: 8px;
+    text-align: center;
+    font-size: 0.9em;
+    color: #666;
   }
 </style>
 
@@ -470,8 +495,6 @@
     </div>
   
 </div>
-
-
 
     <footer class="page-footer bg-color">
     
