@@ -30,9 +30,9 @@
     <script src="/libs/jquery/jquery.min.js"></script>
 
 
-<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="lkii's Blog" type="application/atom+xml">
-
+<meta name="generator" content="Hexo 7.3.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="lkii's Blog" type="application/atom+xml">
 </head>
 
 
@@ -409,194 +409,77 @@
 </div>
 
 
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let albumUrl = window.location.pathname;
+    if (!sessionStorage.getItem(albumUrl)) {
+      alert("未授权访问！请返回相册页输入密码。");
+      window.location.href = "/albums";
+    }
+  });
+</script>
+
 <style>
-  .password-container {
-    text-align: center;
-    margin-top: 50px;
+  .photo-frame {
+    padding: 12px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    margin: 10px;
   }
-  .password-input {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+
+  .photo-frame:hover {
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    transform: scale(1.03);
   }
-  .password-button {
-    padding: 10px 15px;
-    font-size: 16px;
-    border: none;
-    background: #007bff;
-    color: white;
-    cursor: pointer;
-    margin-left: 10px;
+
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
   }
-  .password-error {
-    color: red;
-    margin-top: 10px;
-  }
-  .hidden {
-    display: none;
+
+  .photo-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
   }
 </style>
 
-
-
-<div id="photo-gallery" class="">
-  <style>
-    .photo-frame {
-      padding: 12px;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      transition: all 0.3s ease;
-      margin: 10px;
-    }
-    .photo-frame:hover {
-      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-      transform: scale(1.03);
-    }
-    .photo-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 1.5rem;
-      padding: 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .photo-item img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 4px;
-    }
-  </style>
-
-  <div class="photo-grid">
-    
-      <div class="photo-frame">
-        <div class="photo-item">
-          <a target="_blank" rel="noopener" href="https://cloudflare-imgbed-8lm.pages.dev/file/1733066491157_绪山真寻打招呼.jpg" data-fancybox="gallery">
-            <img src="/medias/loading/miku.gif# optional eg ./images/loading.gif" data-original="https://cloudflare-imgbed-8lm.pages.dev/file/1733066491157_绪山真寻打招呼.jpg" alt="雪山美景" loading="lazy">
-          </a>
-          
-            <div class="photo-caption">雪山美景</div>
-          
-        </div>
+<div class="photo-grid">
+  
+    <div class="photo-frame">
+      <div class="photo-item">
+        <a target="_blank" rel="noopener" href="https://cloudflare-imgbed-8lm.pages.dev/file/1733066491157_绪山真寻打招呼.jpg" data-fancybox="gallery">
+          <img src="https://cloudflare-imgbed-8lm.pages.dev/file/1733066491157_绪山真寻打招呼.jpg" 
+               alt="雪山美景"
+               loading="lazy">
+        </a>
+        
+          <div class="photo-caption">雪山美景</div>
+        
       </div>
-    
-      <div class="photo-frame">
-        <div class="photo-item">
-          <a target="_blank" rel="noopener" href="https://cloudflare-imgbed-8lm.pages.dev/file/1733066493286_鹿目圆贴图.png" data-fancybox="gallery">
-            <img src="/medias/loading/miku.gif# optional eg ./images/loading.gif" data-original="https://cloudflare-imgbed-8lm.pages.dev/file/1733066493286_鹿目圆贴图.png" alt="海边日落" loading="lazy">
-          </a>
-          
-            <div class="photo-caption">海边日落</div>
-          
-        </div>
+    </div>
+  
+    <div class="photo-frame">
+      <div class="photo-item">
+        <a target="_blank" rel="noopener" href="https://cloudflare-imgbed-8lm.pages.dev/file/1733066493286_鹿目圆贴图.png" data-fancybox="gallery">
+          <img src="https://cloudflare-imgbed-8lm.pages.dev/file/1733066493286_鹿目圆贴图.png" 
+               alt="海边日落"
+               loading="lazy">
+        </a>
+        
+          <div class="photo-caption">海边日落</div>
+        
       </div>
-    
-  </div>
+    </div>
+  
 </div>
-
-<script>
-  async function hashPassword(password) {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(password);
-    const hash = await crypto.subtle.digest("SHA-256", data);
-    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, "0")).join("");
-  }
-
-  async function checkPassword() {
-    const inputPassword = document.getElementById("album-password").value;
-    const inputHash = await hashPassword(inputPassword);
-
-    // 获取 EJS 传入的相册哈希值
-    const albumPasswordHash = "";
-
-    if (inputHash === albumPasswordHash) {
-      localStorage.setItem("-password", inputHash);
-      document.getElementById("password-protect").classList.add("hidden");
-      document.getElementById("photo-gallery").classList.remove("hidden");
-    } else {
-      document.getElementById("password-error").classList.remove("hidden");
-    }
-  }
-
-  // 页面加载时检查是否已输入正确密码
-  async function verifyStoredPassword() {
-    const storedHash = localStorage.getItem("-password");
-    if (storedHash && storedHash === "") {
-      document.getElementById("password-protect").classList.add("hidden");
-      document.getElementById("photo-gallery").classList.remove("hidden");
-    }
-  }
-
-  verifyStoredPassword();
-</script>
-
-
-  <div class="photo-grid">
-    
-      <div class="photo-frame">
-        <div class="photo-item">
-          <a target="_blank" rel="noopener" href="https://cloudflare-imgbed-8lm.pages.dev/file/1733066491157_绪山真寻打招呼.jpg" data-fancybox="gallery">
-            <img src="/medias/loading/miku.gif# optional eg ./images/loading.gif" data-original="https://cloudflare-imgbed-8lm.pages.dev/file/1733066491157_绪山真寻打招呼.jpg" alt="雪山美景" loading="lazy">
-          </a>
-          
-            <div class="photo-caption">雪山美景</div>
-          
-        </div>
-      </div>
-    
-      <div class="photo-frame">
-        <div class="photo-item">
-          <a target="_blank" rel="noopener" href="https://cloudflare-imgbed-8lm.pages.dev/file/1733066493286_鹿目圆贴图.png" data-fancybox="gallery">
-            <img src="/medias/loading/miku.gif# optional eg ./images/loading.gif" data-original="https://cloudflare-imgbed-8lm.pages.dev/file/1733066493286_鹿目圆贴图.png" alt="海边日落" loading="lazy">
-          </a>
-          
-            <div class="photo-caption">海边日落</div>
-          
-        </div>
-      </div>
-    
-  </div>
-</div>
-
-<script>
-  async function hashPassword(password) {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(password);
-    const hash = await crypto.subtle.digest("SHA-256", data);
-    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, "0")).join("");
-  }
-
-  async function checkPassword() {
-    const inputPassword = document.getElementById("album-password").value;
-    const inputHash = await hashPassword(inputPassword);
-
-    // 这里用 EJS 传入相册的哈希值
-    const albumPasswordHash = "";
-
-    if (inputHash === albumPasswordHash) {
-      localStorage.setItem("-password", inputHash);
-      document.getElementById("password-protect").classList.add("hidden");
-      document.getElementById("photo-gallery").classList.remove("hidden");
-    } else {
-      document.getElementById("password-error").classList.remove("hidden");
-    }
-  }
-
-  // 页面加载时检查是否已输入密码
-  async function verifyStoredPassword() {
-    const storedHash = localStorage.getItem("-password");
-    if (storedHash && storedHash === "") {
-      document.getElementById("password-protect").classList.add("hidden");
-      document.getElementById("photo-gallery").classList.remove("hidden");
-    }
-  }
-
-  verifyStoredPassword();
-</script>
-
 
     <footer class="page-footer bg-color">
     
