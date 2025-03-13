@@ -11,109 +11,83 @@ body{
 
 
 
-/* === 整个相册区域的木纹背景 === */
+
 .photo-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 2rem;
-  padding: 3rem;
-  width: 100vw; /* 确保填充整个视口宽度 */
-  min-height: 100vh; /* 让背景足够大，避免裁剪 */
+  gap: 1.5rem;
+  padding: 2rem;
+  max-width: 1200px;
   margin: 0 auto;
-  
-  background: url('https://cdn.jsdelivr.net/gh/liukun1111/img@main/img/wood-texture.jpg') no-repeat center center fixed;
-  background-size: cover;
+  position: relative;
 }
 
-/* === 确保 .main 容器没有影响相册区域 === */
-.main {
-  width: 100vw !important; /* 让 .main 也占满整个视口 */
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-/* === 让相框层次感更强，避免背景抢眼 === */
 .photo-frame {
   position: relative;
-  padding: 12px;
-  border-radius: 10px;
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3), inset 2px 2px 5px rgba(0, 0, 0, 0.15);
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.1);
+  transform: rotate(calc(-3deg + 6deg * var(--tilt))); /* 不同角度的倾斜 */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  transform: rotate(calc(var(--rotate-angle, 0deg))) translateZ(0);
-  background: linear-gradient(145deg, rgba(215, 196, 183, 0.9), rgba(191, 163, 145, 0.9)); /* 透明渐变 */
-  overflow: hidden;
 }
 
-/* === 相框阴影增强，让照片更立体 === */
+.photo-frame:hover {
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3), 0 6px 10px rgba(0, 0, 0, 0.15);
+  transform: rotate(0deg) scale(1.05); /* 鼠标悬停时恢复平直并放大 */
+}
+
 .photo-frame::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border: 2px solid rgba(255, 255, 255, 0.6); /* 细衬线 */
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  top: -6px;
+  left: -6px;
+  right: -6px;
+  bottom: -6px;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-radius: 14px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: -1;
+}
+
+.photo-frame .photo-item img {
+  width: 100%;
+  height: auto;
   border-radius: 10px;
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* === 调整照片整体区域，避免背景干扰 === */
-.photo-item img {
   display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 6px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-
-/* === 相框高级渐变配色（不同相框颜色）=== */
-.photo-grid > .photo-frame:nth-child(1) { background: linear-gradient(145deg, #D7C4B7, #BFA391); } /* 高级米金色 */
-.photo-grid > .photo-frame:nth-child(2) { background: linear-gradient(145deg, #A59D92, #8B8377); } /* 高级灰棕 */
-.photo-grid > .photo-frame:nth-child(3) { background: linear-gradient(145deg, #5E514A, #3F362F); } /* 深咖色 */
-.photo-grid > .photo-frame:nth-child(4) { background: linear-gradient(145deg, #C4A484, #A37D5E); } /* 浅木色 */
-.photo-grid > .photo-frame:nth-child(5) { background: linear-gradient(145deg, #827B75, #6C6560); } /* 复古灰黑 */
-
-/* === 立体感增强 === */
-.photo-frame:hover {
-  transform: scale(1.05) rotate(calc(var(--rotate-angle, 0deg)));
-  box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.4), inset 3px 3px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* === 照片样式 === */
-.photo-item img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 6px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-  transform: rotate(calc(var(--image-angle, 0deg)));
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* === 鼠标悬停时，照片微微凸起 === */
-.photo-item img:hover {
-  transform: scale(1.02);
-  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.25);
-}
-
-/* === 让相框倾斜角度不同，模拟真实照片墙效果 === */
-.photo-grid > .photo-frame:nth-child(1) { --rotate-angle: -3deg; --image-angle: -1deg; }
-.photo-grid > .photo-frame:nth-child(2) { --rotate-angle: 2deg; --image-angle: 1deg; }
-.photo-grid > .photo-frame:nth-child(3) { --rotate-angle: -1deg; --image-angle: 0deg; }
-.photo-grid > .photo-frame:nth-child(4) { --rotate-angle: 3deg; --image-angle: 2deg; }
-.photo-grid > .photo-frame:nth-child(5) { --rotate-angle: -2deg; --image-angle: -1deg; }
-
-/* === 照片标题 === */
 .photo-caption {
-  margin-top: 6px;
+  padding: 10px;
   text-align: center;
-  font-size: 0.9em;
+  font-size: 1em;
   color: #444;
   font-style: italic;
-  font-weight: bold;
+}
+
+.photo-frame::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: radial-gradient(circle, #ffdb4d 40%, #caa62b 100%);
+  border-radius: 50%;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  z-index: 2; /* 模拟图钉 */
+}
+
+/* 不规则布局的倾斜 */
+.photo-grid .photo-frame:nth-child(4n + 1) {
+  --tilt: -2;
+}
+.photo-grid .photo-frame:nth-child(4n + 2) {
+  --tilt: 3;
+}
+.photo-grid .photo-frame:nth-child(4n + 3) {
+  --tilt: -4;
+}
+.photo-grid .photo-frame:nth-child(4n + 4) {
+  --tilt: 2;
 }
