@@ -19,36 +19,35 @@ body{
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
-  background: url('https://cdn.jsdelivr.net/gh/liukun1111/img@main/img/wood-texture.jpg'); /* 木质背景 */
+  background: url('https://cdn.jsdelivr.net/gh/liukun1111/img@main/img/wood-texture.jpg'); /* 替换成更大的木纹背景 */
   background-size: cover;
+  background-position: center;
   background-attachment: fixed;
 }
 
 /* === 相框基础样式 === */
 .photo-frame {
   position: relative;
-  padding: 8px;
-  border-radius: 12px;
-  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3), 1px 1px 4px rgba(0, 0, 0, 0.2) inset; /* 立体感 */
-  border: 2px solid rgba(255, 255, 255, 0.6); /* 细衬线 */
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3), inset 2px 2px 5px rgba(0, 0, 0, 0.15);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   transform: rotate(calc(var(--rotate-angle, 0deg))) translateZ(0);
   max-width: 100%;
   overflow: hidden;
 }
 
-/* === 让相框颜色更丰富（随机颜色）=== */
-.photo-grid > .photo-frame:nth-child(1) { background: linear-gradient(135deg, #F4E3C1, #EAD1A8); } /* 浅米色 */
-.photo-grid > .photo-frame:nth-child(2) { background: linear-gradient(135deg, #E3D5CA, #D6C7B1); } /* 浅棕色 */
-.photo-grid > .photo-frame:nth-child(3) { background: linear-gradient(135deg, #D1D5DB, #BDC3C7); } /* 淡灰色 */
-.photo-grid > .photo-frame:nth-child(4) { background: linear-gradient(135deg, #E8C6A7, #D4B185); } /* 复古棕 */
-.photo-grid > .photo-frame:nth-child(5) { background: linear-gradient(135deg, #CACFD2, #BFC5CA); } /* 冷色系灰蓝 */
+/* === 相框高级渐变配色（不同相框颜色）=== */
+.photo-grid > .photo-frame:nth-child(1) { background: linear-gradient(145deg, #D7C4B7, #BFA391); } /* 高级米金色 */
+.photo-grid > .photo-frame:nth-child(2) { background: linear-gradient(145deg, #A59D92, #8B8377); } /* 高级灰棕 */
+.photo-grid > .photo-frame:nth-child(3) { background: linear-gradient(145deg, #5E514A, #3F362F); } /* 深咖色 */
+.photo-grid > .photo-frame:nth-child(4) { background: linear-gradient(145deg, #C4A484, #A37D5E); } /* 浅木色 */
+.photo-grid > .photo-frame:nth-child(5) { background: linear-gradient(145deg, #827B75, #6C6560); } /* 复古灰黑 */
 
-/* === 悬停效果：增强立体感 === */
+/* === 立体感增强 === */
 .photo-frame:hover {
   transform: scale(1.05) rotate(calc(var(--rotate-angle, 0deg)));
-  box-shadow: 5px 5px 12px rgba(0, 0, 0, 0.4), 2px 2px 6px rgba(0, 0, 0, 0.3) inset;
-  border: 2px solid rgba(255, 255, 255, 1);
+  box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.4), inset 3px 3px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* === 照片样式 === */
