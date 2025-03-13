@@ -13,7 +13,7 @@ body{
 
 .photo-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1.5rem;
   padding: 2rem;
   max-width: 1200px;
@@ -22,35 +22,41 @@ body{
 
 .photo-frame {
   position: relative;
-  background: #f9f9f9;
+  display: inline-block;
+  padding: 12px;
+  background: linear-gradient(135deg, #ffddc1, #ff9a9e, #fad0c4);
   border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   transform: rotate(calc(var(--rotate-angle, 0deg)));
+  width: fit-content;
+  max-width: 100%;
 }
 
 .photo-frame:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1);
   transform: scale(1.05) rotate(calc(var(--rotate-angle, 0deg)));
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
 }
 
 .photo-frame::before {
   content: "";
   position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
-  background: linear-gradient(135deg, #fdfbfb, #ebedee);
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  background: linear-gradient(135deg, #f3ec78, #af4261);
   z-index: -1;
-  filter: blur(8px);
-  border-radius: 12px;
+  border-radius: 14px;
+  opacity: 0.6;
 }
 
 .photo-item img {
-  width: 100%;
+  display: block;
+  max-width: 100%;
   height: auto;
   border-radius: 8px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
   transform: rotate(calc(var(--image-angle, 0deg)));
 }
 
@@ -58,16 +64,17 @@ body{
   margin-top: 8px;
   text-align: center;
   font-size: 0.9em;
-  color: #555;
+  color: #444;
   font-style: italic;
+  font-weight: bold;
 }
 
 .photo-grid > .photo-frame:nth-child(odd) {
-  --rotate-angle: -3deg;
+  --rotate-angle: -4deg;
   --image-angle: -2deg;
 }
 
 .photo-grid > .photo-frame:nth-child(even) {
-  --rotate-angle: 2deg;
-  --image-angle: 1deg;
+  --rotate-angle: 3deg;
+  --image-angle: 2deg;
 }
