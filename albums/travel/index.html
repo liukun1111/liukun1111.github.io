@@ -409,47 +409,22 @@
 </div>
 
 
+<style>
+  .photo-grid {
+    display: none; /* 默认隐藏 */
+  }
+</style>
+
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     let albumUrl = window.location.pathname;
     if (!sessionStorage.getItem(albumUrl)) {
-      alert("未授权访问！请返回相册页输入密码。");
-      window.location.href = "/albums";
+      window.location.replace("/albums"); // 直接跳转，避免页面短暂显示
+    } else {
+      document.querySelector(".photo-grid").style.display = "grid"; // 通过验证后才显示相册
     }
   });
 </script>
-
-<style>
-  .photo-frame {
-    padding: 12px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-    margin: 10px;
-  }
-
-  .photo-frame:hover {
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-    transform: scale(1.03);
-  }
-
-  .photo-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1.5rem;
-    padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .photo-item img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 4px;
-  }
-</style>
 
 <div class="photo-grid">
   
