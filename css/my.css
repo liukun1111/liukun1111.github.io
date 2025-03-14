@@ -10,42 +10,71 @@ body{
 }
 
 
+/* ===== 相册容器 ===== */
 .photo-gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 2rem;
-  padding: 2rem;
-  perspective: 1200px;
+  gap: 2.5rem;
+  padding: 3rem;
+  perspective: 1500px;
+  background: linear-gradient(15deg, #fff5f8 0%, #f8f4ff 100%);
 }
 
+/* ===== 相框核心样式 ===== */
 .photo-frame {
   position: relative;
   display: inline-block;
-  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
   transform-style: preserve-3d;
   cursor: pointer;
-  margin: 1.5rem;
-  filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15));
+  margin: 2rem;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 15px;
+  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.12));
+  
+  /* 随机参数 */
+  --rotate-deg: 0deg;
+  --scale-ratio: 1;
+  --pin-pos: 50%;
+  transform: rotate(var(--rotate-deg)) scale(var(--scale-ratio));
 }
 
-/* 随机旋转布局 */
-.photo-frame:nth-child(3n+1) { transform: rotate(-3deg); }
-.photo-frame:nth-child(3n+2) { transform: rotate(2deg); }
-.photo-frame:nth-child(3n+3) { transform: rotate(-4deg); }
-
-.photo-frame:hover {
-  transform: rotate(0deg) scale(1.05) translateZ(20px);
-  z-index: 10;
+/* ===== 智能随机布局系统 ===== */
+.photo-frame:nth-child(5n+1) { 
+  --rotate-deg: -3deg;
+  --scale-ratio: 0.98;
+  --pin-pos: 30%;
+}
+.photo-frame:nth-child(5n+2) { 
+  --rotate-deg: 5deg;
+  --scale-ratio: 1.02;
+  --pin-pos: 65%;
+}
+.photo-frame:nth-child(5n+3) { 
+  --rotate-deg: -6deg;
+  --scale-ratio: 0.95;
+  --pin-pos: 45%;
+}
+.photo-frame:nth-child(5n+4) { 
+  --rotate-deg: 2deg;
+  --scale-ratio: 1.05;
+  --pin-pos: 80%;
+}
+.photo-frame:nth-child(5n+5) { 
+  --rotate-deg: -8deg;
+  --scale-ratio: 0.97;
+  --pin-pos: 20%;
 }
 
-/* 动态渐变边框 */
+/* ===== 动态渐变边框 ===== */
 .photo-frame::before {
   content: "";
   position: absolute;
-  top: -15px;
-  left: -15px;
-  right: -15px;
-  bottom: -15px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: linear-gradient(
       135deg,
       #ff7eb3 0%,
@@ -56,61 +85,147 @@ body{
       #a18fff 100%
   );
   background-size: 300% 300%;
-  animation: gradientShift 8s ease infinite;
-  border-radius: 12px;
+  animation: gradientFlow 12s ease infinite;
+  border-radius: 14px;
   z-index: -1;
-  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+  box-shadow: 
+      inset 0 0 15px rgba(255,255,255,0.4),
+      0 25px 50px -12px rgba(0,0,0,0.25);
+  width: calc(100% + 10px);
+  height: calc(100% + 10px);
+  margin: -5px;
 }
 
-/* 内层相框 */
+/* ===== 三维立体图钉系统 ===== */
+/* 钉头 */
 .photo-frame::after {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border: 3px solid rgba(255,255,255,0.8);
-  border-radius: 10px;
-  mix-blend-mode: overlay;
-  pointer-events: none;
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle at 30% 30%, 
+      #fff0b3 10%,
+      #ffdb4d 30%,
+      #d6a329 70%,
+      #ad841f 100%
+  );
+  border-radius: 50% 50% 40% 40%;
+  top: -22px;
+  left: var(--pin-pos);
+  transform: 
+      translateX(-50%)
+      rotate(45deg)
+      perspective(500px)
+      rotateX(35deg);
+  box-shadow: 
+      0 4px 8px rgba(0,0,0,0.2),
+      inset -3px -3px 6px rgba(0,0,0,0.3),
+      inset 2px 2px 3px rgba(255,255,255,0.5);
+  z-index: 20;
+  transition: all 0.4s ease;
 }
 
+/* 钉杆 */
+.photo-frame .pin-stem {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 28px;
+  background: linear-gradient(
+      to right,
+      #c0c0c0 20%,
+      #e0e0e0 50%,
+      #c0c0c0 80%
+  );
+  top: -34px;
+  left: var(--pin-pos);
+  transform: translateX(-50%) rotate(2deg);
+  border-radius: 1px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+  z-index: 18;
+}
+
+/* ===== 图片样式 ===== */
 .photo-frame img {
   display: block;
   width: 100%;
   height: auto;
   border-radius: 10px;
   background: white;
-  transform: translateZ(30px);
-  box-shadow: inset 0 0 20px rgba(255,255,255,0.3),
-              inset 0 0 40px rgba(255,255,255,0.2);
+  transform: translateZ(40px);
+  box-shadow: 
+      inset 0 0 25px rgba(255,255,255,0.4),
+      inset 0 0 50px rgba(255,255,255,0.2);
+  border: 3px solid rgba(255,255,255,0.5);
+  transition: transform 0.4s ease;
 }
 
-/* 文字说明 */
+/* ===== 悬浮互动效果 ===== */
+.photo-frame:hover {
+  transform: rotate(0deg) scale(1.08) translateZ(50px);
+  z-index: 100;
+}
+
+.photo-frame:hover::after {
+  top: -26px;
+  animation: pinBounce 0.8s ease;
+}
+
+.photo-frame:hover img {
+  transform: translateZ(60px);
+}
+
+/* ===== 文字说明 ===== */
 .photo-caption {
   position: absolute;
-  bottom: -30px;
+  bottom: -35px;
   left: 50%;
   transform: translateX(-50%);
-  padding: 8px 15px;
-  background: linear-gradient(to right, #ffd8e4, #fff3e0);
-  border-radius: 20px;
-  font-size: 0.85em;
-  font-weight: 500;
+  padding: 10px 20px;
+  background: linear-gradient(145deg, #fff3f8, #fff9ee);
+  border-radius: 25px;
+  font-size: 0.9em;
+  font-weight: 600;
   color: #7a4b6e;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
   opacity: 0;
-  transition: opacity 0.3s ease, bottom 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  backdrop-filter: blur(4px);
 }
 
 .photo-frame:hover .photo-caption {
   opacity: 1;
-  bottom: -25px;
+  bottom: -28px;
 }
 
-@keyframes gradientShift {
+/* ===== 动画关键帧 ===== */
+@keyframes gradientFlow {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
+}
+
+@keyframes pinBounce {
+  0%, 100% { transform: translateX(-50%) rotate(45deg) rotateX(35deg); }
+  30% { transform: translateX(-50%) rotate(50deg) rotateX(40deg); }
+  60% { transform: translateX(-50%) rotate(40deg) rotateX(30deg); }
+}
+
+/* ===== 响应式适配 ===== */
+@media (max-width: 768px) {
+  .photo-gallery {
+      grid-template-columns: 1fr;
+      padding: 1.5rem;
+  }
+  
+  .photo-frame::after {
+      width: 14px;
+      height: 14px;
+      top: -18px;
+  }
+  
+  .photo-frame .pin-stem {
+      height: 20px;
+      top: -26px;
+  }
 }
