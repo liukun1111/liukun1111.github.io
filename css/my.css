@@ -10,100 +10,58 @@ body{
 }
 
 
-.photo-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  position: relative;
-}
-
 .photo-frame {
   position: relative;
-  padding: 8px;
+  display: inline-block;
+  padding: 10px;
+  background: linear-gradient(45deg, #ff9a9e, #fad0c4, #a18cd1);
   border-radius: 12px;
-  background: linear-gradient(135deg, #ff7eb3, #ff758c, #ff7eb3, #ffa07a, #ffcc70, #ffd700);
-  background-size: 300% 300%;
-  animation: gradient-move 8s infinite linear;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.1);
-  transform: rotate(calc(-3deg + 6deg * var(--tilt)));
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 
+              inset 0 0 12px rgba(255, 255, 255, 0.5);
+  transform: rotate(var(--tilt-angle, 0deg));
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* 让渐变更自然流畅 */
-@keyframes gradient-move {
-  0% { background-position: 0% 50%; }
-  25% { background-position: 50% 100%; }
-  50% { background-position: 100% 50%; }
-  75% { background-position: 50% 0%; }
-  100% { background-position: 0% 50%; }
 }
 
 .photo-frame:hover {
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3), 0 6px 10px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3), 
+              inset 0 0 16px rgba(255, 255, 255, 0.7);
   transform: rotate(0deg) scale(1.05);
 }
 
-/* **完全自适应图片高度** */
-.photo-item {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-.photo-item img {
-  width: 100%;
-  height: auto;
+.photo-frame img {
   display: block;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
 }
 
-/* 文字描述 */
-.photo-caption {
-  width: 100%;
-  text-align: center;
-  font-size: 1em;
-  color: #444;
-  font-style: italic;
-  background: rgba(255, 255, 255, 0.8);
-  padding: 8px;
-  margin-top: 5px;
-  border-radius: 0 0 10px 10px;
-}
-
-/* 顶部图钉 */
-.photo-frame::after {
+.photo-frame::before {
   content: "";
   position: absolute;
-  width: 12px;
-  height: 12px;
-  background: radial-gradient(circle, #ffdb4d 40%, #caa62b 100%);
-  border-radius: 50%;
-  top: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  z-index: 2;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  border-radius: 10px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.15);
 }
 
-/* 不同相框倾斜角度 */
-.photo-grid .photo-frame:nth-child(4n + 1) {
-  --tilt: -2;
+.photo-caption {
+  margin-top: 8px;
+  text-align: center;
+  font-size: 0.9em;
+  font-weight: bold;
+  color: #555;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
-.photo-grid .photo-frame:nth-child(4n + 2) {
-  --tilt: 3;
+
+/* 随机倾斜角度 */
+.photo-frame:nth-child(3n) {
+  --tilt-angle: -5deg;
 }
-.photo-grid .photo-frame:nth-child(4n + 3) {
-  --tilt: -4;
+.photo-frame:nth-child(3n+1) {
+  --tilt-angle: 4deg;
 }
-.photo-grid .photo-frame:nth-child(4n + 4) {
-  --tilt: 2;
+.photo-frame:nth-child(3n+2) {
+  --tilt-angle: -3deg;
 }
