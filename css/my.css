@@ -13,7 +13,7 @@ body{
 /* ===== 相册容器 ===== */
 .photo-gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
   gap: 2.5rem;
   padding: 3rem;
   perspective: 1500px;
@@ -120,7 +120,7 @@ body{
   height: auto;
   position: relative;
   border-radius: 10px;
-  background: white;
+  background: rgb(10, 47, 233);
   transform: translateZ(20px);
   box-shadow: 
       /* 新增外侧立体阴影 */
