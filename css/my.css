@@ -36,6 +36,9 @@ body{
   width: fit-content;
   height: fit-content;
   
+  /* 创建边框区域 */
+  padding: 8px;
+  
   /* 随机参数 */
   --rotate-deg: 0deg;
   --scale-ratio: 1;
@@ -70,14 +73,14 @@ body{
   --pin-pos: 20%;
 }
 
-/* ===== 新版渐变边框 ===== */
+/* ===== 全尺寸渐变边框 ===== */
 .photo-frame::before {
   content: "";
   position: absolute;
-  top: 8px;
-  left: 8px;
-  right: 8px;
-  bottom: 8px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: linear-gradient(
       135deg,
       #ff7eb3 0%,
@@ -150,6 +153,7 @@ body{
   display: block;
   width: 100%;
   height: auto;
+  position: relative;
   border-radius: 10px;
   background: white;
   transform: translateZ(20px);
@@ -159,7 +163,6 @@ body{
   border: 3px solid rgba(255,255,255,0.5);
   transition: transform 0.4s ease;
   box-sizing: border-box;
-  position: relative;
   z-index: 2;
 }
 
