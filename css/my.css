@@ -15,47 +15,42 @@ body{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, max-content));
   justify-content: center;
-  gap: 3rem;
+  gap: 2.5rem;
   padding: 2rem;
-  perspective: 1200px;
+  perspective: 1000px;
 }
 
-/* ===== 自然尺寸相框 ===== */
+/* ===== 相框容器 ===== */
 .photo-frame {
   position: relative;
-  display: inline-block;
-  transition: all 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
-  transform-style: preserve-3d;
+  display: inline-block; /* 关键：让容器包裹内容 */
+  transition: transform 0.4s ease;
   cursor: pointer;
-  margin: 1rem;
-  
-  /* 随机参数 */
-  --rotate-deg: rotate(-3deg);
-  --pin-pos: 30%;
-  transform: var(--rotate-deg);
+  margin: 1.5rem;
+  transform-origin: center;
 }
 
-/* ===== 智能随机旋转系统 ===== */
-.photo-frame:nth-child(5n+1) { --rotate-deg: rotate(-5deg); --pin-pos: 25%; }
-.photo-frame:nth-child(5n+2) { --rotate-deg: rotate(3deg); --pin-pos: 70%; }
-.photo-frame:nth-child(5n+3) { --rotate-deg: rotate(-2deg); --pin-pos: 45%; }
-.photo-frame:nth-child(5n+4) { --rotate-deg: rotate(4deg); --pin-pos: 85%; }
-.photo-frame:nth-child(5n+5) { --rotate-deg: rotate(-6deg); --pin-pos: 15%; }
+/* ===== 图片真实尺寸容器 ===== */
+.frame-inner {
+  position: relative;
+  display: block;
+  transform-style: preserve-3d;
+}
 
-/* ===== 图片自适应核心 ===== */
-.photo-frame img {
+/* ===== 图片核心样式 ===== */
+.frame-inner img {
   display: block;
   max-width: 100%;
   height: auto;
-  border-radius: 8px;
-  background: white;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 12px 24px rgba(0,0,0,0.1);
   transform: translateZ(0);
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
 }
 
-/* ===== 精致渐变边框 ===== */
-.photo-frame::before {
+/* ===== 动态渐变边框（绝对定位不占空间）===== */
+.frame-inner::before {
   content: "";
   position: absolute;
   top: -12px;
@@ -70,49 +65,53 @@ body{
   );
   border-radius: 10px;
   z-index: -1;
-  opacity: 0.8;
+  opacity: 0.9;
   mix-blend-mode: multiply;
   transition: all 0.3s ease;
 }
 
-/* ===== 立体图钉系统 ===== */
-.photo-frame::after {
+/* ===== 立体图钉（绝对定位不占空间）===== */
+.frame-inner::after {
   content: "";
   position: absolute;
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   background: radial-gradient(circle at 30% 30%, 
       #fff0b3 20%,
       #ffdb4d 60%
   );
-  top: -20px;
-  left: var(--pin-pos);
+  top: -24px;
+  left: 50%;
   transform: translateX(-50%) rotate(45deg);
   border-radius: 50%;
   box-shadow: 0 3px 6px rgba(0,0,0,0.2);
   z-index: 2;
 }
 
-/* ===== 悬浮互动效果 ===== */
+/* ===== 智能随机旋转系统 ===== */
+.photo-frame:nth-child(5n+1) { transform: rotate(-5deg); }
+.photo-frame:nth-child(5n+2) { transform: rotate(3deg); }
+.photo-frame:nth-child(5n+3) { transform: rotate(-2deg); }
+.photo-frame:nth-child(5n+4) { transform: rotate(4deg); }
+.photo-frame:nth-child(5n+5) { transform: rotate(-6deg); }
+
+/* ===== 悬浮效果 ===== */
 .photo-frame:hover {
-  transform: var(--rotate-deg) scale(1.05) translateY(-10px);
+  transform: rotate(0deg) scale(1.05);
   z-index: 10;
 }
 
-.photo-frame:hover::before {
-  opacity: 1;
+.photo-frame:hover .frame-inner::before {
   top: -15px;
   left: -15px;
   right: -15px;
   bottom: -15px;
+  opacity: 1;
 }
 
-.photo-frame:hover::after {
-  animation: pinJump 0.6s ease;
-}
-
-@keyframes pinJump {
-  50% { transform: translateX(-50%) rotate(45deg) translateY(-5px); }
+.photo-frame:hover img {
+  transform: translateZ(20px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
 }
 
 /* ===== 文字说明 ===== */
@@ -121,13 +120,14 @@ body{
   bottom: -28px;
   left: 50%;
   transform: translateX(-50%);
-  padding: 6px 15px;
-  background: rgba(255,255,255,0.9);
-  border-radius: 18px;
+  padding: 8px 16px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 20px;
   font-size: 0.85em;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
   opacity: 0;
   transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
 .photo-frame:hover .photo-caption {
