@@ -27,18 +27,17 @@ body{
   transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
   transform-style: preserve-3d;
   cursor: pointer;
-  margin: 2.5rem;
+  margin: 2rem;
   max-width: 100%;
   box-sizing: border-box;
   filter: drop-shadow(0 20px 30px rgba(0,0,0,0.12));
-  overflow: visible;
   
   /* 新增尺寸自适应 */
   width: fit-content;
   height: fit-content;
   
   /* 创建边框区域 */
-  padding: 15px;
+  padding: 8px;
   
   /* 随机参数 */
   --rotate-deg: 0deg;
@@ -117,15 +116,13 @@ body{
 /* ===== 新版图片样式 ===== */
 .photo-frame img {
   display: block;
-  width: 130%;
+  width: 100%;
   height: auto;
   position: relative;
   border-radius: 10px;
   background: rgb(10, 47, 233);
-  margin-left: -15%;
   transform: 
-      translateZ(20px)
-      scale(1.3);
+      translateZ(20px);
   box-shadow: 
       /* 新增外侧立体阴影 */
       0 15px 30px -5px rgba(0,0,0,0.15),
