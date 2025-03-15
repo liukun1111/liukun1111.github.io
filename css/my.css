@@ -33,11 +33,11 @@ body{
   filter: drop-shadow(0 20px 30px rgba(0,0,0,0.12));
   
   /* 新增尺寸自适应 */
-  width: fit-content;
+  width: 320px;
   height: fit-content;
   
   /* 创建边框区域 */
-  padding: 8px;
+  padding: 12px;
   
   /* 随机参数 */
   --rotate-deg: 0deg;
