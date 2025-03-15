@@ -31,13 +31,14 @@ body{
   max-width: 100%;
   box-sizing: border-box;
   filter: drop-shadow(0 20px 30px rgba(0,0,0,0.12));
+  overflow: visible;
   
   /* 新增尺寸自适应 */
   width: fit-content;
   height: fit-content;
   
   /* 创建边框区域 */
-  padding: 8px;
+  padding: 12px;
   
   /* 随机参数 */
   --rotate-deg: 0deg;
@@ -116,14 +117,14 @@ body{
 /* ===== 新版图片样式 ===== */
 .photo-frame img {
   display: block;
-  width: 150%;
+  width: 120%;
   height: auto;
   position: relative;
   border-radius: 10px;
   background: rgb(10, 47, 233);
   transform: 
       translateZ(20px)
-      scale(1.5);
+      scale(1.2);
   box-shadow: 
       /* 新增外侧立体阴影 */
       0 15px 30px -5px rgba(0,0,0,0.15),
