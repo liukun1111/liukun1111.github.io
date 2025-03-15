@@ -33,11 +33,11 @@ body{
   filter: drop-shadow(0 20px 30px rgba(0,0,0,0.12));
   
   /* 新增尺寸自适应 */
-  width: 320px;
+  width: fit-content;
   height: fit-content;
   
   /* 创建边框区域 */
-  padding: 12px;
+  padding: 8px;
   
   /* 随机参数 */
   --rotate-deg: 0deg;
@@ -116,7 +116,7 @@ body{
 /* ===== 新版图片样式 ===== */
 .photo-frame img {
   display: block;
-  width: 100%;
+  width: 105%;
   height: auto;
   position: relative;
   border-radius: 10px;
