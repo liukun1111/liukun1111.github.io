@@ -1544,6 +1544,13 @@ blockquote footer cite:before {
 blockquote > :last-child {
   margin-bottom: 0 !important;
 }
+@font-face {
+  font-family: btfFont;
+  src: url("https://fs-im-kefu.7moor-fs1.com/ly/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/1741530217331/13.woff2") format('woff2');
+}
+body {
+  font-family: "btfFont" !important;
+}
 :root {
   --hl-color: #90a4ae;
   --hl-bg: #f6f8fa;
