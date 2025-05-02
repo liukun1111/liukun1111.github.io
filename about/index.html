@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://blog.liukun.dpdns.org/img/avatar.jpg">
 <meta property="article:published_time" content="2025-05-02T09:44:24.000Z">
-<meta property="article:modified_time" content="2025-05-02T14:14:36.526Z">
+<meta property="article:modified_time" content="2025-05-02T14:22:42.197Z">
 <meta property="article:author" content="lkii">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://blog.liukun.dpdns.org/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.jpg"><link rel="canonical" href="https://blog.liukun.dpdns.org/about/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
@@ -178,26 +178,36 @@
     /* 个人资料卡片 */
     .profile-card {
         position: relative;
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.2) 100%);
-        backdrop-filter: blur(20px) saturate(180%);
-        -webkit-backdrop-filter: blur(20px) saturate(180%);
-        border: 1px solid rgba(255, 255, 255, 0.18);
+        background: linear-gradient(135deg, 
+            rgba(147, 184, 255, 0.2) 0%,
+            rgba(166, 147, 255, 0.2) 100%
+        );
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
         border-radius: 20px;
         padding: 40px;
         text-align: center;
         margin-bottom: 40px;
-        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+        box-shadow: 
+            0 8px 32px rgba(31, 38, 135, 0.15),
+            inset 0 0 80px rgba(255, 255, 255, 0.1);
         transition: all 0.3s ease;
     }
 
     [data-theme="dark"] .profile-card {
-        background: linear-gradient(135deg, rgba(40, 44, 52, 0.7) 0%, rgba(40, 44, 52, 0.4) 100%);
+        background: linear-gradient(135deg,
+            rgba(46, 51, 90, 0.4) 0%,
+            rgba(58, 46, 90, 0.4) 100%
+        );
         border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 
+            0 8px 32px rgba(0, 0, 0, 0.3),
+            inset 0 0 80px rgba(0, 0, 0, 0.2);
     }
 
     .profile-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 15px 35px rgba(31, 38, 135, 0.2);
     }
 
     .avatar-container {
@@ -237,46 +247,37 @@
     }
 
     .info-card {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.2) 100%);
-        backdrop-filter: blur(20px) saturate(180%);
-        -webkit-backdrop-filter: blur(20px) saturate(180%);
-        border: 1px solid rgba(255, 255, 255, 0.18);
+        background: linear-gradient(145deg,
+            rgba(176, 218, 255, 0.2) 0%,
+            rgba(187, 176, 255, 0.2) 100%
+        );
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
         border-radius: 15px;
         padding: 25px;
         transition: all 0.3s ease;
-        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .info-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-            90deg,
-            transparent,
-            rgba(255, 255, 255, 0.2),
-            transparent
-        );
-        transition: 0.5s;
-    }
-
-    .info-card:hover::before {
-        left: 100%;
+        box-shadow: 
+            0 4px 15px rgba(31, 38, 135, 0.1),
+            inset 0 0 40px rgba(255, 255, 255, 0.05);
     }
 
     [data-theme="dark"] .info-card {
-        background: linear-gradient(135deg, rgba(40, 44, 52, 0.7) 0%, rgba(40, 44, 52, 0.4) 100%);
+        background: linear-gradient(145deg,
+            rgba(46, 51, 90, 0.3) 0%,
+            rgba(58, 46, 90, 0.3) 100%
+        );
         border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 
+            0 4px 15px rgba(0, 0, 0, 0.2),
+            inset 0 0 40px rgba(0, 0, 0, 0.2);
     }
 
     .info-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 15px 35px rgba(31, 38, 135, 0.2);
+        box-shadow: 
+            0 8px 25px rgba(31, 38, 135, 0.15),
+            inset 0 0 40px rgba(255, 255, 255, 0.1);
     }
 
     .info-header {
@@ -325,8 +326,6 @@
         border-radius: 15px;
         overflow: hidden;
         transition: all 0.3s ease;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
     }
 
     .site-card:hover {
@@ -344,9 +343,7 @@
     .site-overlay {
         position: absolute;
         inset: 0;
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.8));
-        backdrop-filter: blur(5px);
-        -webkit-backdrop-filter: blur(5px);
+        background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -358,30 +355,13 @@
     }
 
     .site-card:hover .site-overlay {
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.9));
+        background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.9));
     }
 
     .site-title {
         font-size: 1.2em;
         font-weight: bold;
         margin-bottom: 10px;
-    }
-
-    /* 标题样式优化 */
-    .grid-title {
-        position: relative;
-        display: inline-block;
-        margin-bottom: 30px;
-        padding: 10px 20px;
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.2) 100%);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-    }
-
-    [data-theme="dark"] .grid-title {
-        background: linear-gradient(135deg, rgba(40, 44, 52, 0.7) 0%, rgba(40, 44, 52, 0.4) 100%);
     }
 
     /* 响应式调整 */
