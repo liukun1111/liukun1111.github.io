@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://blog.liukun.dpdns.org/img/avatar.jpg">
 <meta property="article:published_time" content="2025-05-02T09:44:24.000Z">
-<meta property="article:modified_time" content="2025-05-02T14:46:55.831Z">
+<meta property="article:modified_time" content="2025-05-02T15:47:43.330Z">
 <meta property="article:author" content="lkii">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://blog.liukun.dpdns.org/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.jpg"><link rel="canonical" href="https://blog.liukun.dpdns.org/about/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
@@ -215,16 +215,6 @@
         width: 150px;
         height: 150px;
         margin: 0 auto 20px;
-        border-radius: 50%;
-        padding: 5px;
-        background: linear-gradient(135deg, #50a0ff, #d050ff);
-        animation: borderRotate 4s linear infinite;
-    }
-
-    @keyframes borderRotate {
-        100% {
-            filter: hue-rotate(360deg);
-        }
     }
 
     .avatar {
@@ -232,13 +222,8 @@
         height: 100%;
         border-radius: 50%;
         object-fit: cover;
-        border: none;
-        background: #fff;
-        box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1);
-    }
-
-    [data-theme="dark"] .avatar {
-        background: #2c2c2c;
+        border: 4px solid #fff;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     }
 
     .status-dot {
