@@ -1554,8 +1554,12 @@ body {
 .spoiler {
   margin: 25px 0;
   padding: 18px;
-  border: 1px solid #4caf50; /* 细绿色边框 */
-  background: #eef3fc; /* 整体背景色 */
+  border: 2px solid #4caf50; /* 绿色镶边 */
+  background: -webkit-linear-gradient(315deg, #e8f0f8, #d4e4f0);
+  background: -moz-linear-gradient(315deg, #e8f0f8, #d4e4f0);
+  background: -o-linear-gradient(315deg, #e8f0f8, #d4e4f0);
+  background: -ms-linear-gradient(315deg, #e8f0f8, #d4e4f0);
+  background: linear-gradient(135deg, #e8f0f8, #d4e4f0); /* 浅灰蓝渐变 */
   position: relative;
   clear: both;
   border-radius: 8px;
@@ -1564,8 +1568,8 @@ body {
   -o-transition: all 0.4s ease-in-out;
   -ms-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;
-  -webkit-box-shadow: 0 4px 10px rgba(0,0,0,0.12);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.12); /* 轻微阴影，增加立体感 */
+  -webkit-box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 .spoiler .spoiler-title {
   margin: 0 -18px;
@@ -1591,10 +1595,20 @@ body {
   -o-transition: color 0.3s, background 0.3s;
   -ms-transition: color 0.3s, background 0.3s;
   transition: color 0.3s, background 0.3s;
+  background: -webkit-linear-gradient(0deg, #cce5ff, #b3d7ff);
+  background: -moz-linear-gradient(0deg, #cce5ff, #b3d7ff);
+  background: -o-linear-gradient(0deg, #cce5ff, #b3d7ff);
+  background: -ms-linear-gradient(0deg, #cce5ff, #b3d7ff);
+  background: linear-gradient(90deg, #cce5ff, #b3d7ff); /* 标题渐变 */
   border-radius: 6px;
 }
 .spoiler .spoiler-title:hover {
   color: #007bff;
+  background: -webkit-linear-gradient(0deg, #b3d7ff, #99c9ff);
+  background: -moz-linear-gradient(0deg, #b3d7ff, #99c9ff);
+  background: -o-linear-gradient(0deg, #b3d7ff, #99c9ff);
+  background: -ms-linear-gradient(0deg, #b3d7ff, #99c9ff);
+  background: linear-gradient(90deg, #b3d7ff, #99c9ff); /* 悬停时渐变加强 */
 }
 .spoiler .spoiler-title:before {
   content: "▶";
@@ -1617,24 +1631,29 @@ body {
   display: none; /* 默认隐藏 */
   padding: 12px;
   margin-top: 10px;
-  background: rgba(255,255,255,0.8); /* 轻微透明感，让背景更有层次 */
+  background: rgba(255,255,255,0.6); /* 轻微透明感 */
   border-radius: 6px;
 }
 .spoiler.expanded .spoiler-content {
   display: block !important;
   padding: 15px;
-  background: #fff; /* 展开后内容背景为白色，增加层次感 */
+  background: -webkit-linear-gradient(315deg, #f7faff, #eef3fa);
+  background: -moz-linear-gradient(315deg, #f7faff, #eef3fa);
+  background: -o-linear-gradient(315deg, #f7faff, #eef3fa);
+  background: -ms-linear-gradient(315deg, #f7faff, #eef3fa);
+  background: linear-gradient(135deg, #f7faff, #eef3fa); /* 层次感 */
   border-radius: 6px;
 }
 .spoiler.collapsed {
   padding: 10px;
-  border: 1px solid #4caf50; /* 细绿色镶边 */
+  background: #f0f0f0;
+  border: 2px solid #4caf50; /* 保持绿色镶边 */
 }
 .spoiler.expanded {
-  background: #eef3fc;
-  border: 1px solid #4caf50;
-  -webkit-box-shadow: 0 6px 12px rgba(0,0,0,0.18);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.18); /* 展开时阴影更深，增加立体感 */
+  background: #fff;
+  border: 2px solid #4caf50;
+  -webkit-box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15); /* 展开时增加阴影 */
 }
 :root {
   --hl-color: #90a4ae;
