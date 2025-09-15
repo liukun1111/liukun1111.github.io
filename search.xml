@@ -1,0 +1,1986 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>置顶文章</title>
+      <link href="/2099/01/02/%E7%BD%AE%E9%A1%B6%E6%96%87%E7%AB%A0/"/>
+      <url>/2099/01/02/%E7%BD%AE%E9%A1%B6%E6%96%87%E7%AB%A0/</url>
+      
+        <content type="html"><![CDATA[<div class="note primary modern"><p>这个文章分类目前还在旧站，我会后面我会陆续搬过来</p></div><blockquote><p>（此分类页面下的所有文章都不会出现在主页和更新日志中）</p></blockquote><p>       2025年到了，今年给自己立一个flag吧：每天学习一个新的知识！可以是弄懂一个似懂非懂的知识，可以是了解一个新的概念，或者是认识一个新的英语单词，总之每天都要学一点东西，或深或浅，这个页面就用来记录打卡，1防止我忘记了2输出倒逼输入3看看积少成多的过程。</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>解决安知鱼主题相册加密无效</title>
+      <link href="/2025/09/13/%E8%A7%A3%E5%86%B3%E5%AE%89%E7%9F%A5%E9%B1%BC%E4%B8%BB%E9%A2%98%E7%9B%B8%E5%86%8C%E5%8A%A0%E5%AF%86%E6%97%A0%E6%95%88/"/>
+      <url>/2025/09/13/%E8%A7%A3%E5%86%B3%E5%AE%89%E7%9F%A5%E9%B1%BC%E4%B8%BB%E9%A2%98%E7%9B%B8%E5%86%8C%E5%8A%A0%E5%AF%86%E6%97%A0%E6%95%88/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>并非从代码上彻底解决，因为博主代码基础为0，不可能实现通过修改插件代码或主题代码达到相互兼容。只是一个能用上加密的思路，如果有更彻底的方法请评论，感谢！</p><h2 id="需要解决的问题"><a href="#需要解决的问题" class="headerlink" title="需要解决的问题"></a>需要解决的问题</h2><p>安知鱼主题中，hexo-blog-encrypt插件对相册页面的加密无效。<br>hexo-blog-encrypt的仓库上有人提过相关issues：<br><a href="https://github.com/D0n9X1n/hexo-blog-encrypt/issues/225">Issue #225 · D0n9X1n&#x2F;hexo-blog-encrypt</a></p><h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><ul><li><strong>安知鱼主题</strong>是一个开源hexo主题，基于<code>hexo-theme-butterfly</code>修改，相册的页面配置见官方文档：<br><a href="https://docs.anheyu.com/page/album.html">相册页面配置 | 安知鱼主题官方文档</a></li><li><strong>hexo-blog-encrypt</strong>是一款hexo插件，<del>是 Hexo 生态圈中 <strong>最好的</strong> 博客加密插件</del>，可以实现对文章的加密，GitHub仓库地址：<br><a href="https://github.com/D0n9X1n/hexo-blog-encrypt">D0n9X1n&#x2F;hexo-blog-encrypt</a></li><li>在<code>butterfly</code>主题中，相册页面的实现方式是通过标签外挂，相册和图库页面仍为普通页面。<br>具体见官方文档：<br><a href="https://butterfly.js.org/posts/dc584b87/">Butterfly 文檔(二) 主題頁面 | Butterfly</a><br><a href="https://butterfly.js.org/posts/ceeb73f/#Gallery-%E7%9B%B8%E5%86%8A%E5%9C%96%E5%BA%AB">Butterfly 文檔(四) 標簽外挂 | Butterfly</a></li><li>在<code>anzhiyu</code>主题中，相册页面是通过在<strong>Front-matter</strong>中添加页面类型<code>type: &quot;album_detail&quot;</code>，对特殊页面进行渲染实现的。<br>对于butterfly的相册页面，可以用插件加密。对于anzhiyu主题，加了<code>type: &quot;album_detail&quot;</code>就无法加密页面，不加<code>type: &quot;album_detail&quot;</code>就无法加载图片，具体原因未知。</li></ul><h2 id="突破口"><a href="#突破口" class="headerlink" title="突破口"></a>突破口</h2><p>因为安知鱼主题基于<code>hexo-theme-butterfly</code>修改，也可以用butterfly的官方文档教程、用标签外挂的方式建相册页面。<br>可是这样就是为了加密效果舍弃了好看好用的anzhiyu相册页面了，有无鱼和熊掌兼得的方法呢？</p><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>我们将相册页面分为两类：私有（需要加密的）和公开。相册集两类都建：anzhiyu主题和butterfly主题。<br>公开的就正常按照anzhiyu主题配置加<code>type: &quot;album_detail&quot;</code>；私密的先按照butterfly主题配置并加密，再按照anzhiyu主题配置不加<code>type: &quot;album_detail&quot;</code>不加密并且在index.md中添加一个重定向到<strong>对应的加密页面路径</strong>的html代码。<br>最后通过album.yml添加所有的anzhiyu主题相册页面到相册集。</p><h2 id="具体操作"><a href="#具体操作" class="headerlink" title="具体操作"></a>具体操作</h2><p>假设我要建立两个相册页面，一个加密（encrypt）一个不加密（noencrypt）</p><h3 id="anzhiyu主题"><a href="#anzhiyu主题" class="headerlink" title="anzhiyu主题"></a>anzhiyu主题</h3><ol><li><p>前往你的 Hexo 博客的根目录</p></li><li><p>在 Hexo 博客根目录 <code>[blog]</code>下打开终端，输入</p><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page album</span><br></pre></td></tr></table></figure></li><li><p>你会找到 <code>source/album/index.md</code> 这个文件</p></li><li><p>修改这个文件： 记得添加 <code>type: &quot;album&quot;</code></p><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 相册集</span><br><span class="line">date: 2022-10-23 15:57:51</span><br><span class="line">aside: false</span><br><span class="line">top<span class="emphasis">_img: false</span></span><br><span class="line"><span class="emphasis">type: &quot;album&quot;</span></span><br><span class="line"><span class="emphasis">---</span></span><br></pre></td></tr></table></figure></li><li><p>主题配置文件中开启<code>menu</code>中我的和相册集的注释，注意缩进！！！</p></li></ol><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="comment"># 文章:</span></span><br><span class="line">  <span class="comment">#   隧道: /archives/ || icon-box-archive</span></span><br><span class="line">  <span class="comment">#   分类: /categories/ || icon-shapes</span></span><br><span class="line">  <span class="comment">#   标签: /tags/ || icon-tags</span></span><br><span class="line"></span><br><span class="line">  <span class="string">友链:</span></span><br><span class="line">    <span class="string">友人帐:</span> <span class="string">/link/</span> <span class="string">||</span> <span class="string">icon-link</span></span><br><span class="line">  <span class="comment">#   朋友圈: /fcircle/ || icon-artstation</span></span><br><span class="line">  <span class="comment">#   留言板: /comments/ || icon-envelope</span></span><br><span class="line"></span><br><span class="line">  <span class="string">我的:</span></span><br><span class="line">    <span class="string">音乐馆:</span> <span class="string">/music/</span> <span class="string">||</span> <span class="string">icon-music</span></span><br><span class="line">    <span class="comment">#   追番页: /bangumis/ || icon-bilibili1</span></span><br><span class="line">    <span class="string">相册集:</span> <span class="string">/album/</span> <span class="string">||</span> <span class="string">icon-images</span></span><br><span class="line">  <span class="comment">#   小空调: /air-conditioner/ || icon-fan</span></span><br><span class="line"></span><br><span class="line">  <span class="string">关于:</span></span><br><span class="line">    <span class="comment">#   关于本人: /about/ || icon-zhifeiji</span></span><br><span class="line">    <span class="string">闲言碎语:</span> <span class="string">/essay/</span> <span class="string">||</span> <span class="string">icon-lightbulb</span></span><br><span class="line">    <span class="comment">#   随便逛逛: javascript:toRandomPost() || icon-shoe-prints</span></span><br></pre></td></tr></table></figure><p>新建文件<code>[blog]\source\_data\album.yml</code>,没有<code>_data</code>文件夹的话也请自己新建。打开<code>[blog]\source\_data\album.yml</code>，输入：</p><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">class_name:</span> <span class="string">加密</span></span><br><span class="line">  <span class="attr">path_name:</span> <span class="string">/album/encrypt</span></span><br><span class="line">  <span class="attr">type:</span> <span class="number">2</span></span><br><span class="line">  <span class="attr">description:</span> <span class="string">需要加密的相册</span></span><br><span class="line">  <span class="attr">cover:</span> </span><br><span class="line">  <span class="attr">top_background:</span> </span><br><span class="line">  <span class="attr">rowHeight:</span> <span class="number">220</span></span><br><span class="line">  <span class="attr">limit:</span> <span class="number">10</span></span><br><span class="line">  <span class="attr">lazyload:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">btnLazyload:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">url:</span> </span><br><span class="line">  <span class="attr">top_link:</span> <span class="string">/album</span></span><br><span class="line">  <span class="attr">top_btn_text:</span> <span class="string">返回</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">class_name:</span> <span class="string">不加密</span></span><br><span class="line">  <span class="attr">path_name:</span> <span class="string">/album/noencrypt</span></span><br><span class="line">  <span class="attr">type:</span> <span class="number">2</span></span><br><span class="line">  <span class="attr">description:</span> <span class="string">因为到不了世界各地，所以请网友们发来了各地的夕阳与风景🌇。</span></span><br><span class="line">  <span class="attr">cover:</span> <span class="string">https://upload-bbs.miyoushe.com/upload/2025/06/13/125766904/2cf2b6aea07bba089d0d17c4fea72d1b_5366629137934368264.png</span></span><br><span class="line">  <span class="attr">top_background:</span> <span class="string">https://bu.dusays.com/2023/06/30/649e546ada7dd.webp</span></span><br><span class="line">  <span class="attr">rowHeight:</span> <span class="number">220</span></span><br><span class="line">  <span class="attr">limit:</span> <span class="number">10</span></span><br><span class="line">  <span class="attr">lazyload:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">btnLazyload:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">url:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">top_link:</span> <span class="string">/album</span></span><br><span class="line">  <span class="attr">top_btn_text:</span> <span class="string">返回</span></span><br><span class="line">  <span class="attr">album_list:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">date:</span> <span class="number">2022</span><span class="string">/10/26</span> <span class="number">01</span><span class="string">:00:00</span></span><br><span class="line">      <span class="attr">content:</span> <span class="string">湘潭的一角。</span></span><br><span class="line">      <span class="attr">address:</span> <span class="string">湖南湘潭</span></span><br><span class="line">      <span class="attr">from:</span> <span class="string">再吃一口就减肥</span></span><br><span class="line">      <span class="attr">image:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">https://bu.dusays.com/2023/04/09/64329399db122.webp</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">date:</span> <span class="number">2022-10-25</span></span><br><span class="line">      <span class="attr">content:</span> <span class="string">洛阳暴雨后的天空。</span></span><br><span class="line">      <span class="attr">address:</span> <span class="string">河南洛阳</span></span><br><span class="line">      <span class="attr">from:</span> <span class="string">紫菜卷</span></span><br><span class="line">      <span class="attr">image:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">https://bu.dusays.com/2023/04/09/64329399db122.webp</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">https://bu.dusays.com/2023/04/09/64329399db2e1.webp</span></span><br><span class="line"></span><br></pre></td></tr></table></figure><table><thead><tr><th>参数</th><th>备选值&#x2F;类型</th><th>解释</th></tr></thead><tbody><tr><td>class_name</td><td>string</td><td>【必须】页面类</td></tr><tr><td>path_name</td><td>url</td><td>【必须】当前相册路径</td></tr><tr><td>type</td><td>number</td><td>【必须】当前相册页面样式类型</td></tr><tr><td>description</td><td>string</td><td>【必须】当前相册描述</td></tr><tr><td>cover</td><td>url</td><td>【必须】当前相册 cover 图片</td></tr><tr><td>rowHeight</td><td>number</td><td>【可选】仅当 type 为 2 时有效，当前相册 rowHeight</td></tr><tr><td>limit</td><td>number</td><td>【可选】仅当 type 为 2 时有效，当前相册 一次懒加载的数量</td></tr><tr><td>lazyload</td><td>boolean</td><td>【可选】仅当 type 为 2 时有效，当前相册 lazyload 是否开启懒加载，默认懒加载为滚动懒加载，type 为 1 时懒加载不可关闭。</td></tr><tr><td>btnLazyload</td><td>boolean</td><td>【可选】仅当 type 为 2 且 lazyload 开启 时有效，当前相册 lazyload 懒加载的方式，默认为滚动懒加载，开启本选项后为按钮点击懒加载。</td></tr><tr><td>album_list</td><td>list</td><td>【必须】当前相册内图片列表</td></tr><tr><td>url</td><td>url</td><td>【可选】仅当 type 为 2 时有效，可以加载远程的 json 数据。</td></tr><tr><td>album_list.date</td><td>date</td><td>【必须】当前图片创建时间</td></tr><tr><td>album_list.content</td><td>string</td><td>【必须】当前图片描述内容</td></tr><tr><td>album_list.image</td><td>list</td><td>【必须】当前图片集，可以多张</td></tr><tr><td>album_list.from</td><td>string</td><td>【可选】当前图片的创建人，未填写则不显示</td></tr><tr><td>album_list.address</td><td>string</td><td>【必须】当前图片地址</td></tr></tbody></table><p>由于相册页面需要很多的 page，所以在写数据的时候自行写入路径<code>path_name</code>，示例数据中有两个<code>path_name</code>，所以需要再创建两个页面</p><p>注意新建的页面必须与<code>path_name</code>一致。</p><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page noencrypt</span><br><span class="line">hexo new page encrypt</span><br></pre></td></tr></table></figure><p>将这两个文件夹移动到<code>source/album/</code>下</p><p>你会找到 <code>source/album/noencrypt/index.md</code> 和<code>source/album/encrypt/index.md</code>两个文件，这两个为相册集详情页</p><p>然后内容为以下内容：</p><ul><li>不加密的需在详情页加上<code>type: &quot;album_detail&quot;</code></li></ul><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 不加密</span><br><span class="line">date: 2022-10-23 15:57:51</span><br><span class="line">aside: false</span><br><span class="line">top<span class="emphasis">_img: false</span></span><br><span class="line"><span class="emphasis">type: &quot;album_</span>detail&quot;</span><br><span class="line">---</span><br></pre></td></tr></table></figure><ul><li>加密的不加<code>type: &quot;album_detail&quot;</code>，填写这样一段html实现定向跳转</li></ul><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 加密</span><br><span class="line">date: 2022-10-23 15:57:51</span><br><span class="line">aside: false</span><br><span class="line">top<span class="emphasis">_img: false</span></span><br><span class="line"><span class="emphasis">type: &quot;album_</span>detail&quot;</span><br><span class="line">---</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span></span><br><span class="line">window.onload = function() &#123;</span><br><span class="line">window.location.href = &quot;/album2/encrypt&quot;; &lt;!-- 这里填写的就是要跳转的加密相册页面 --&gt;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span></span>页面加载后将自动跳转，如未跳转请手动点击<span class="language-xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/album2/encrypt&quot;</span>&gt;</span></span>此处<span class="language-xml"><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><span class="language-xml"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span></span><br></pre></td></tr></table></figure><h3 id="butterfly主题相册"><a href="#butterfly主题相册" class="headerlink" title="butterfly主题相册"></a>butterfly主题相册</h3><p><code>hexo n page album2</code> 创建你的页面<br>然后使用标签外挂 galleryGroup，具体用法请查看对应的内容。</p><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;gallery-group-main&quot;</span>&gt;</span></span></span><br><span class="line">&#123;% galleryGroup &#x27;加密&#x27; &#x27;需要加密的相册&#x27; &#x27;/album2/encrypt&#x27; https://example.com/pic.png %&#125;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure><p><code>hexo n page encrypt</code> 创建你的页面，将<code>encrypt</code>文件夹移动到<code>source/album2/</code>下</p><p>你会找到 <code>source/album2/encrypt/index.md</code></p><p>然后使用标签外挂 gallery，具体用法请查看对应的内容。</p><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 加密</span><br><span class="line">date: 2025-05-02 16:12:46</span><br><span class="line">cover: </span><br><span class="line">aside: false</span><br><span class="line">comments: true</span><br><span class="line">password: 这部分根据加密插件设置就行</span><br><span class="line">message: 这部分根据加密插件设置就行</span><br><span class="line">wrong<span class="emphasis">_pass_</span>message: 这部分根据加密插件设置就行</span><br><span class="line"><span class="section">wrong<span class="emphasis">_hash_</span>message: 这部分根据加密插件设置就行</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line">&#123;% gallery %&#125;</span><br><span class="line">![](<span class="link">https://i.loli.net/2019/12/25/Fze9jchtnyJXMHN.jpg</span>)</span><br><span class="line">![](<span class="link">https://i.loli.net/2019/12/25/ryLVePaqkYm4TEK.jpg</span>)</span><br><span class="line">![](<span class="link">https://i.loli.net/2019/12/25/gEy5Zc1Ai6VuO4N.jpg</span>)</span><br><span class="line">![](<span class="link">https://i.loli.net/2019/12/25/d6QHbytlSYO4FBG.jpg</span>)</span><br><span class="line">![](<span class="link">https://i.loli.net/2019/12/25/6nepIJ1xTgufatZ.jpg</span>)</span><br><span class="line">![](<span class="link">https://i.loli.net/2019/12/25/E7Jvr4eIPwUNmzq.jpg</span>)</span><br><span class="line">![](<span class="link">https://i.loli.net/2019/12/25/mh19anwBSWIkGlH.jpg</span>)</span><br><span class="line">![](<span class="link">https://i.loli.net/2019/12/25/2tu9JC8ewpBFagv.jpg</span>)</span><br><span class="line">&#123;% endgallery %&#125;</span><br></pre></td></tr></table></figure><h2 id="大功告成"><a href="#大功告成" class="headerlink" title="大功告成"></a>大功告成</h2><p>可以执行hexo三连查看效果</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 暂未分类 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> hexo </tag>
+            
+            <tag> anzhiyu </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>俄语字母表</title>
+      <link href="/2025/03/27/%E4%BF%84%E8%AF%AD%E5%AD%97%E6%AF%8D%E8%A1%A8/"/>
+      <url>/2025/03/27/%E4%BF%84%E8%AF%AD%E5%AD%97%E6%AF%8D%E8%A1%A8/</url>
+      
+        <content type="html"><![CDATA[<!-- wp:group {"layout":{"type":"constrained"}} --><div class="wp-block-group"><!-- wp:image {"width":"445px","height":"auto","sizeSlug":"large"} --><figure class="wp-block-image size-large is-resized"><img src="https://p.cldisk.com/star3/origin/d050fd1df501d45f20e66a52b824244c.png" alt="" style="width:445px;height:auto"/></figure><!-- /wp:image --></div><!-- /wp:group --><p>发音：<a href="https://zhuanlan.zhihu.com/p/497471284">俄语字母发音——知乎@晴岚</a></p><p>         <a href="https://www.bilibili.com/video/av559435627/">【俄语学习】完整版俄语字母表教学，认真跟读，你也能学会——哔哩哔哩@小语种入门学习</a></p><p>         <a href="https://www.bilibili.com/video/BV1MM4m197nb/">【俄语】俄语字母发音详解！！！！——哔哩哔哩@辣蛙俄语</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>菌</title>
+      <link href="/2025/03/26/%E8%8F%8C/"/>
+      <url>/2025/03/26/%E8%8F%8C/</url>
+      
+        <content type="html"><![CDATA[<p>细菌、真菌读“军”，菌子、蕈菌（具有菌丝、子实体、孢子的大型真菌，蘑菇），读作“俊”。小的读君大的读郡。</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>萌备</title>
+      <link href="/2025/03/25/%E8%90%8C%E5%A4%87/"/>
+      <url>/2025/03/25/%E8%90%8C%E5%A4%87/</url>
+      
+        <content type="html"><![CDATA[<p>民间的备案系统，非官方icp备案，申请萌icp号加入萌国，可以在自己的网站下面添加萌icp号并在官网查到备案记录，萌备域名icp.gov.moe。</p><p>学习资料：</p><p><a href="https://icp.gov.moe/AboutMoeICP.html">关于萌备</a></p><p><a href="https://moe.blog/icp.html">萌国ICP备案 (萌ICP备) ——萌博客</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>tracker</title>
+      <link href="/2025/03/23/tracker/"/>
+      <url>/2025/03/23/tracker/</url>
+      
+        <content type="html"><![CDATA[<p>运行于服务器上的一个程序，这个程序能够追踪到底有多少人同时在下载同一个文件。</p><p>在BT下载中，每一个下载者在下载的过程中都会不断与tracker服务器通信，所以tracker服务器能记录同时下载的用户总数和下载信息。</p><p>学习资料：</p><p><a href="https://baike.baidu.com/item/tracker/6639983">tracker（bt中的系统）——百度百科</a></p><p></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>拧螺丝对角线法则</title>
+      <link href="/2025/03/22/%E6%8B%A7%E8%9E%BA%E4%B8%9D%E5%AF%B9%E8%A7%92%E7%BA%BF%E6%B3%95%E5%88%99/"/>
+      <url>/2025/03/22/%E6%8B%A7%E8%9E%BA%E4%B8%9D%E5%AF%B9%E8%A7%92%E7%BA%BF%E6%B3%95%E5%88%99/</url>
+      
+        <content type="html"><![CDATA[<p>先紧固对角线上的螺栓，然后再依次向两侧紧固。 这样可以使连接件受力均匀，避免因紧固不均而导致的变形或者松动。</p><!-- wp:image {"sizeSlug":"large"} --><figure class="wp-block-image size-large"><img src="https://img01.71360.com/file/read/www/M00/03/B1/wKj0iWKy0MaAah3mAAGKS1UL82E941.jpg" alt=""/></figure><!-- /wp:image --><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>胡桃夹综合征</title>
+      <link href="/2025/03/21/%E8%83%A1%E6%A1%83%E5%A4%B9%E7%BB%BC%E5%90%88%E5%BE%81/"/>
+      <url>/2025/03/21/%E8%83%A1%E6%A1%83%E5%A4%B9%E7%BB%BC%E5%90%88%E5%BE%81/</url>
+      
+        <content type="html"><![CDATA[<p>行走于腹主动脉和肠系膜上动脉之间夹角处的左肾静脉受压，从而引起血尿、蛋白尿、腹痛、左精索静脉曲张等的一系列临床表现的综合征。</p><p>学习资料：</p><p><a href="https://baike.baidu.com/item/%E8%83%A1%E6%A1%83%E5%A4%B9%E7%BB%BC%E5%90%88%E5%BE%81/6412093">胡桃夹综合征——百度百科</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>478呼吸法</title>
+      <link href="/2025/03/20/478%E5%91%BC%E5%90%B8%E6%B3%95/"/>
+      <url>/2025/03/20/478%E5%91%BC%E5%90%B8%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<p data-pid="rn65Kous">失眠时快速入睡的一种呼吸方法：</p><p data-pid="rn65Kous">Step 1.闭上嘴巴，慢慢用用鼻子吸气，并在心里默数 4 秒；</p><p data-pid="udwqAYRs">Step 2. 停止吸气，屏住呼吸，在心中默数 7 秒；</p><p data-pid="JVdL15Ju">Step 3. 用嘴唇微微咧开并通过你的舌头吐气，同时心中默数 8秒，才把气吐完。</p><p>学习资料：</p><p><a href="https://zhuanlan.zhihu.com/p/494991760">失眠睡不着、入睡困难有快速入睡的方法吗？478呼吸睡眠法真的有用吗？ —— 知乎@<a href="https://www.zhihu.com/people/paddy-46-94" target="_blank" rel="noreferrer noopener">好睡0压酱</a></a><a href=""></a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>艾宾浩斯记忆法</title>
+      <link href="/2025/03/19/%E8%89%BE%E5%AE%BE%E6%B5%A9%E6%96%AF%E8%AE%B0%E5%BF%86%E6%B3%95/"/>
+      <url>/2025/03/19/%E8%89%BE%E5%AE%BE%E6%B5%A9%E6%96%AF%E8%AE%B0%E5%BF%86%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<p>学的东西有一个遗忘曲线，要在忘记之前再复习一遍才能巩固记忆。</p><p>隔一段时间回忆复习一次，每次隔的时间越来越长，最后就牢牢记住了。</p><div class="para_WzwJ3 content_XwoLS MARK_MODULE" data-tag="paragraph" data-uuid="gnx8mqwxrx" data-idx="3-2"><span class="text_tJaKK" data-text="true">第一个记忆周期：5分钟</span></div><div class="para_WzwJ3 content_XwoLS MARK_MODULE" data-tag="paragraph" data-uuid="gnx8mqwxtn" data-idx="3-3"><span class="text_tJaKK" data-text="true">第二个记忆周期：30分钟</span></div><div class="para_WzwJ3 content_XwoLS MARK_MODULE" data-tag="paragraph" data-uuid="gnx8mqwxvd" data-idx="3-4"><span class="text_tJaKK" data-text="true">第三个记忆周期：12小时</span></div><div class="para_WzwJ3 content_XwoLS MARK_MODULE" data-tag="paragraph" data-uuid="gnx8mqwxx2" data-idx="3-5"><span class="text_tJaKK" data-text="true">第四个记忆周期：1天</span></div><div class="para_WzwJ3 content_XwoLS MARK_MODULE" data-tag="paragraph" data-uuid="gnx8mqwxyr" data-idx="3-6"><span class="text_tJaKK" data-text="true">第五个记忆周期：2天</span></div><div class="para_WzwJ3 content_XwoLS MARK_MODULE" data-tag="paragraph" data-uuid="gnx8mqwxyr" data-idx="3-6"><span class="text_tJaKK" data-text="true">第六个记忆周期：4天</span></div><div class="para_WzwJ3 content_XwoLS MARK_MODULE" data-tag="paragraph" data-uuid="gnx8mqwy26" data-idx="3-8"><span class="text_tJaKK" data-text="true">第七个记忆周期：7天</span></div><div class="para_WzwJ3 content_XwoLS MARK_MODULE" data-tag="paragraph" data-uuid="gnx8mqwy3w" data-idx="3-9"><span class="text_tJaKK" data-text="true">第八个记忆周期：15天</span></div><div data-tag="paragraph" data-uuid="gnx8mqwy3w" data-idx="3-9">(p.s.所以每日一学要多看看才行啊，今天写的时候看一下昨天前天学的）</div><p>学习资料：</p><p><a href="https://baike.baidu.com/item/%E8%89%BE%E5%AE%BE%E6%B5%A9%E6%96%AF%E8%AE%B0%E5%BF%86%E6%B3%95/2880406">艾宾浩斯记忆法——百度百科</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>SKP</title>
+      <link href="/2025/03/18/SKP/"/>
+      <url>/2025/03/18/SKP/</url>
+      
+        <content type="html"><![CDATA[<p>SKP为全球高端时尚百货，位于北京华贸中心一隅，并在此聚集了近1000个品牌，其中80%以上为国际知名品牌。<br>去年武汉也开了一家。</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>叶蜡石</title>
+      <link href="/2025/03/17/%E5%8F%B6%E8%9C%A1%E7%9F%B3/"/>
+      <url>/2025/03/17/%E5%8F%B6%E8%9C%A1%E7%9F%B3/</url>
+      
+        <content type="html"><![CDATA[<p>叶腊石是错误的写法，叶蜡石是正确的写法。</p><p>黏土矿物的一种，硬度1～2，叶片状、纤维状、放射状和片状块体。有白色、灰色、浅蓝色、浅黄色、浅绿色和绿棕色，条痕色白色。透明到半透明，珍珠光泽。触摸时有油脂感。表面具有疏水性，天然可浮性较好。</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>蜜罐技术</title>
+      <link href="/2025/03/16/%E8%9C%9C%E7%BD%90%E6%8A%80%E6%9C%AF/"/>
+      <url>/2025/03/16/%E8%9C%9C%E7%BD%90%E6%8A%80%E6%9C%AF/</url>
+      
+        <content type="html"><![CDATA[<p>蜜罐Honeypot，是指服务器故意暴露漏洞诱饵端口让别人攻击，从而跟踪攻击者的行为和攻击方法，统计评估攻击者的攻击强度等数据，据此加强服务器的防御，诱敌深入，知己知彼。</p><p>学习资料：</p><p><a href="https://baike.baidu.com/item/%E8%9C%9C%E7%BD%90%E6%8A%80%E6%9C%AF/9165942">蜜罐技术——百度百科</a></p><p><a href="https://blog.csdn.net/Karka_/article/details/132752521">网络安全之蜜罐入门教程（非常详细）从零基础入门到精通，看完这一篇就够了——CSDN@程序员桔子</a></p><p><a href="https://www.bilibili.com/video/BV1enQSYPEyD/">【城】为了研究网络安全，我的服务器被攻击了365天..._——哔哩哔哩@网络小白_Uncle城</a></p><p></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>315</title>
+      <link href="/2025/03/15/315/"/>
+      <url>/2025/03/15/315/</url>
+      
+        <content type="html"><![CDATA[<p>“3.15”即“国际消费者权益日”（International Day for Protecting Consumers’ Rights）。由国际消费者联盟组织于1983年确定，目的在于扩大消费者权益保护的宣传，使消费者权益在世界范围内得到重视，以促进各国和地区消费者组织之间的合作与交往，在国际范围内更好地保护消费者权益。</p><p>12315是中国在全国范围设立的专门受理消费者投诉举报专线电话和全国互联网平台的管理体系。其中，全国互联网平台包括：网站、手机APP、微信公众号、微信小程序。12315互联网平台和12315热线电话协同配合，发挥各自优势，为消费者提供更加高效、便捷的消费维权服务。</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>OSS</title>
+      <link href="/2025/03/14/OSS/"/>
+      <url>/2025/03/14/OSS/</url>
+      
+        <content type="html"><![CDATA[<p>Object Storage Service，即对象存储服务，提供文件资源的上传和下载服务，可以存储一些静态资源，图像视频这样，有不同的存储策略可以根据使用场景选择，节省存储成本。</p><p>参考资料：</p><p><a href="https://help.aliyun.com/zh/oss/what-is-oss">什么是对象存储OSS_对象存储(OSS)——阿里云帮助中心</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>内行人的读音</title>
+      <link href="/2025/03/13/%E5%86%85%E8%A1%8C%E4%BA%BA%E7%9A%84%E8%AF%BB%E9%9F%B3/"/>
+      <url>/2025/03/13/%E5%86%85%E8%A1%8C%E4%BA%BA%E7%9A%84%E8%AF%BB%E9%9F%B3/</url>
+      
+        <content type="html"><![CDATA[<p>淬火（cuihuo），内行人读“蘸火”，为了和另一道工艺“退火”区分；</p><p>焙烧（beishao），内行人读“赔烧”，老师傅都这么念；</p><p>浸入（jinru），内行人读“请入”，老师傅都这么读跟着读就是了；</p><p>镀铬（duge），内行人读“镀洛”，为了和另一种金属“镉”区分。</p><p>（p.s.焙烧和浸入老师上课提到过常用的读法和普通话读音不一样，但没有解释读音的来源，现在看来就是一些是便于区分，一些是老师傅传承下来的读音）</p><p>学习资料：</p><p><a href="https://www.jubalyjx.cn/news/1521.html">钢铁圈，这些字必须这样读！否则你就out了！——武穴市巨霸粮油设备制造股份有限公司</a></p><p><a href="https://m.163.com/dy/article/GNG32IIN0511SQR3.html">到底是淬（cui）火还是蘸（zhan）火？欢迎加入讨论！——网易号@焊割观察者</a></p><p><a href="https://zhuanlan.zhihu.com/p/691276350">行业奥秘：揭秘内行人才知道的语言，车间老手也不一定全明白！——知乎@瑞轻铝润滑</a></p><p>补充：‘嵌布粒度“读”堪布粒度“（4月6日补充）</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>LLM</title>
+      <link href="/2025/03/12/LLM/"/>
+      <url>/2025/03/12/LLM/</url>
+      
+        <content type="html"><![CDATA[<p>Large Language Model，大语言模型（p.s.知道llm和大语言模型有关，今天才知道全称是Large Language Model）</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>雍正作息</title>
+      <link href="/2025/03/11/%E9%9B%8D%E6%AD%A3%E4%BD%9C%E6%81%AF/"/>
+      <url>/2025/03/11/%E9%9B%8D%E6%AD%A3%E4%BD%9C%E6%81%AF/</url>
+      
+        <content type="html"><![CDATA[<p>凌晨4:00 起床、洗漱</p><p>凌晨4:30 早读、批阅奏折</p><p>凌晨5:00 初一十五早朝，其他时间继续批阅奏折</p><p>上午8:00 吃早餐（吃啥自己说了不算）</p><p>上午8:30 给皇太后请安</p><p>上午9:00 批阅奏折、与军机大臣商谈国事</p><p>中午13:00 吃午餐（吃啥自己说了不算）、午休</p><p>下午14:00 继续批阅奏折、召见大臣</p><p>下午17:00 吃些点心（清朝皇帝没有晚餐，只吃早、午两餐，其他时间饿了吃点心）、祭拜神灵（雍正信奉萨满教）、检查皇子学习等</p><p>晚上20:00 心血来潮会约妃子打扑克，妃子走后继续处理奏折</p><p>学习资料：</p><p><a href="https://zhuanlan.zhihu.com/p/607019436">最勤政的皇帝——雍正的作息时间 —— 知乎@<a href="https://www.zhihu.com/people/tao-tie-xing-yang" target="_blank" rel="noreferrer noopener">人生如梦有点追求</a><br><a href="https://www.zhihu.com/question/48510028" target="_blank" rel="noreferrer noopener">​</a></a></p><p><a href="https://zhuanlan.zhihu.com/p/388125159">雍正的一天，都在做什么？ —— 知乎@<a href="https://www.zhihu.com/people/qiang-qiang-40-14" target="_blank" rel="noreferrer noopener">强强讲宫里的故事</a></a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>古厝</title>
+      <link href="/2025/03/10/%E5%8F%A4%E5%8E%9D/"/>
+      <url>/2025/03/10/%E5%8F%A4%E5%8E%9D/</url>
+      
+        <content type="html"><![CDATA[<p>福建方言中古民居、老建筑的特色称谓，在闽南的方言里，“厝”是房子。</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>美拉德反应</title>
+      <link href="/2025/03/09/%E7%BE%8E%E6%8B%89%E5%BE%B7%E5%8F%8D%E5%BA%94/"/>
+      <url>/2025/03/09/%E7%BE%8E%E6%8B%89%E5%BE%B7%E5%8F%8D%E5%BA%94/</url>
+      
+        <content type="html"><![CDATA[<p>食物中的还原糖（即碳水化合物）、氨基酸与蛋白质在常温或加热时发生一系列复杂反应后，生成的棕黑色的大分子物质类黑精的过程，也称为氨反应。<br />可以让烧烤、煎炸、烘焙富有香味。<br />学习资料：<br /><a href="https://baijiahao.baidu.com/s?id=1671467832712488462">西餐讲究的“美拉德反应”，究竟是什么？为什么让人又爱又恨？——百家号@美食作家梅依旧</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>摄影构图法（一）</title>
+      <link href="/2025/03/08/%E6%91%84%E5%BD%B1%E6%9E%84%E5%9B%BE%E6%B3%95%EF%BC%88%E4%B8%80%EF%BC%89/"/>
+      <url>/2025/03/08/%E6%91%84%E5%BD%B1%E6%9E%84%E5%9B%BE%E6%B3%95%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[<h2 id="点线面"><a href="#点线面" class="headerlink" title="点线面"></a>点线面</h2></h2><h4>点的作用</h4><p>1.作为主体的点——趣味中心<br /><img src="https://tse2-mm.cn.bing.net/th/id/OIP-C.yflDvMjrXxx1UYEb2JDuAgHaE6?rs=1&amp;pid=ImgDetMain" alt="" /><br />2.作为陪衬的点——陪衬主体<br /><img src="https://tse4-mm.cn.bing.net/th/id/OIP-C.mk15u_H3XEFAaK7MatWh4AHaEs?w=312&amp;h=199&amp;c=7&amp;r=0&amp;o=5&amp;dpr=2&amp;pid=1.7" alt="" /><br />3.作为环境的点——丰富画面<br /><img src="https://tse1-mm.cn.bing.net/th/id/OIP-C.bzVyuppmHNM0en5YH3cDsQHaEK?w=273&amp;h=180&amp;c=7&amp;r=0&amp;o=5&amp;dpr=2&amp;pid=1.7" alt="" /></p><h4>线的作用</h4><p>线条：抓住眼球引导视线，增强轮廓，突出主体形态，加强画面节奏感，使画面富有表现力<br /><img class="" src="https://ts1.cn.mm.bing.net/th/id/R-C.2b26041cd57eef85a201108a14bbb338?rik=EMiOD0zSwdSr5g&amp;riu=http%3a%2f%2fwww.gysjzsjy.com%2fresource%2fimages%2fc331948735a04dbe903d0300a0ac4b43_25.jpg&amp;ehk=MQRuhTr3%2bWivKoapWI0wRtswOBmX%2bX5SbglODZVAu5o%3d&amp;risl=&amp;pid=ImgRaw&amp;r=0" alt="" width="419" height="279" /></p><h4>面的作用</h4><p>面由线条分割形成，一个面是一个区域<br /><img class="" src="https://n.sinaimg.cn/sinakd10117/707/w969h538/20200803/2c17-ixeeirz8206186.jpg" alt="" width="463" height="257" /></p><h2 id="对称构图"><a href="#对称构图" class="headerlink" title="对称构图"></a>对称构图</h2></h2><h4>分类：</h4><p>上下对称，左右对称，斜向对称，全面对称</p><h4>特点：</h4><p>平衡、稳定、相呼应</p><h4>缺点：</h4><p>呆板、缺少变化</p><h4>应用：</h4><p>常用于拍摄对称的物体、建筑、特殊风格的物体<br /><img class="" src="https://www.8848seo.cn/zb_users/upload/2022/05/20220517101057165275345754675.jpeg" alt="" width="364" height="234" /><img class="" src="https://p1.ssl.qhmsg.com/t015ecde4758d9219bf.jpg" alt="" width="352" height="235" /><br /><img class="" src="https://ui.tedu.cn/upload/20170220/20170220134620_984.jpg" alt="" width="358" height="201" /><img class="" src="https://ts1.cn.mm.bing.net/th/id/R-C.79e4bff64cd73cd838b062d87c209abe?rik=LAta9sAzn8QoVQ&amp;riu=http%3a%2f%2fn.sinaimg.cn%2ffront%2f495%2fw627h668%2f20181022%2fbQ_M-hmuuiyv6848103.jpg&amp;ehk=fjsvA5DMPIpiRoZm0mNbHzMUm42SfKtRq9W4MQi24uc%3d&amp;risl=&amp;pid=ImgRaw&amp;r=0" alt="" width="188" height="200" /></p><h2 id="三分法构图"><a href="#三分法构图" class="headerlink" title="三分法构图"></a>三分法构图</h2></h2><h4>方法：</h4><p>将画面平均分为三等份</p><h4>特点：</h4><p>水平、舒展的线条能够表现出宽阔、稳定、和谐的感觉</p><h4>应用：</h4><p>常用于拍摄水面（江河、湖、海）；日出、日落、草原等。</p><h4>地平线放哪儿？</h4><p>天空好看就放在下1/3处，地面（水面）好看就放在上1/3。<br /><img class="" src="https://p4.itc.cn/q_70/images03/20221102/4e61fbd6904849cc8398f7861947625c.jpeg" alt="" width="373" height="210" /><img class="" src="https://timgm.eprice.com.tw/tw/mobile/img/2018-11/12/5158923/forbes99_1_e137a36169c6b2bbf87c9dd4302131fa.jpg" alt="" width="372" height="209" /></p><h2 id="井字构图法"><a href="#井字构图法" class="headerlink" title="井字构图法"></a>井字构图法</h2></h2><h4>方法：</h4><p>将屏幕横竖分为三等份，形成一个井字格，把主体安排在井字格的四个交叉点其中的一个点上。</p><h4>特点：</h4><p>交叉点大致在画面黄金分割点上，容易吸引人的眼球。<br />应用最为广泛（手机相机）<br /><img class="" src="https://cloudflare-imgbed-8lm.pages.dev/file/1741447716502_1741447582143.jpg" alt="相机中的构图线.jpg" width="248" height="551" /><img class="" src="https://nimg.ws.126.net/?url=http%3A%2F%2Fdingyue.ws.126.net%2F2020%2F0602%2F0fe4d7cej00qb98ki0049c000gk00b0m.jpg&amp;thumbnail=660x2147483647&amp;quality=80&amp;type=jpg" alt="" width="342" height="227" /><br /><img class="" src="https://cloudflare-imgbed-8lm.pages.dev/file/1741447856263_构图技巧井字.webp" alt="" width="598" height="330" /><br /><img class="" src="https://cloudflare-imgbed-8lm.pages.dev/file/1741447947844_构图技巧井字2.webp" alt="" width="604" height="337" /></p><h2 id="黄金分割构图法"><a href="#黄金分割构图法" class="headerlink" title="黄金分割构图法"></a>黄金分割构图法</h2></h2><h4>黄金分割：</h4><p>黄金分割是指将整体一分为二，较大部分与整体部分的比值等于较小部分与较大部分的比值，其比值约为0.618。这个比例被公认为是最能引起美感的比例，因此被称为黄金分割。</p><h4>方法：</h4><p>1.将主题安排在黄金分割线上（与三等分线很接近）<br />2.将主体安排在黄金分割点上（与三等分点很接近）<br /><img class="" src="https://cloudflare-imgbed-8lm.pages.dev/file/1741448050085_黄金分割点.webp" alt="黄金分割点.png" width="385" height="247" /><br />3.根据黄金螺旋线构图<br /><img class="" src="https://image.uisdc.com/wp-content/uploads/2019/12/uisdc-hj-20191220-7.jpg" alt="" width="690" height="448" /></p><h2 id="S型曲线构图"><a href="#S型曲线构图" class="headerlink" title="S型曲线构图"></a>S型曲线构图</h2></h2><h4>特点：</h4><p>常见、优雅。会引导观众视线沿着曲线观看照片<br />用于拍摄女性构图<br />使图片有趣又动感<br /><img class="" src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=394421553,1037628603&amp;fm=173&amp;app=25&amp;f=JPEG?w=640&amp;h=394&amp;s=9A387E87A2BBCBCE022AA4760300705B" alt="" width="391" height="241" /><br /><img class="" src="https://pic3.zhimg.com/v2-d4cf33ae708397c2318e7d0ea3fbd3a2_b.jpg" alt="" width="385" height="685" /></p><h2 id="对角线构图"><a href="#对角线构图" class="headerlink" title="对角线构图"></a>对角线构图</h2></h2><h4>方法：</h4><p>将主体安排在对角线上。</p><h4>特点：</h4><p>能有效利用对角线的长度，容易产生线条汇聚趋势，具有纵深感<br /><img class="" src="https://pic.quanjing.com/5m/iz/QJ9125144952.jpg@!350h" alt="" width="353" height="235" /><img class="" src="https://tse1-mm.cn.bing.net/th/id/OIP-C.td3sfebsmxIDU81OMbhE2wHaGn?w=182&amp;h=180&amp;c=7&amp;r=0&amp;o=5&amp;dpr=2&amp;pid=1.7" alt="" width="292" height="289" /></p><h2 id="框架式构图"><a href="#框架式构图" class="headerlink" title="框架式构图"></a>框架式构图</h2></h2><h4>方法：</h4><p>选择一个富有变化的框，把主体围起来，集中观察者的视线，使其透过这个框去观察画面所要突出表现的主体。</p><h4>框的作用：</h4><p>增加画面的纵深对比和装饰效果，使照片产生深度感。将观众更好的代入观察者的角色。<br /><img class="" src="https://zhongces3.sina.com.cn/product/20200910/0c447b516ba67357cebb01d9f4b2f2bd.jpeg" alt="" width="346" height="432" /><img class="" src="https://ts1.cn.mm.bing.net/th/id/R-C.ed910c375db1cfb6ff880dc29657c64a?rik=CB5NeEuEdBvA1g&amp;riu=http%3a%2f%2fsinastorage.com%2fstorage.miaosha.sina.com.cn%2fproducts%2f201801%2f4dd7fd46a16c72a4c7daf42b78050d17.jpg&amp;ehk=uOAwO5Vg6JawGNaxEICx11icr%2f%2bNNUOGqPMkvYXGzEU%3d&amp;risl=&amp;pid=ImgRaw&amp;r=0" alt="" width="463" height="306" /></p><h2 id="第三次课后作业："><a href="#第三次课后作业：" class="headerlink" title="第三次课后作业："></a>第三次课后作业：</h2></h2><p><img class="alignnone " src="https://cloudflare-imgbed-8lm.pages.dev/file/1732375348476_框架式.jpg" width="357" height="476" /><div class='spoiler collapsed'>    <div class='spoiler-title'>        点击查看图片信息    </div>    <div class='spoiler-content'>        </p><p>主体：窗户裂纹</p><p>角度：平视</p><p>景别：近景</p><p>构图：框架式构图</p><p>    </div></div><img class="alignnone " src="https://cloudflare-imgbed-8lm.pages.dev/file/1732375501813_对称式 (2).jpg" width="380" height="285" /><div class='spoiler collapsed'>    <div class='spoiler-title'>        点击查看图片信息    </div>    <div class='spoiler-content'>        </p><p>主体：食堂桌椅</p><p>角度：俯视</p><p>景别：中景</p><p>构图：对称式构图</p><p>    </div></div><img class="alignnone " src="https://cloudflare-imgbed-8lm.pages.dev/file/1732375635585_对角线.jpg" width="409" height="231" /><div class='spoiler collapsed'>    <div class='spoiler-title'>        点击查看图片信息    </div>    <div class='spoiler-content'>        </p><p>主体：山坡</p><p>角度：仰视</p><p>景别：中景</p><p>构图：对角线构图</p><p>    </div></div><img class="alignnone " src="https://cloudflare-imgbed-8lm.pages.dev/file/1732375694408_井字法 (2).jpg" width="410" height="308" /><div class='spoiler collapsed'>    <div class='spoiler-title'>        点击查看图片信息    </div>    <div class='spoiler-content'>        </p><p>主体：山顶</p><p>角度：平视</p><p>景别：全景</p><p>构图：井字法构图​</p><p>    </div></div></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 摄影 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 选修课 </tag>
+            
+            <tag> 笔记 </tag>
+            
+            <tag> 摄影 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>CV</title>
+      <link href="/2025/03/08/CV/"/>
+      <url>/2025/03/08/CV/</url>
+      
+        <content type="html"><![CDATA[<p>CV即Character Voice来表示作品中角色演绎的对应声优，为和制英语</p><p>CV只用来标示作品中角色是由哪位配音员来配音的，即角色声音的意思，并不是声优这个职业的名字<br />学习资料：<br /><a href="https://zhuanlan.zhihu.com/p/503087696">CV与配音演员有什么区别？ ——知乎@对轨奇侠</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>谢帕德音调</title>
+      <link href="/2025/03/07/%E8%B0%A2%E5%B8%95%E5%BE%B7%E9%9F%B3%E8%B0%83/"/>
+      <url>/2025/03/07/%E8%B0%A2%E5%B8%95%E5%BE%B7%E9%9F%B3%E8%B0%83/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>我大抵是病了</title>
+      <link href="/2025/03/06/%E6%88%91%E5%A4%A7%E6%8A%B5%E6%98%AF%E7%97%85%E4%BA%86/"/>
+      <url>/2025/03/06/%E6%88%91%E5%A4%A7%E6%8A%B5%E6%98%AF%E7%97%85%E4%BA%86/</url>
+      
+        <content type="html"><![CDATA[<p>我大抵是病了,横竖都睡不着,坐起身来点起了一支烟,这悲伤没有由来,黯然看着床头的两个枕头,一个是我的,另一个也是我的。</p><p>这不是鲁迅的原文，是仿鲁迅文</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>N非院校</title>
+      <link href="/2025/03/05/N%E9%9D%9E%E9%99%A2%E6%A0%A1/"/>
+      <url>/2025/03/05/N%E9%9D%9E%E9%99%A2%E6%A0%A1/</url>
+      
+        <content type="html"><![CDATA[<p>双非：非985，非211</p><p>三非：非985、非211、非双一流的大学</p><p>三非：非全国重点，非985，非211</p><p>四非：‌“四非”院校是指那些未能入选国家“全国重点高等学校”、211工程、985工程和“双一流”战略的学校，即非国家重点、非985、非211、非双一流的大学‌。‌12历史背景和定义“四非”院校的概念是在“双非”院校（即非985、非211）的基础上进一步细分的。2017年启动的“双一流”工程以专业为主，很多专业性强的大学进入了这个名单，但仍然有一些大学未能入选，这些大学就被称为“四非”院校。</p><p>五非：非全国重点、非211、非985、非一流大学、非一流学科（p.s.就是把双一流拆开说吧）</p><p>六非：非985、非211、非双一流大学院校、非双一流学科建设院校、非全国重点、非一本</p><p>六非：非985，非211，非首批一流大学，非首批一流学科，非增选一流大学，非增选一流学科（p.s.这是把一批二批双一流拆开说了）</p><p>学习资料：</p><p><a href="https://zhuanlan.zhihu.com/p/551638318">最全关于“双非，三非，四非”的定义。——知乎@高校分析</a></p><p></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Petrichor</title>
+      <link href="/2025/03/04/Petrichor/"/>
+      <url>/2025/03/04/Petrichor/</url>
+      
+        <content type="html"><![CDATA[<p>描述雨后泥土的清新气味的一个专属科学名称，这个词由两位澳大利亚科学家在1964年创造，结合了希腊语中的“petra”（石头）和“ichor”（神话中神的血液）。微信名常见，寓意着新生与希望。</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>五年计划</title>
+      <link href="/2025/03/02/%E4%BA%94%E5%B9%B4%E8%AE%A1%E5%88%92/"/>
+      <url>/2025/03/02/%E4%BA%94%E5%B9%B4%E8%AE%A1%E5%88%92/</url>
+      
+        <content type="html"><![CDATA[<p>五年规划（The Five-Year Plan，原称五年计划），全称为中华人民共和国国民经济和社会发展五年规划纲要，是中国国民经济计划的重要部分，属长期计划。主要是对国家重大建设项目、生产力分布和国民经济重要比例关系等作出规划，为国民经济发展远景规定目标和方向。<br>第一个五年计划：1953－1957<br>第二个五年计划：1958－1962<br>（1963年至1965年为国民经济调整时期）<br>第三个五年计划：1966－1970<br>第四个五年计划：1971－1975<br>第五个五年计划：1976－1980<br>第六个五年计划：1981－1985<br>第七个五年计划：1986－1990<br>第八个五年计划：1991－1995<br>第九个五年计划：1996－2000<br>第十个五年计划：2001－2005<br>第十一个五年规划：2006－2010<br>第十二个五年规划：2011－2015<br>第十三个五年规划：2016－2020<br>第十四个五年规划：2021－2025<br>学习资料：<br><a href="https://baike.baidu.com/item/%E4%BA%94%E5%B9%B4%E8%A7%84%E5%88%92/6544998">五年规划（中国国民经济计划的重要部分）——百度百科</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>偏导符号的念法</title>
+      <link href="/2025/03/01/%E5%81%8F%E5%AF%BC%E7%AC%A6%E5%8F%B7%E7%9A%84%E5%BF%B5%E6%B3%95/"/>
+      <url>/2025/03/01/%E5%81%8F%E5%AF%BC%E7%AC%A6%E5%8F%B7%E7%9A%84%E5%BF%B5%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<p>偏</p><p>Partial（啪授）</p><p>tho</p><p></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>驼峰命名法</title>
+      <link href="/2025/02/28/%E9%A9%BC%E5%B3%B0%E5%91%BD%E5%90%8D%E6%B3%95/"/>
+      <url>/2025/02/28/%E9%A9%BC%E5%B3%B0%E5%91%BD%E5%90%8D%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<p>电脑编程时的一种给函数、变量命名的方式。printEmployeePaychecks()；print_employee_paychecks()；第一个函数名使用了骆驼式命名法——函数名中的每一个逻辑断点都有一个大写字母来标记；第二个函数名使用了下划线法——函数名中的每一个逻辑断点都有一个下划线来标记。学习资料：<a href="https://baike.baidu.com/item/%E9%A9%BC%E5%B3%B0%E5%91%BD%E5%90%8D%E6%B3%95/7560610">驼峰命名法——百度百科</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>自出洞来无敌手</title>
+      <link href="/2025/02/27/%E8%87%AA%E5%87%BA%E6%B4%9E%E6%9D%A5%E6%97%A0%E6%95%8C%E6%89%8B/"/>
+      <url>/2025/02/27/%E8%87%AA%E5%87%BA%E6%B4%9E%E6%9D%A5%E6%97%A0%E6%95%8C%E6%89%8B/</url>
+      
+        <content type="html"><![CDATA[<p>象棋谱书，书名来自下诗</p><p>      <strong>绝句</strong></p><p><strong>[label]  </strong> 宋·蔡州道人<strong>[/label]</strong></p><p> 烂柯真诀妙通神，</p><p>一局曾经几度春。</p><p>自出洞来无敌手，</p><p>得饶人处且饶人。</p><p> </p><p> </p><p></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>yellow</title>
+      <link href="/2025/02/26/yellow/"/>
+      <url>/2025/02/26/yellow/</url>
+      
+        <content type="html"><![CDATA[<p>［adj］胆小的</p><p>Don't be yellow,just go talk to her!（别怂了，去和她说话！）</p><p>You're so yellow.（你太胆小了。）</p><p></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>双币卡</title>
+      <link href="/2025/02/25/%E5%8F%8C%E5%B8%81%E5%8D%A1/"/>
+      <url>/2025/02/25/%E5%8F%8C%E5%B8%81%E5%8D%A1/</url>
+      
+        <content type="html"><![CDATA[<p>带有银联和MasterCard标、VISA标等国际银行组织标的银行卡，有双币借记卡和双币信用卡。</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>柯立芝效应</title>
+      <link href="/2025/02/24/%E6%9F%AF%E7%AB%8B%E8%8A%9D%E6%95%88%E5%BA%94/"/>
+      <url>/2025/02/24/%E6%9F%AF%E7%AB%8B%E8%8A%9D%E6%95%88%E5%BA%94/</url>
+      
+        <content type="html"><![CDATA[<p>研究发现，大多数哺乳动物在交媾之后的一段时间内，即使原有的配偶就在身边，也不再有性行为，这个阶段称为<strong>性不应期</strong>。但是，如果在雄性动物交媾之后，重新给它一个<strong>新的雌性</strong>发情对象，它的不应期会大大缩短，甚至立即又出现交媾行为。（p.s.这下nekopara大结局能解释通了）</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>RSS</title>
+      <link href="/2025/02/23/RSS/"/>
+      <url>/2025/02/23/RSS/</url>
+      
+        <content type="html"><![CDATA[<p>RSS 的全称有三种说法，RDF Site Summary（资源描述框架站点摘要）、Rich Site Summary（网站内容摘要）和 Really Simple Syndication（简易资讯聚合）。将网站的RSS源添加到RSS阅读器中，就可以订阅该网站的信息。RSS是反商业化的，用户可以自主筛选信息，无硬广告。一些没有提供RSS源的网站可以利用RSSHub生成源。学习资料：<a href="https://zhuanlan.zhihu.com/p/349349861">知道RSS的人越少，我就越希望它能被人知道！ ——知乎@阿虚同学</a><a href="https://www.cnblogs.com/PeterJXL/p/18354504">RSS: 是什么？为什么？怎么用？ ——博客园@peterjxl</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>近讲效应</title>
+      <link href="/2025/02/22/%E8%BF%91%E8%AE%B2%E6%95%88%E5%BA%94/"/>
+      <url>/2025/02/22/%E8%BF%91%E8%AE%B2%E6%95%88%E5%BA%94/</url>
+      
+        <content type="html"><![CDATA[<p>靠近麦克风说话时低音会变得更强，会让声音更浑厚更有磁性。<br />声音在麦克风附近时低频部分比高频部分更容易被增强。</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>布尔乔亚</title>
+      <link href="/2025/02/21/%E5%B8%83%E5%B0%94%E4%B9%94%E4%BA%9A/"/>
+      <url>/2025/02/21/%E5%B8%83%E5%B0%94%E4%B9%94%E4%BA%9A/</url>
+      
+        <content type="html"><![CDATA[<p>即资产阶级，法语/英语：bourgeois</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>NSFW</title>
+      <link href="/2025/02/20/NSFW/"/>
+      <url>/2025/02/20/NSFW/</url>
+      
+        <content type="html"><![CDATA[<p></p><p>Not Safe/Suitable For Work的简写，工作场所不宜。</p><p>就是说内容不适合上班时间浏览，什么内容你就猜去吧。</p><p>我发现这个词的时候用bing直接搜索“NSFW”，一条结果也没有，提示</p><p>[alert]您所在的国家或地区要求使用严格的必应安全搜索设置，其过滤出的结果可能返回成人内容。要了解 您所在的国家或地区关于安全搜索要求的更多信息，请参阅 必应如何提交搜索结果。[/alert]</p><p>我搜“NSFW是什么意思？”才搜出来。</p><p></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>直链</title>
+      <link href="/2025/02/19/%E7%9B%B4%E9%93%BE/"/>
+      <url>/2025/02/19/%E7%9B%B4%E9%93%BE/</url>
+      
+        <content type="html"><![CDATA[<p>文件资源的直接访问链接，一般可以直接下载或者在网站引用、播放。云盘外链也是直链，访问权限可以自己设置。</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Shelter</title>
+      <link href="/2025/02/19/Shelter/"/>
+      <url>/2025/02/19/Shelter/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这篇文章要讲的是美国著名音乐人Porter Robinson、法国音乐人Madeon与日本动画公司A-1 Pictures合作，于10月18日公布的一部以虚拟世界为主题的<strong>音乐MV「SHELTER(避难所)」</strong></p><p>我们来看看创作者阵容：</p></p><div class='spoiler collapsed'>    <div class='spoiler-title'>        Porter Robinson    </div>    <div class='spoiler-content'>        <p>Porter Robinson的音乐大多具有实验价值，大胆创新，风格多样，涉及Electro House、Dubstep、Complextro、Moombahton、Midtempo甚至是Trance，渐渐的他厌倦了当时的主流电子音乐，接下来他开始制作自己心中的音乐。2015年，由于抑郁症的原因，Porter Robinson并没有发布任何曲子。 在2016年8月11日，他与好友Madeon合作发布了Shelter，并在10月18日发布了与A-1 Pictures、Crunchyroll合作的动画MV，之后Porter Robinson与Madeon开始了长达一年的"Shelter Live Tour"（现场巡回演出）</p><p>Porter Robinson虽然是一名美国男孩，但是自小就受到日本宅文化的熏陶，痴迷于其中，Shelter已经不是他第一次融合日漫元素的作品。</p>    </div></div><div class='spoiler collapsed'>    <div class='spoiler-title'>        Madeon    </div>    <div class='spoiler-content'>        <p>Madeon，国内粉丝称作雨果，法国DJ，是Porter Robinson小时候学习创作在网络论坛上结交的好朋友，在Porter Robinson情绪低落甚至一度抑郁时，Madeon陪伴他并与他一起创作出了《shelter》的音乐部分。</p>    </div></div><div class='spoiler collapsed'>    <div class='spoiler-title'>        A-1 Pictures    </div>    <div class='spoiler-content'>        <p>A-1 Pictures，简称A1P，是安尼普（Aniplex）旗下负责动画制作的全资子公司之一，于2005年5月9日成立，日本动画协会正式成员。喜欢看日漫的网友应该有所听闻，该公司比较出名的动漫作品有《我们仍未知道那天所看见的花的名字》《我的妹妹哪有这么可爱。》《四月是你的谎言》《逆转裁判》《辉夜大小姐想让我告白 ~天才们的恋爱头脑战~》《我独自升级》等</p>    </div></div><p>这首《shelter》是Porter Robinson在低谷期中创作的少数有影响力的作品之一。</p><p>最初，Porter所创作的《shelter》的音乐部分，与我们现在听到的有很多不同，可能与当时Porter自己的状态有关，歌曲的主题其实充斥着一种末日的苍茫与无助感，但是在与A-1 Picture的商讨磨合下，决定将歌曲的背景故事改为讲述末日下的爱与勇气。</p><p>到这里，你是否已经迫切的想知道这首歌的MV会讲述什么样的故事？博主也难以表达，大抵可以说是一个悲伤的、美丽的故事吧~</p><p>请欣赏MV（建议佩戴耳机使用！）</p><div class='spoiler collapsed'>    <div class='spoiler-title'>        MV    </div>    <div class='spoiler-content'>        <video controls width="100%">  <source src="https://txmov2.a.kwimgs.com/upic/2024/11/09/23/BMjAyNDExMDkyMzUzNTFfMzkzNTY2NDg5Nl8xNDgyMTUzNjE0NTNfMF8z_b_Bb386c13dd91c80770a1b761bb56f2cd6.mp4?tag=1-1731167847-unknown-0-fyjct3oori-048588b953a3beb1&amp;clientCacheKey=3x5mtqidvsynqh9_b.mp4&amp;bp=10000&amp;tt=b&amp;ss=vp" type="video/mp4">  Your browser does not support the video tag.</video>    </div></div><h2 id="故事解析"><a href="#故事解析" class="headerlink" title="故事解析"></a>故事解析</h2><h3 id="少女的独白"><a href="#少女的独白" class="headerlink" title="少女的独白"></a>少女的独白</h3><p><em>深蓝的水中，少女缓缓下沉。</em></p><p>“前方会发生什么呢？”</p><p>“曾几何时，我停止了思考”</p><p><em>樱花飘落</em></p><p>“或许我已经忘了”</p><p><em>回忆涌入，红色，是末日的景象</em></p><p>“如何思考”</p><p><em>睁开双眼，凛躺在粉色的大床上，是梦吗</em></p><p>“一切都一成不变”</p><p>“在这个只有自己的世界里”</p><p>“日复一日，持续下去”</p><p><em>少女起床，打开平板</em></p><p>“但是我不觉得孤独，没有什么大不了的”</p><p><em>打开邮箱，没有任何消息</em></p><h3 id="凛的日常"><a href="#凛的日常" class="headerlink" title="凛的日常"></a>凛的日常</h3><p>打个哈欠，伸个懒腰，重新躺下去，随着思绪的飘拂，房间的墙变成透明的玻璃，这是个数字化的虚拟世界。</p><p>她是这个世界的主人，随着画笔在平板上的描绘，蓝天，山川，河流，树木，立刻浮现。</p><p>移开树木，冰雪融化，出现极光，世界随着想象力改变，充满了梦幻。</p><p>画青绿的草地，尽情奔跑；画高耸的岩石，俯视脚下。</p><h3 id="凛的回忆"><a href="#凛的回忆" class="headerlink" title="凛的回忆"></a>凛的回忆</h3><p>突然出现在眼前的秋千，吸引着凛走过去。</p><p>凛的手触摸秋千的一瞬间，断断续续的记忆快速闪过。</p><p>她似乎想起了什么，脑海中浮现出一个年轻男人的脸庞。</p><p>虚拟的世界一点点的消失，凛又回到灯光昏暗的房间里，她觉得怅然若失，慢慢睡着了。</p><p>不过记忆中红色的天空究竟是什么？凛编织着记忆碎片，走过那些模糊的记忆景象。</p><p>第二天醒来，平板的邮箱和过去的2577天一样，没有任何信息。</p><p>屏幕上突然出现一幅画，世界也随之改变，将凛带到了她小时候的住所，看到了小时候的自己背着书包跑去。</p><p>凛坠入了无限的回忆。</p><p>父亲陪着小凛荡秋千、玩沙子。</p><p>相册中母亲抱着还是小婴儿的凛，旁边的白花暗示母亲已经离世。</p><p>电视中播放着新闻，东京的现状，红色的天空笼罩着断壁残垣。</p><p>父亲趁着小凛熟睡之后，进行着小凛看不懂的研究。</p><p>父亲给小凛过生日。</p><p>父亲为小凛梳头发。</p><p>父亲带小凛参拜空无一人的神社。</p><p>新闻中一颗红色的小行球即将与地球相撞，父亲加紧了研究进度。</p><h3 id="父亲的诀别"><a href="#父亲的诀别" class="headerlink" title="父亲的诀别"></a>父亲的诀别</h3><p>父亲紧张地准备着一个太空舱，脸上写满了焦虑和悲痛他，他知道世界即将毁灭。</p><p>因为太空舱的大小、发射工作和其他原因，父亲不得不留在地球。为了保护天真的女儿，他决定让她独自进入这个宇宙飞船。</p><p>他用虚拟现实的技术，让女儿在其中沉睡，生活在自由的虚拟世界中，忘记烦恼，勇敢活下去。</p><p>凌晨，父亲带着熟睡的凛进入了飞船。父亲将她轻轻地放进一个透明的舱室里，关上了舱门。小凛睡得很安详，似乎并不知道自己即将面临什么。</p><p>父亲启动了飞船程序，飞船开始倒计时发射。他站在飞船外，目送着飞船缓缓升空。他知道这可能意味着永别。</p><p>一束光将凛从回忆中带出，平板的邮箱里居然出现了一封信。</p><h3 id="父亲的信"><a href="#父亲的信" class="headerlink" title="父亲的信"></a>父亲的信</h3><div class='spoiler collapsed'>    <div class='spoiler-title'>        To Rin    </div>    <div class='spoiler-content'>        <blockquote><p><span style="font-size: revert; color: initial;">致凛</span></p><p>FROM：父<br /><span style="color: #808080;"><strong>从你降生至今，所剩的时间实在是太过不足了。</strong></span><br /><span style="color: #808080;"><strong>从你母亲过世以来，在你身上倾注了太多爱意……</strong></span><br /><span style="color: #808080;"><strong>看着活泼的你，爸爸还是得到了勇气</strong></span><br /><span style="color: #808080;"><strong>本该陪你一起的，结果没能办到。</strong></span><br /><span style="color: #808080;"><strong>忘掉一切是很悲伤的…不过你一定没问题。</strong></span><br /><span style="color: #808080;"><strong>知晓了那份寂寞之后，便会回忆起来吧。</strong></span><br /><span style="color: #808080;"><strong>我相信你会变坚强，坚强到能看完这段话。</strong></span><br /><span style="color: #808080;"><strong>没能给你更多回忆，对不起了。</strong></span><br /><span style="color: #808080;"><strong>小时候不能理解的那些话，那天的那些话。</strong></span></p></blockquote>    </div></div><h3 id="凛勇敢面对现实"><a href="#凛勇敢面对现实" class="headerlink" title="凛勇敢面对现实"></a>凛勇敢面对现实</h3><p>“即使这些回忆让我悲伤”</p><p>“但我会相信，并且继续前进”</p><p>“即使知道很孤独”</p><p>“哪怕看不到希望”</p><p>“多亏有你让我回忆起来，让我变得更坚强”</p><p>“我并不孤独，因为你”</p><p>飞船在空旷黑暗的太空中沿着固定航向前进，少女沉睡在太空舱里，各种仪器和少女的身体相连，维持着凛的生命体征，不知何时会等到救援。</p><p>父亲留下的回忆，终于让凛勇敢面对现实。</p><p>凛的眼角湿润</p><p>“谢谢你”</p><h2 id="歌词"><a href="#歌词" class="headerlink" title="歌词"></a>歌词</h2><blockquote><p>建议先点击播放，边听边看更佳</p></blockquote><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><div id='demo'></div><script>    var demo = new APlayer({        element: document.getElementById('demo'),        showlrc: false,        fixed: false,        mini: false,        audio: [            {                title: 'Shelter',                author: 'Porter Robinson/Madeon',                url: 'https://13649.kstore.space/Shelter+-+Porter+Robinson%EF%BC%8FMadeon.mp3',                pic: 'https://tse3-mm.cn.bing.net/th/id/OIP-C.3asWrw2keQaxcB-4Z0sYogHaHa?rs=1&pid=ImgDetMain',                lrc: ''            },        ]    });</script><div class='spoiler collapsed'>    <div class='spoiler-title'>        Shelter - Porter Robinson/Madeon    </div>    <div class='spoiler-content'>        <p>QQ音乐享有本翻译作品的著作权</p><p>Lyrics by: Madeon/Porter Robinson</p><p>Amy Millan：</p><p>Ayy I will ayy</p><p>我会</p><p>Ayy I will ahh hum huh</p><p>我会</p><p>Ayy I will ayy it's</p><p>我会</p><p>I wonder I wonder I wonder I wonder</p><p>我想知道</p><p>Ayy I will ayy it's</p><p>我会</p><p>Ayy I will ahh hum huh</p><p>我会</p><p>Ayy I will ayy it's</p><p>我会</p><p>I wonder I wonder I wonder I wonder</p><p>我想知道</p><p>Ayy I will ayy it's</p><p>我会</p><p>Ayy I will ahh hum huh</p><p>我会</p><p>Ayy I will ayy it's</p><p>我会</p><p>I wonder I wonder I wonder I wonder</p><p>我想知道</p><p>Ayy I will ayy it's</p><p>我会</p><p>Ayy I will ahh hum huh</p><p>我会</p><p>Ayy I will ayy it's</p><p>我会</p><p>I wonder I wonder I wonder I wonder</p><p>我想知道</p><p>Madeon:</p><p>I could never find the right way to tell you</p><p>我一直都找不到方法告诉你</p><p>Have you noticed I've been gone</p><p>你是否注意到我已经离开了</p><p>'Cause I left behind the home that you made me</p><p>因为你让我离开家</p><p>But I will carry it along</p><p>但是我会坚持到底</p><p>Mm it's a long way forward so trust in me</p><p>前路漫长信任我吧</p><p>I'll give them shelter like you've done for me</p><p>我会建造一座坚固堡垒就像你为我做的那样</p><p>And I know I'm not alone you'll be watching over us</p><p>我知道我并非孤身一人你会默默注视我们</p><p>Until you're gone一直到你离我而去</p><p>Amy Millan:</p><p>Ayy I will ayy it's</p><p>我会</p><p>Ayy I will ahh hum huh</p><p>我会</p><p>Ayy I will ayy it's</p><p>我会</p><p>I wonder I wonder I wonder I wonder</p><p>我想知道</p><p>Ayy I will ayy it's</p><p>我会</p><p>Ayy I will ahh hum huh</p><p>我会</p><p>Ayy I will ayy it's</p><p>我会</p><p>I wonder I wonder I wonder</p><p>我想知道</p><p>Ayy I will ayy it's</p><p>我会</p><p>Ayy I will ahh hum huh</p><p>我会</p><p>Ayy I will ayy it's</p><p>我会</p><p>I wonder I wonder I wonder I wonder</p><p>我想知道</p><p>Ayy I will ayy it's</p><p>我会</p><p>Ayy I will ahh hum huh</p><p>我会</p><p>Ayy I will ayy it's</p><p>我会</p><p>I wonder I wonder I wonder I wonder</p><p>我想知道</p><p>Madeon:</p><p>When I'm older I'll be silent beside you</p><p>当我两鬓斑白我会默默地守护你</p><p>I know words won't be enough</p><p>我知道仅是这些誓言并不够</p><p>And they won't need to know ournames or our faces</p><p>人们无需牢记我们的脸孔我们的名字</p><p>But they will carry on for us</p><p>但是人们会一直给予我们支持</p><p>Mm it's a long way forward so trust in me</p><p>前路漫长 信任我吧</p><p>I'll give them shelter like you've done for me</p><p>我会建造一座坚固堡垒就像你为我做的那样</p><p>And I know I'm not alone you'll be watching over us</p><p>我知道我并非孤身一人你会默默注视我们</p><p>Until you're gone</p><p>一直到你离我而去</p><p>Amy Millan:</p><p>Ayy I will ayy</p><p>我会</p><p>Ayy I will ahh hum huh</p><p>我会</p><p>Ayy I will ayy it's</p><p>我会</p><p>I wonder I wonder I wonder I wonder</p><p>我想知道</p><p>Ayy I will ayy</p><p>我会</p><p>Ayy I will ahh hum huh</p><p>我会</p><p>Ayy I will ayy</p><p>我会</p><p>Ayy I will ayy it's</p><p>我会</p><p>Ayy I will ahh hum huh</p><p>我会</p><p>Ayy I will ayy it's</p><p>我会</p><p>I wonder I wonder I wonder I wonder</p><p>我想知道</p><p>Ayy I will ayy it's</p><p>我会</p><p>Ayy I will ahh hum huh</p><p>我会</p><p>Ayy I will ayy it's</p><p>我会</p><p>I wonder I wonder I wonder</p><p>我想知道</p><p>Madeon:</p><p>Oh it's a long way forward trust in me</p><p>前路漫长信任我吧</p><p>I'll give them shelter like you've done for me</p><p>我会建造一座坚固堡垒就像你为我做的那样</p><p>And I know I'm not alone you'll be watching over us</p><p>我知道我并非孤身一人你会默默注视我们</p><p>Until</p><p>直到</p>    </div></div><h2 id="评论"><a href="#评论" class="headerlink" title="评论"></a>评论</h2><div class='spoiler collapsed'>    <div class='spoiler-title'>        SOS动漫社团-SOS姬——微博    </div>    <div class='spoiler-content'>        <blockquote><p><span style="color: #008080;">从短片内容看，应该是地球即将被卫星撞击，而且从新闻看东京已经毁灭了（可能因为引力/战争之类的）。这个时候父亲为了拯救自己的女儿，启动了一个名为project r-505的项目，制作了一艘以7岁儿童为承载对象的太空逃生舱。</span><br /><span style="color: #008080;">从闪回的记忆画面来看，可以看到开始这个项目时女儿才6岁（生日蛋糕上只插了6根蜡烛），整个回忆从环境变化来看经过了几个季节但不到一年。之后父亲便将女儿安置在了逃生舱中，并且背后脑后都有管道与逃生舱相连，可以认为分别是维持女儿生命的装置和使女儿强制进入VR世界的装置。</span><br /><span style="color: #008080;">之后便是发射升空进入宇宙，而父亲留在了地球之上，之后地球被卫星撞击。</span><br /><span style="color: #008080;">不过短片中的时间线比较暧昧，以上只是根据展现的画面才猜测。尤其是官网中设定女儿的年龄在17岁，而VR时间中女儿两次查看信箱时的时间分别是2539天和2578天（分别是不到7年和刚满7年）。推测进入太空之后并没有第一时间就进入了VR世界，而是一直航行了3年后才开始。</span><br /><span style="color: #008080;">之后的事情就像短片一开始展示的一样，女儿一直生活在VR的世界中。直到有一次VR世界与儿时生活的环境重合，勾起了所有的记忆，收到了父亲留下的信息，感动的留下泪水。</span><br /><span style="color: #008080;">然而，女儿并没有就此从VR的世界中醒来。现实世界的女儿仍然是被连接在逃生舱中的。</span><br /><span style="color: #008080;">标题的《shelter》具有多重意义。父亲所打造的这艘逃生舱是保护女儿生命的避难所，而VR空间则是父亲保护女儿心灵的避难所。如果从最后女儿并没有从VR中苏醒的画面来说，也可以说女儿并没有选择从父亲给自己打造的避难所中离开，当然，其实即使离开了VR世界这个避难所，女儿实际上仍然生活在父亲为她准备的另一个避难所——逃生舱中。</span></p></blockquote><p>——2016-10-19</p>    </div></div><div class='spoiler collapsed'>    <div class='spoiler-title'>        DigitalHunter——哔哩哔哩    </div>    <div class='spoiler-content'>        <blockquote><p><span style="color: #008000;">我还是想来科普一下……</span><br /><span style="color: #008000;">这个短动画是音乐人Porter Robinson和Madeon的歌曲《Shelter》的MV，由PR本人担任编剧。并不是系列动画宣传片之类的，也不要问BGM是什么啦！ 23333</span><br /><span style="color: #008000;">Porter Robinson虽然是一名美国男孩，但是自小就受到日本宅文化的熏陶，痴迷于其中。他的音乐之路的开启也是因为家里给他买了一个日本跳舞机！</span><br /><span style="color: #008000;">他在2012年因单曲《Language》第一次进入主流流行音乐听众的视野。（从这首的歌词就可以看出Worlds的故事已经开始了 但PR还是有所收敛）但在那之后，他表示将不再跟着市场方向做脍炙人口的歌曲，而是做出自己的心中的声音。闭关修炼2年，他带着专辑《Worlds》回归。</span><br /><span style="color: #008000;">这张专辑与阳炎Project本体专辑一样，更像是一本小说，叙述着多个快乐与悲伤交杂的故事，表达着他对异世界的美好幻想。</span><br /><span style="color: #008000;">所以我要在这里强烈推荐！！！如果你有时间，请认真的看歌词按顺序听完Worlds这张专辑！最后你会像看完这个MV一样感动到蓝瘦香菇(/TДT)/</span><br /><span style="color: #008000;">《Shelter》 的MV不再像他演出背后大屏幕上播放的影像一般晦涩，而是直接明了的展现了故事的情节，这是PR的重要里程碑。不过，在Worlds的发布以前PR其实发布过一个美式画风的动画MV。是与Mat Zo合作的《Easy》的MV，有兴趣的朋友可以看看。</span><br /><span style="color: #008000;">最后最后的补充：</span><br /><span style="color: #008000;">在Worlds的巡回演出中，PR所使用的VJ影像也不再像大众VJ一样单调，而是通过图片与动画描述着他所写的故事。同时专辑中的每首歌曲PR也都制作了现场特别版，并且将自己以前制作的歌曲全部用Worlds的风格重置了一遍在演出播放。 Youtube上有一个Up主叫Huntroxic，他将PR所有在Worlds巡回演出上放的VJ影像都Remake了一遍，海外党和有梯人士有兴趣可以看看。</span><br /><span style="color: #008000;">求顶上热评(｀・ω・´)</span></p></blockquote><p>——2016-10-21</p>    </div></div><div class='spoiler collapsed'>    <div class='spoiler-title'>        Winter0263——YouTube    </div>    <div class='spoiler-content'>        <blockquote><p><span style="color: #808000;">When a 6 min video is actually better than the 90% of Fall 2016 anime season.</span></p></blockquote><p>——7年前</p>    </div></div><div class='spoiler collapsed'>    <div class='spoiler-title'>        IA——QQ音乐    </div>    <div class='spoiler-content'>        <blockquote><p><span style="color: #993300;">父亲给予的爱，是rin的避难所。哪怕世界毁灭，关于你的记忆也不会消失。谢谢你</span></p></blockquote><p>——2017-01-19</p>    </div></div><div class='spoiler collapsed'>    <div class='spoiler-title'>        Konseki_Takane——网易云    </div>    <div class='spoiler-content'>        <blockquote><p><span style="color: #008080;">Shelter对于我来说，是一个较为特别的存在，我喜欢电子音乐，同时我也喜欢日本动画，同时玩宅的和听电子的人肯定不止我一个，作为一个尚未脱宅的动画痴迷者，我是绝对想过优秀的故事，精美的作画，独到的镜头下的动画搭配电子产生的效果，今天Porter做到了，可以说，Shelter实现了很多像我这样人的愿望</span></p></blockquote><p>——2016-11-25</p>    </div></div><h2 id="lkii"><a href="#lkii" class="headerlink" title="lkii"></a>lkii</h2><p>本频道叫音乐故事厅，要说有故事的音乐，绝对少不了这首。</p><p>为了写故事解析又逐帧看了一遍MV，结果发现了好多之前没看到的细节，小凛（刚被父亲送到太空舱）的身体身上插着线，眼角还有泪，我们可以想象父亲把小凛安置在太空舱的具体过程，父亲没有把这段记忆保留。还有照片旁的白花暗示母亲去世，参拜神社时空无一人暗示末日来临，邮箱显示2578天没有消息明示凛已经孤独地度过了7年，细节这一块做的真好。</p><p>凛并不孤独，有位b友已经在评论区给凛发晚安坚持1349天了（虽然有几天忘了发）。⇨<a href="https://www.bilibili.com/video/BV1is41147Gt">前往围观</a>⇦</p><img src="https://cloudflare-imgbed-8lm.pages.dev/file/1739959176367_坚持给rin发晚安的b友.png" alt="坚持给rin发晚安的b友.png" width=100% /><p>有人说《Sad Machine》是后续，其实这首歌发布比《Shelter》早，不过也可以当成后续来看。《Sad Machine》也很好听，以后可能会写一篇关于《Sad Machine》的，Porter Robinson真的是宝藏音乐人，大爱傻颇。</p><img src="https://cloudflare-imgbed-8lm.pages.dev/file/1739959172700_微信运动封面-1024x882.jpg" alt="Porter Robinson" width=100% /><p>可遇而不可求的作品，何时才能再次看到这种让人眼前一亮的、潸然泪下的电子音乐和MV故事呢？</p><img src="https://cloudflare-imgbed-8lm.pages.dev/file/1739959175221_小凛在太空舱中.jpg" alt="小凛在太空舱中.jpg" width=100% /><p><strong>即使知道很孤独，哪怕看不到希望，因为有你的回忆使我变得更坚强。</strong></p><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><!-- wp:list --><ul class="wp-block-list"><!-- wp:list-item --><li>1.<a href="https://www.bilibili.com/opus/746512449224573013">“我知道我并不孤单” ——简析音乐动画短片《shelter》</a></li><!-- /wp:list-item --><!-- wp:list-item --><li>2.<a href="http://dm.kantsuu.com/201610/20161019192830_552901.shtml"><span class="ArticleTitle">活在虚拟世界中的少女！音乐MV「SHELTER(避难所)」曝光！</span></a></li><!-- /wp:list-item --><!-- wp:list-item --><li>3.<a href="https://baike.baidu.com/item/Porter%20Robinson/16688693">Porter Robinson——百度百科</a></li><!-- /wp:list-item --><!-- wp:list-item --><li>4.<a href="https://mzh.moegirl.org.cn/Porter_Robinson">Porter Robinson——萌娘百科</a></li><!-- /wp:list-item --><!-- wp:list-item --><li>5.<a href="https://baike.baidu.com/item/A-1%20Pictures/1264976">A-1 Pictures——百度百科</a></li><!-- /wp:list-item --><!-- wp:list-item --><li>6.<a href="https://www.bilibili.com/video/BV1JW411p7Wf">【完全汉化】Shelter 避难所 - 个人翻译版 收藏向</a></li><!-- /wp:list-item --><!-- wp:list-item --><li>7.<a href="https://www.bilibili.com/video/BV1is41147Gt">【1080P】Shelter(避难所) OVA【中字】</a></li><!-- /wp:list-item --><!-- wp:list-item --><li>8.<a href="https://www.youtube.com/watch?v=fzQ6gRAEoy0&amp;lc=Ugg6Onq9VR1MIXgCoAEC">Porter Robinson &amp; Madeon - Shelter (Official Video) (Short Film with A-1 Pictures &amp; Crunchyroll)</a></li><!-- /wp:list-item --></ul><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 音乐故事厅 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 音乐 </tag>
+            
+            <tag> 分享 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Nevada</title>
+      <link href="/2025/02/19/Nevada/"/>
+      <url>/2025/02/19/Nevada/</url>
+      
+        <content type="html"><![CDATA[<p><span style="color: #ff0000;">阅读前先点击播放按钮，边听边看更佳！</span></p><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><div id='demo'></div><script>    var demo = new APlayer({        element: document.getElementById('demo'),        showlrc: false,        fixed: false,        mini: false,        audio: [            {                title: 'Nevada',                author: 'Vicetone',                url: 'https://13649.kstore.space/Nevada+-+Vicetone%EF%BC%8FCozi+Zuehlsdorff.mp3',                pic: 'https://cloudflare-imgbed-8lm.pages.dev/file/1730780315652_OIP-C.jfif',                lrc: ''            },        ]    });</script><h2 id="取自站长2021年1月02QQ空间"><a href="#取自站长2021年1月02QQ空间" class="headerlink" title="取自站长2021年1月02QQ空间"></a>取自站长2021年1月02QQ空间</h2><p>♫《Nevada》风格：electroic house<br />内华达州，此曲可谓vicetone封神之<br />♫18年轰动乐坛，20年轰动政坛。<br />♫大约十一月中旬，拜登的票数将要到达270票，但是内华达还没有投票——一旦内华达投给拜登就意味着选举结束。(最后川建国下了拜登赢了的这事你们都知道的😕)<br />♫Vicetone并未使用太多环响音轨衬托，drop干脆利落，辅以空灵的vocal，一幅广阔生动的内华达景象浮现在眼前。<br />♫有人说这是最强的电音<br />♫Vicetone：<br />“作为职业的音乐家，尽管有明显的下降趋势（V今年掉出100了），但也存在一些积极面：Astronomia是全球热潮的一部分，并且vicetone的歌曲Nevada在Spotify上的播放记录超过了1亿，这是令我们非常高兴的里程碑事件。”<br />◎2013年 DJ Mag百大DJ 排名60<br />◎2014年 DJ Mag百大DJ 排名36<br />◎2015年 DJ Mag百大DJ 排名50<br />◎2016年 DJ Mag百大DJ 排名81<br />◎2019年 DJ Mag百大DJ 排名83</p><p>☆2021年期待vicetone再创辉煌！☆🥰</p><h2 id="歌词"><a href="#歌词" class="headerlink" title="歌词"></a>歌词</h2><p>Nevada - Vicetone/Cozi Zuehlsdorff</p><div class='spoiler collapsed'>    <div class='spoiler-title'>        展开    </div>    <div class='spoiler-content'>        <p>I've been painting every fence I know</p><p>每处险阻我都铭记心中</p><p>Every color bleeds into the same</p><p>现已化作经验教训</p><p>Cause before you go and walk away</p><p>在你踏上征途之前</p><p>Yeah you better know where you're going</p><p>我希望你清楚你的方向</p><p>Hey yeah hey yeah</p><p>You're a wanderer just like me</p><p>你就像我一样是个流浪者</p><p>Hey yeah hey yeah</p><p>Yeah you better know where you're going</p><p>我希望你清楚你的方向</p><p>Yeah you better know where you're going</p><p>我希望你清楚你的方向</p><p>I've been painting every fence I know</p><p>每处险阻我都铭记心中</p><p>Every color bleeds into the same</p><p>现已化作经验教训</p><p>Cause before you go and walk away</p><p>在你踏上征途之前</p><p>Yeah you better know where you're going</p><p>我希望你清楚你的方向</p><p>Hey yeah hey yeah</p><p>You're a wanderer just like me</p><p>你就像我一样是个流浪者</p><p>Hey yeah hey yeah</p><p>Yeah you better know where you're going</p><p>我希望你清楚你的方向</p><p>You're a wanderer just like me</p><p>你就像我一样是个流浪者</p><p>Yeah you better know where you're going</p><p>我希望你清楚你的方向</p><p>Hey yeah hey yeah</p><p>You're a wanderer just like me</p><p>你就像我一样是个流浪者</p><p>Hey yeah hey yeah</p><p>Yeah you better know where you're going</p><p>我希望你清楚你的方向</p><p>Yeah you better know where you're going</p><p>我希望你清楚你的方向</p><p>Yeah you better know where you're going</p><p>我希望你清楚你的方向</p><p>You're a wanderer just like me</p><p>你就像我一样是个流浪者</p><p>Yeah you better know where you're going</p><p>我希望你清楚你的方向</p><p>You're a wanderer just like me</p><p>你就像我一样是个流浪者</p>    </div></div><h2 id="曲风"><a href="#曲风" class="headerlink" title="曲风"></a>曲风</h2><p><a href="https://baike.baidu.com/item/%E6%B5%A9%E5%AE%A4%E9%9F%B3%E4%B9%90/7660694?fromModule=lemma_inlink">House</a></p><h2 id="评论"><a href="#评论" class="headerlink" title="评论"></a>评论</h2><div class='spoiler collapsed'>    <div class='spoiler-title'>        晨宇——QQ音乐    </div>    <div class='spoiler-content'>        <blockquote><p><span style="color: #339966;">作为美国内华达州的同名曲，《Nevada》 将烂漫、自由、信仰、热爱的"主题"理念体现的淋漓尽致。</span></p><p><span style="color: #339966;">从lead开始就引入强劲的单音击节串联，原汁原味的鼓组在脱离音轨衬托后显得干净而利落，区别于以往的“空灵人声”，这次的Vocal与创作背景呼应，带上一丝野性和自由的呼唤，多重氛围注重的营造下，广阔而壮丽的山脉，带着瑰丽色彩的平原，一片自由风光跃然眼前，而标志的电子气息则由bass铸就，在极具"Vicetone"风格的留白把控后步入Drop,真正属于Electron House的极致听感也随之而来。</span></p><p><span style="color: #339966;">游走在风光旖旎的瑰丽平原，登顶生命与热爱齐聚的山巅。</span></p></blockquote><p>——2021-7-26</p>    </div></div><div class='spoiler collapsed'>    <div class='spoiler-title'>        Asi5——QQ音乐    </div>    <div class='spoiler-content'>        <blockquote><p><span style="color: #99cc00;">Nevada被称为封神之作，我认为是不为过的。从一开始的空灵的主旋律起，就仿佛来到了内华达州，在荒凉的沙漠中漫步。个人最喜欢的是这两句歌词：“Are you a wanderer just like me”和“You better know where you‘re going”。这两句歌词经过多次重复，起到了强调的作用，同时也仿佛使我们看到了这样一幅场景：荒凉的沙漠上，一个步履匆匆的旅人远远眺望见了另一个旅行者。志同道合的二人寒暄几句后继而继续向着目的地进发。</span></p></blockquote><p>——2020-12-11</p>    </div></div><div class='spoiler collapsed'>    <div class='spoiler-title'>        懿岱宗凛匡仁——QQ音乐    </div>    <div class='spoiler-content'>        <blockquote><p><span style="color: #339966;">全世界都在等内华达......</span></p></blockquote><p>——2020-11-06</p>    </div></div><div class='spoiler collapsed'>    <div class='spoiler-title'>        HEY纪贺哒——网易云音乐    </div>    <div class='spoiler-content'>        <blockquote><p><span style="color: #008000;">在优酷上看一个十五秒的视频之后的网游广告的BGM是这首，可惜广告不能暂停。错过之后我为了找这音乐把这段视频反复播了20次（当然每次都快进到快结束的地方）才终于又看到同一个广告，赶紧拿出准备好的手机来听歌识曲……终于找到你。</span></p></blockquote><p>——2016-09-19</p>    </div></div><div class='spoiler collapsed'>    <div class='spoiler-title'>        白衣夜行时——知乎    </div>    <div class='spoiler-content'>        <blockquote><p data-first-child="" data-pid="4nQUis7A"><span style="color: #808000;">人生就像一片大海，我们不过都在水中沉浮。</span></p><p data-pid="NpqbGW-z"><span style="color: #808000;">从出生开始，人生就像一段征程，并无太多轻松可言。</span></p><p data-pid="lfvo0QJ6"><span style="color: #808000;">这首歌像是母亲会写给孩子的。我描绘出我所知道的所有险阻，是希望帮助自己的孩子避开它们;层叠的颜色或许已经模糊，也许因为时代变迁，也许因为个性不同遇到的困难不同，甚至因为母亲自己的记忆已经模糊。</span></p><p data-pid="VD-rAm1F"><span style="color: #808000;">因为你将踏上征程，应该是这首歌的题眼了吧。因为你，我的孩子，要踏上漫无边际的人世了，我不得不告诉你这些。</span></p><p data-pid="MsW_i0Xb"><span style="color: #808000;">虽然，你和我一样，是个流浪者（其实在人生的浩瀚海洋中，有谁不是在流浪呢），但我还是希望你能知道自己要去那里。虽然这看起来是个很简单的愿望，可是太多人都要用太多太多年去发现自己真正想做的事情吧。</span></p><p data-pid="zsiLYaRi"><span style="color: #808000;">每次听这首歌，都会想起广阔无边的戈壁沙漠，想起千里黄沙，想起无尽的无解的荒凉，类似无奈，犹像人生。</span></p><p data-pid="9BGsqyhQ"><span style="color: #808000;">最重要的，还是那份电音的纯粹感吧。仿佛可以涤荡去生命中很多黏滞的，拖沓的东西吧。</span></p></blockquote><p>——2017-07-16</p>    </div></div><h2 id="lkii"><a href="#lkii" class="headerlink" title="lkii"></a>lkii</h2><p>因为这首歌入坑Vicetone，这绝对是我单曲循环最多的一首歌。再好吃的东西吃多了也会腻，这么多年过去了Nevada没有以前好听了，但在我心目中Nevada仍然是V神作品中排名第一的一首歌。</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 音乐故事厅 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 音乐 </tag>
+            
+            <tag> 分享 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>视角和景别</title>
+      <link href="/2025/02/19/%E8%A7%86%E8%A7%92%E5%92%8C%E6%99%AF%E5%88%AB/"/>
+      <url>/2025/02/19/%E8%A7%86%E8%A7%92%E5%92%8C%E6%99%AF%E5%88%AB/</url>
+      
+        <content type="html"><![CDATA[<h1>1.<a href="https://baike.baidu.com/item/%E6%8B%8D%E6%91%84%E8%A7%92%E5%BA%A6/5380742">视角</a></h1><h2>1.1.仰视</h2><h3>1.1.1.定义</h3><p>       摄影（像）机从低处向上拍摄。</p><h3>1.1.2.特点</h3><p>       仰摄适于拍摄高处的景物，能够使景物显得更加高大雄伟。用它代表影视人物的视线，有时可以表示对象之间的高低位置。由于透视关系，仰摄使画面中水平线降低，前景和后景中的物体在高度上的对比因之发生变化，使处于前景的物体被突出、被夸大，从而获得特殊的艺术效果。影视教材中常用仰摄镜头，表示人们对英雄人物的歌颂，或对某种对象的敬畏。</p><h6><img src="https://img.redocn.com/sheji/20160718/gaoqingrenwusucaiyangshinan12_6733647.jpg.285.jpg" alt="" width="137" height="270" /></h6><h2>1.2.平视</h2><h3>1.2.1.定义</h3><p>       摄影（像）机与被摄对象处于同一水平线的一种拍摄角度。</p><h3>1.2.2.优点</h3><p>       画面显得端庄，构图具有对称美。用来拍摄气势宏伟的建筑物，给人以正面全貌的印象；拍摄人物，能比较真实地反映人物的正面形象。</p><h3>1.2.3.缺点</h3><p>       立体感差，因此常常借助场面调度，增加画面的纵深感。</p><h6><img src="https://pic.huke88.com/upload/content/2021/08/18/16292649114021.png" alt="" width="248" height="139" /></h6><h2>1.3.俯视</h2><h3>1.3.1.定义</h3><p>       摄影（像）机由高处向下拍摄。</p><h3>1.3.2.特点</h3><p>       俯摄镜头视野开阔，用来表现浩大的场景，有其独到之处。<br />从高角度拍摄，画面中的水平线升高，周围环境得到较充分的表现，而处于前景的物体投影在背景上，人感到它被压近地面，变得矮小而压抑。用俯摄镜头表现反面人物的可憎渺小或展示人物的卑劣行径，在影视片中是极为常见的。</p><h6><img src="https://p0.ifengimg.com/pmop/2017/0928/D9608907C3DCD3A356BAD1814DCBD78B24F242A7_size40_w640_h610.jpeg" alt="" width="202" height="192" /></h6><h1>2.<a href="https://www.163.com/dy/article/H4ML3Q9M0553383E.html">景别</a></h1><p><img src="https://t.huiguer.com/huigucom/2022/09/598bb6326c9541a3badae62c117fd514.jpg" alt="" /></p><h2>2.1.远景</h2><p>       人物通常小于画面高度的一半，甚至为一个点。用于表现宏大、壮观的场面，全方位展示开阔的自然景观及环境。镜头比较客观化。</p><h2>2.2.全景</h2><p>       人物通常小于画面高度的一半，甚至为一个点。用于表现宏大、壮观的场面，全方位展示开阔的自然景观及环境。镜头比较客观化。</p><h2>2.3.中景</h2><p>       是最常用的景别。以人像为例，通常意义上的中景是指人物膝盖以上的部分。是户外新闻采访最常用的景别。因为人们谈话的距离，刚好目光注意力集中在上半身，这是每个人都最习惯的一个视角。用中景可以突出人物状态，如手部动作、面部朝向等。常用来展示富有表现力的情节和动作性很强的局部。中景画面通常用于讲故事，是叙事性的画面，在影视作品中运用中景最多。</p><h2>2.4.近景</h2><p>       指人物胸部以上的部位，上衣第二颗扣子以上的画面，能够更多展示人物面部表情。因为镜头离得近，参与感就很强烈，就好比自己也身临其境，镜头比较主观化。画面视觉范围较小，观察距离相对更近，细节比较清晰，有利于表现人物面部或其他部位的细微动作以及景物的局部状态。近景中的环境退于次要地位，画面构图应尽量简炼，避免杂乱的背景扰乱视线，因此常用长焦镜头拍摄，利用浅景深来虚化背景。人物近景画面用人物局部背影或道具做前景可增加画面的深度、层次和线条结构。</p><h2>2.5.特写</h2><p>       取景只有某个局部，虽然画面不完整，但是它可以放大信息量，让人快速得把注意力集中到这个信息点上，不会被别的东西干扰。特写镜头被摄对象充满画面，有强调加重的含义。正因为特写镜头具有强烈的视觉感受，因此特写镜头不能滥用。要用的恰到好处，用得精，才能起到画龙点睛的作用。滥用会使人厌烦，反而会削弱它的表现力。尤其是脸部大特写（只含五官）应该慎用。</p><h1>3.第二次课后作业</h1><p><div class='spoiler collapsed'>    <div class='spoiler-title'>        远景    </div>    <div class='spoiler-content'>        <img src="https://cloudflare-imgbed-8lm.pages.dev/file/1739936866764_远景.jpg" alt="远景.jpg" width=100% />    </div></div><div class='spoiler collapsed'>    <div class='spoiler-title'>        全景    </div>    <div class='spoiler-content'>        <img src="https://cloudflare-imgbed-8lm.pages.dev/file/1739936861341_全景.jpg" alt="全景.jpg" width=100% />    </div></div><div class='spoiler collapsed'>    <div class='spoiler-title'>        中景    </div>    <div class='spoiler-content'>        <img src="https://cloudflare-imgbed-8lm.pages.dev/file/1739936863598_中景.jpg" alt="中景.jpg" width=100% />    </div></div><div class='spoiler collapsed'>    <div class='spoiler-title'>        近景    </div>    <div class='spoiler-content'>        <img src="https://cloudflare-imgbed-8lm.pages.dev/file/1739936869794_近景.jpg" alt="近景.jpg" width=100% />    </div></div><div class='spoiler collapsed'>    <div class='spoiler-title'>        特写    </div>    <div class='spoiler-content'>        <img src="https://cloudflare-imgbed-8lm.pages.dev/file/1739936864147_特写.jpg" alt="特写.jpg" width=100% />    </div></div></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 摄影 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 选修课 </tag>
+            
+            <tag> 笔记 </tag>
+            
+            <tag> 摄影 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>相机的三大参数</title>
+      <link href="/2025/02/19/%E7%9B%B8%E6%9C%BA%E7%9A%84%E4%B8%89%E5%A4%A7%E5%8F%82%E6%95%B0/"/>
+      <url>/2025/02/19/%E7%9B%B8%E6%9C%BA%E7%9A%84%E4%B8%89%E5%A4%A7%E5%8F%82%E6%95%B0/</url>
+      
+        <content type="html"><![CDATA[<h3 id="1-光圈"><a href="#1-光圈" class="headerlink" title="1.光圈"></a>1.光圈</h3><h3 id="1-1-定义"><a href="#1-1-定义" class="headerlink" title="1.1.定义"></a>1.1.定义</h3><p>对于已经制造好的镜头，我们不可能随意改变镜头的直径，但是我们可以通过在镜头内部加入多边形或者圆形，并且面积可变的孔径光阑来达到控制镜头通光量，这个装置就叫做光圈。<br><img class="" src="https://www.videostar.com/wp-content/uploads/2019/10/101119_0842_2.jpg" alt="|300" width="416" height="227" /></p><h3 id="1-2-效果"><a href="#1-2-效果" class="headerlink" title="1.2.效果"></a>1.2.效果</h3><p>数值越小，光圈越大，进光量越多，画面越亮，景深越浅；<br>数值越大，光圈越小，进光量越少，画面越暗，景深越深。<br>大光圈虚化背景，小光圈前后景都清晰。<br><img class="alignnone" title="大光圈" src="https://tse3-mm.cn.bing.net/th/id/OIP-C.1c5bBHomXJv-7jR5TavNigHaFj?rs=1&amp;pid=ImgDetMain" alt="" width="407" height="305" /> <img class="alignnone" title="小光圈" src="https://ts1.cn.mm.bing.net/th/id/R-C.54d9add23e1237cea0021b1d0cee7aa8?rik=sUPHHhpLoEl3lQ&amp;riu=http%3a%2f%2fimgs.tom.com%2flyzx%2f202005%2fCONTENTC30AB91BB516427F.jpg&amp;ehk=7UF3nHZmgPyVult8Hs3VH%2bOIxlHDG6tZw4hR5bNcc40%3d&amp;risl=&amp;pid=ImgRaw&amp;r=0" alt="" width="326" height="386" /></p><h3 id="2-快门"><a href="#2-快门" class="headerlink" title="2.快门"></a>2.快门</h3><h3 id="2-1-定义"><a href="#2-1-定义" class="headerlink" title="2.1.定义"></a>2.1.定义</h3><p>快门是摄像器材中用来控制光线照射感光元件时间的装置，是控制光线进入相机时间长短的装置，是照相机的一个重要组成部分。</p><img class="alignnone " src="https://ts1.cn.mm.bing.net/th/id/R-C.2deb4964ab177dcff24a466612656e43?rik=yGfSFm1einZT8w&amp;riu=http%3a%2f%2fphotocdn.sohu.com%2f20121109%2fImg357101995.jpg&amp;ehk=gkmdcqNaHSivPD1xV2bErd9lYYHDzYn6IkmIoKoZpoc%3d&amp;risl=&amp;pid=ImgRaw&amp;r=0&amp;sres=1&amp;sresct=1" width="407" height="263" /><h3 id="2-2-效果"><a href="#2-2-效果" class="headerlink" title="2.2.效果"></a>2.2.效果</h3><p>快门开启时间越长，光线进入时间越长，进光量越多；快门开启时间越短，进光量自然越少。<br><strong>快门速度</strong>：单位是秒。<br><strong>快门优先模式</strong>：开启后可以手动设置快门速度，相机自动匹配光圈数值。<br><strong>安全快门速度</strong>：拍摄照片不会拍虚的最低快门速度，对于全画幅相机，安全快门速度＝1&#x2F;焦距。<br><strong>快速（高速）快门</strong>：用于凝固运动瞬间，有利于连拍。<br><strong>慢速快门</strong>：用于记录运动轨迹，用慢速快门需要固定相机（防止画面虚掉）。<br><img class="alignnone" title="快速快门" src="https://ts1.cn.mm.bing.net/th/id/R-C.c27813311f179a1e1c75ddba0e6cc469?rik=Ud4hRH%2feTNiySw&amp;riu=http%3a%2f%2fimg.fotomen.cn%2f2015%2f02%2f9ff4cdb3de748c82cfad12e402e3483d.jpeg&amp;ehk=d%2bE0KxHE2sxk8bMRljXQyE4F5NJHAJ8FPgaXJXCEIHQ%3d&amp;risl=&amp;pid=ImgRaw&amp;r=0" alt="" width="338" height="250" /> <img class="alignnone" title="慢速快门" src="https://pic4.zhimg.com/v2-1134a9a3d66a215075c88dbd3131b105_r.jpg" alt="" width="396" height="254" /></p><h3 id="3-感光度"><a href="#3-感光度" class="headerlink" title="3.感光度"></a>3.感光度</h3><h3 id="3-1-定义"><a href="#3-1-定义" class="headerlink" title="3.1.定义"></a>3.1.定义</h3><p>感光度又称为ISO，是指相机感光元件对光线的敏感程度。</p><h3 id="3-2-效果"><a href="#3-2-效果" class="headerlink" title="3.2.效果"></a>3.2.效果</h3><p><strong>作用</strong>：在弱光环境下，提高感光度数值可以增加曝光量使画面更亮。<br><strong>高感光度</strong>：能在弱光环境下拍摄，但画面的噪点多、画质差。<br><strong>低感光度</strong>：能获得画面清晰、细节表现细腻、富有层次感的效果。但需要足够好的光照条件。<br><img class="alignnone" title="高感光度" src="https://img.zcool.cn/community/015ca95e056794a8012165182b3f17.png" alt="高感光度" width="341" height="228" /><img class="alignnone" title="低感光度" src="https://tse1-mm.cn.bing.net/th/id/OIP-C.M1-r4_8yvkWb9afmrzmfYgHaE8?rs=1&amp;pid=ImgDetMain" alt="" width="343" height="228" /></p><h3 id="3-3-建议"><a href="#3-3-建议" class="headerlink" title="3.3.建议"></a>3.3.建议</h3><p>尽可能使用低ISO拍摄，光照不好可适当升高ISO，如果要拍老照片风格可以提高感光度使照片噪点增加。</p><h3 id="4-第一节课课后作业"><a href="#4-第一节课课后作业" class="headerlink" title="4.第一节课课后作业"></a>4.第一节课课后作业</h3><img src="https://cloudflare-imgbed-8lm.pages.dev/file/1739935610287_image.png" /><div class='spoiler collapsed'>    <div class='spoiler-title'>        <strong>参数</strong>（点击查看）    </div>    <div class='spoiler-content'>        <p>光圈：f&#x2F;1.68<br>快门：1&#x2F;100s<br>感光度：144</p>    </div></div><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 摄影 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 选修课 </tag>
+            
+            <tag> 笔记 </tag>
+            
+            <tag> 摄影 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>巴纳姆效应的启示</title>
+      <link href="/2025/02/19/%E5%B7%B4%E7%BA%B3%E5%A7%86%E6%95%88%E5%BA%94%E7%9A%84%E5%90%AF%E7%A4%BA/"/>
+      <url>/2025/02/19/%E5%B7%B4%E7%BA%B3%E5%A7%86%E6%95%88%E5%BA%94%E7%9A%84%E5%90%AF%E7%A4%BA/</url>
+      
+        <content type="html"><![CDATA[<p>‌‌‌‌　　在青年心理学的学习中，让我感触颇深的地方有很多：德西效应，布里丹之驴，巴纳姆效应，爱情三元论，爱之图示，人际交往中的情绪互动规则，报答的相互性原则，沟通漏斗，行为心理学……其中令我记忆深刻的是<a href="http://111.229.28.209/%e5%b7%b4%e7%ba%b3%e5%a7%86%e6%95%88%e5%ba%94/">巴纳姆效应</a>，这是我的感悟。<br />‌‌‌‌　　巴纳姆效应是一个很有趣的心理现象，巴纳姆效应是指人们常常认为一种笼统的、一般性的人格描述十分准确地揭示了自己的特点，当人们用一些普通、含糊不清、广泛的形容词来描述一个人的时候，人们往往很容易就接受这些描述，并认为描述中所说的就是自己。正如一位名叫肖曼·巴纳姆的著名杂技师在评价自己的表演时说，他之所以很受欢迎是因为节目中包含了每个人都喜欢的成分，所以他使得“每一分钟都有人上当受骗”。记得上青年心理学课程时，老师提到过这个概念，解释了为什么很多人相信星座、算命，因为那些话是放在任何人身上都行的描述，这是巴纳姆效应给我带来的第一次恍然大悟。但直到我开始观察自己和周围人的行为时，我才真正体会到它的力量。</p><p>‌‌‌‌　　对我来说，巴纳姆效应就像是一面镜子，反映了我们内心对自我的认知和期待。我曾经被朋友称赞为“聪明”、“有趣”和“善良”，这些表面上的赞美让我感到很受鼓舞，同时也让我思考自己到底是不是真的拥有这些品质。在某种程度上，我发现自己更容易相信别人的评价，而不是自己的直觉。然后我细想，如果把这些评价放在其他人身上呢，只要时机比较合适，好像大多数人都会接受这个评价，这是一个笼统的、抽象的评价。同时让我反思自己为什么会同意这些评价？因为这是我自己期待得到的评价啊，我为什么期待这些评价？因为我在意这些，不免让我想到了老师讲的关于阿德勒论自卑的知识，我更加的看清了我自己。</p><p>‌‌‌‌　　在生活中，我经常看到巴纳姆效应的身影。比如，有一次我参加了一个团队活动，组员们互相描述彼此的个性特点。我发现大家往往会用一些模糊而广泛的词语来形容对方，比如“勇敢”、“有责任感”等。而当他们听到这些描述时，总是会点头称是，仿佛这些词语完美地契合了自己的形象。这给我社交带来了启示：根据老师讲的社会交换原则和报答的相互性原则，社交中我需要让别人对我有好感我就要表达我对别人有好感，我们需要一些词语去赞美对方的优点，然而赞美并不是一件容易的事情。这时候巴纳姆效应给我提供了思路，可以用一些模糊的，大家都认可的词去赞美对方，这样还不会因为赞美的词语不合适引起反感。</p><p>‌‌‌‌　　我也意识到巴纳姆效应并不总是负面的。有时候，这种自我认知的偏差可以带来积极的影响。比如，当我们相信自己有能力完成一项任务时，我们可能会更有动力去实现它。这种自信和自我认知的塑造，也可以激发我们的潜能，让我们变得更加自信。我认同了一些积极的描述词，表示我对自己的认同，这种认同会促使我往这方面努力做到，不知不觉中向着提升自己的方向发展。</p><p>‌‌‌‌　　然而，我也意识到巴纳姆效应可能会让我们陷入盲目自信的陷阱。当我们过分相信别人的评价，而忽视自己的实际情况时，我们就容易陷入自我欺骗的状态。这可能会导致我们低估自己的能力，或者高估自己的表现，从而影响到我们的学习和成长。也有一些消极的评价会使我们焦虑，在一个心理学家对巴纳姆效应的测试中曾经用过这些评价：<br />‌‌‌‌　　“你看似强硬、严格自律的外在却掩盖着不安与忧虑的内心。”<br />‌‌‌‌　　“很多时候你都质疑自己的决定”<br />‌‌‌‌　　“你喜欢一定程度的变动并在受限时感到不满。”<br />‌‌‌‌　　“你为自己是独立思想者而骄傲。”<br />‌‌‌‌　　如果过多关注一些让人忧虑的并深信不疑评价是不好的，我们要知道这是符合大多数人的笼统的评价。</p><p>‌‌‌‌　　巴纳姆效应是一个复杂而深刻的心理现象，它影响着我们的自我认知和行为。通过学习和理解这一概念，我更加清晰地认识到了自己，也更加谨慎地对待他人的评价。在未来的生活中，我会努力保持理性思考，更多的去关注青年心理学中所讲的道理在现实中的体现个应用。</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 青年心理学 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 选修课 </tag>
+            
+            <tag> 心理学 </tag>
+            
+            <tag> 作业 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>认知图式理论——爱之图</title>
+      <link href="/2025/02/19/%E8%AE%A4%E7%9F%A5%E5%9B%BE%E5%BC%8F%E7%90%86%E8%AE%BA%E2%80%94%E2%80%94%E7%88%B1%E4%B9%8B%E5%9B%BE/"/>
+      <url>/2025/02/19/%E8%AE%A4%E7%9F%A5%E5%9B%BE%E5%BC%8F%E7%90%86%E8%AE%BA%E2%80%94%E2%80%94%E7%88%B1%E4%B9%8B%E5%9B%BE/</url>
+      
+        <content type="html"><![CDATA[<p>‌‌‌‌　　爱之图，每个人的大脑深处早有一副相爱之人的图画。而后来心理学界的研究，进一步细化了爱之图的影响来源。幼年时期，促进你快乐、依赖情绪的人，会构成你大脑中的爱之图。</p><p>‌‌‌‌　　第一，来自父母。也就是你对父母的亲密和依赖，让你形成了以父母为原型的爱之图。</p><p>‌‌‌‌　　第二，其他家人朋友包括师长。比如你曾经有一位特别喜欢的小学老师，让你产生了强烈的亲近愿望，那么Ta的某些元素，也可能会成为你爱之图的因素。</p><p>‌‌‌‌　　第三，明星或影视人物。比如电影中某个特别有魅力的角色，让你朝思暮想。</p><p>‌‌‌‌　　然后大家成年之后，就带着自己脑海中的“爱之图”行走与人世间，一旦遇上和你心中爱之图形象气质吻合的人，你就会强烈的想要靠近，一见钟情，也就发生了。</p><p>‌‌‌‌　　这种理论认为，男人和女人各自把所梦想的对象特征储存于大脑之中，就像把数据储存于软盘中一样，称之为“爱之图”。原来，这张图最早由父母勾画，并不断受到外界因素的修正与补充。<br /><strong>女性的择偶标准受到父亲的影响，男性的择偶标准受到母亲的影响。</strong><br /><em>比如女生喜欢长得胖的男生，很可能她的父亲肥胖</em><br />‌‌‌‌　　研究表明，“爱之图”的细致与独特是其他人难以理解的，因而出现有人喜欢甲而讨厌乙，但客观地讲似乎乙的条件更好一些的怪现象，如有的女性喜欢大胡子的男人，有的则对白白净净的小生格外垂青。</p><p>‌‌‌‌　　有爱之图的一见钟情，其实就是“爱情+亲情”的婚恋模式，只是它不是近亲，避免了遗传的缺陷，而又是“近亲”，因为对象还是“亲人”，是自己真正亲人的替身。这位类似自己最亲的亲人的替身，无疑会让自己回归那美好的幼年受到亲人的疼爱、呵护，自己有充分的安全、满足和愉悦感，而同时跟现时的恋人在一起，又有了性愉悦的参与，那感觉真是又亲又爱，幼年的体验和现时的感受叠加在一起，形成了“性爱+情爱+亲情”这一爱情最丰满的模式。</p><p>‌‌‌‌　　<a href="https://baike.baidu.com/item/%E8%AE%A4%E7%9F%A5%E5%9B%BE%E5%BC%8F/4705317">百度百科</a><br />‌‌‌‌　　<a href="https://zh.wikipedia.org/wiki/%E8%AA%8D%E7%9F%A5%E7%99%BC%E5%B1%95%E8%AB%96">维基百科</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 爱情心理学 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 选修课 </tag>
+            
+            <tag> 心理学 </tag>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>弗洛姆对爱的论述</title>
+      <link href="/2025/02/19/%E5%BC%97%E6%B4%9B%E5%A7%86%E5%AF%B9%E7%88%B1%E7%9A%84%E8%AE%BA%E8%BF%B0/"/>
+      <url>/2025/02/19/%E5%BC%97%E6%B4%9B%E5%A7%86%E5%AF%B9%E7%88%B1%E7%9A%84%E8%AE%BA%E8%BF%B0/</url>
+      
+        <content type="html"><![CDATA[<p><strong>爱</strong>是人与人之间的创造力，而不是感情。<br /><strong>把</strong>各种经常来当作“真爱”的证明的自恋神经症和性虐待倾向区别开来。<br />例如：”我爱你是因为我爱我自己。“ 屁话，你爱的是一种感觉，爱别人的感觉，满足自己的自恋自卑。<br /><strong>幼</strong>稚的爱是”我爱你，因为我需要你。” 而成熟的爱是“我需要你，因为我爱你。”<br />例如：“墙，想谈恋爱了，找一个……” 为了得到爱而爱 还是 因为爱而得到爱？幼稚的爱。<br /><strong>爱</strong>的五种形式：博爱、母爱、性爱、自爱、神爱。<br /><strong>弗</strong>洛姆相信爱的本质有四大元素： 关怀、责任、尊重和了解。<br />弗洛姆著作<a href="https://pan.xunlei.com/s/VNsqtYy6WAm0sgG7N2ljSVxhA1?pwd=axyr">《爱的艺术》</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 爱情心理学 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 选修课 </tag>
+            
+            <tag> 心理学 </tag>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>伯纳德默斯坦SVR理论</title>
+      <link href="/2025/02/19/%E4%BC%AF%E7%BA%B3%E5%BE%B7%E9%BB%98%E6%96%AF%E5%9D%A6SVR%E7%90%86%E8%AE%BA/"/>
+      <url>/2025/02/19/%E4%BC%AF%E7%BA%B3%E5%BE%B7%E9%BB%98%E6%96%AF%E5%9D%A6SVR%E7%90%86%E8%AE%BA/</url>
+      
+        <content type="html"><![CDATA[<p>心理学家莫斯特因（Murstein）的“<strong>SVR理论</strong>”中，认为两人从认识到结婚，分为三个阶段：</p><p><strong>S阶段（刺激阶段）：</strong> 受到对方外表、行为、性格等刺激；（Stimulus）</p><p><strong>V阶段（价值阶段）：</strong> 思维方式和行为模式相似，对感情顺利发展很重要；（Value）</p><p><strong>R阶段（角色阶段）：</strong> 分配角色、相互补充。（Role）</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 爱情心理学 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 选修课 </tag>
+            
+            <tag> 心理学 </tag>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>爱情投资理论</title>
+      <link href="/2025/02/19/%E7%88%B1%E6%83%85%E6%8A%95%E8%B5%84%E7%90%86%E8%AE%BA/"/>
+      <url>/2025/02/19/%E7%88%B1%E6%83%85%E6%8A%95%E8%B5%84%E7%90%86%E8%AE%BA/</url>
+      
+        <content type="html"><![CDATA[<p>‌‌‌‌　　爱是无私的，但爱情不是<br />‌‌‌‌　　心理学家卡莉尔·布鲁斯尔曾提出一个爱情投资模式理论，即<strong>承诺=满意度＋投资－替代项</strong>。<br />‌‌‌‌　　<strong>承诺</strong>：个人是否希望维系亲密关系，并对此在心理上的依恋程度。<br />‌‌‌‌　　<strong>满意度</strong>：伴侣对我们的满意程度。既包括精神上的，也包括物质上的。它是伴侣个人对我们的主观评价。<br />‌‌‌‌　　<strong>投资</strong>：伴侣在这段情感关系中的投入，沉没成本效应投资越多越不容易放弃。<br />‌‌‌‌　　<strong>替代项</strong>：我们的位置是否容易被替代。</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 爱情心理学 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 选修课 </tag>
+            
+            <tag> 心理学 </tag>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>爱情四阶段论</title>
+      <link href="/2025/02/19/%E7%88%B1%E6%83%85%E5%9B%9B%E9%98%B6%E6%AE%B5%E8%AE%BA/"/>
+      <url>/2025/02/19/%E7%88%B1%E6%83%85%E5%9B%9B%E9%98%B6%E6%AE%B5%E8%AE%BA/</url>
+      
+        <content type="html"><![CDATA[<p>共存、反依赖、独立、共生。<br /><strong>共存</strong>：天天黏在一起。<br /><strong>反依赖</strong>：感情稳定以后，通常就会有一方想要有多一点时间做自己的事，给自己留空间不想天天黏一起。此时为易产生矛盾的阶段。<br />注意<strong>男性一般比女性更早进入反依赖，此时男性要等一等女性，女性要理解男性 并不是他不爱你了 而是他比你提前进入反依赖 你以后也会这样</strong>。<br /><strong>独立</strong>：两个人都进入反依赖后，看到了彼此的差异和对方暴露出来的缺点和不足。首先，我们需要认知到的是独立不意味着“不爱”，也并不意味着“疏远”，恰如其分的独立，能让彼此感受到互信互赖，也互相尊重。一旦有一方“错误解读了独立”，执着于亲密无间，就会发生冲突，一方抓得越紧，另一方势必会逃得越远。<br />最佳的状态是，双方都有自己的事业和爱好，双方为共同目标所创造的价值，都能被对方看到和感受到，保持“亲密有间”<br /><strong>共生</strong>：接纳对方，达成默契。</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 爱情心理学 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 选修课 </tag>
+            
+            <tag> 心理学 </tag>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>爱情三元论</title>
+      <link href="/2025/02/19/%E7%88%B1%E6%83%85%E4%B8%89%E5%85%83%E8%AE%BA/"/>
+      <url>/2025/02/19/%E7%88%B1%E6%83%85%E4%B8%89%E5%85%83%E8%AE%BA/</url>
+      
+        <content type="html"><![CDATA[<p>罗伯特·斯腾伯格(Robert．Sternberg)于1986年提出爱情的三元理论，也叫爱情三因论，他认为爱情应该有三个核心成分，亲密(intimacy)、激情(passion)和承诺（或称责任）(commitment)<img src="https://pic3.zhimg.com/v2-63184607195d4814d3691f757f0f7dce_b.jpg" alt="|325" /><img src="https://pic1.zhimg.com/v2-4b4293f7c1c3ffc1859f61a032d5a910_r.jpg" alt="|275" /></p><p>其中，<br /><strong>激情</strong> （Passion）： 激情可以与生理唤醒或情绪刺激相关。定义：</p><p>1.对某事或做某事的强烈的热情或兴奋感。<br />2.使人以危险的方式行动的强烈感情（如愤怒）。<br />3.对某人强烈的性或浪漫的感觉<br /><strong>亲密</strong> （Intimacy）： 亲密关系被描述为亲密和彼此依恋的感觉。它可以巩固两个个体之间存在的紧密纽带。此外亲密感有助于创造彼此安逸的感觉，因为双方在感情上是相互的。</p><p>亲密关系主要定义为个人、私人的事物或亲近。</p><p><strong>承诺</strong> （Commitment）： 与其他两个概念不同，承诺涉及有意识地决定彼此坚持。继续承诺决定主要取决于伴侣从关系中获得的满意程度。承诺在英文中以以下三种方式定义：</p><p>1.承诺去做某事或给予某物<br />2.承诺忠于某人或某事<br />3.非常努力地工作或支持某事的人的态度</p><p><a href="https://baike.baidu.com/item/%E7%88%B1%E6%83%85%E4%B8%89%E8%A7%92%E7%90%86%E8%AE%BA/2143326">百度百科</a><br /><a href="https://zhuanlan.zhihu.com/p/373767692">知乎</a><br /><a href="https://zh.wikipedia.org/wiki/%E7%88%B1%E6%83%85%E4%B8%89%E5%9B%A0%E8%AE%BA">维基百科</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 爱情心理学 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 选修课 </tag>
+            
+            <tag> 心理学 </tag>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>有限理性</title>
+      <link href="/2025/02/18/%E6%9C%89%E9%99%90%E7%90%86%E6%80%A7/"/>
+      <url>/2025/02/18/%E6%9C%89%E9%99%90%E7%90%86%E6%80%A7/</url>
+      
+        <content type="html"><![CDATA[<p>一名卖家向一名买家出售一种商品，由于信息不对称，买家不知道商品的真实价值，而卖家知道且能够根据商品的真实价值选择不同的定价策略。进一步地，买家有两种不同的类型，卖家生产商品的成本由真实价值和买家类型共同决定，因此卖家有动力去区分不同的买家。但在买家完全理性的情况下，卖家并不能有效地将高成本的买家有效地排除出去，因此无法实现理论上的最高利润。</p><p>我们注意到，如果买家是完全理性的，那么他总可以根据卖家的定价策略和实际给出的售价，通过贝叶斯更新得出商品价值的后验分布，并理性地决定买或者不买。由于卖家的定价策略的任意性，这种理性的买或不买的决定并不一定是单调的：比如说，也许存在高中低三个价格，当观察到高价时，商品的期望价值很高因此可以买，当观察到低价时，商品的期望价值较低但仍高于售价，因此也可以买，但在中间这个价格时，商品的期望价值反而低于售价因此不能买。</p><p>因此，为了让卖家实现有效排除并提高利润，Rubinstein进一步假设，高成本的买家受到“有限理性”的限制，只能采取“阈值策略”(Threshold Strategy)：这类买家不能任意地根据售价决定买还是不买，而是只能选定一个“阈值”，在阈值以上总是做同一个决定，在阈值以下也总是做同一个决定。在这一前提下，卖家可以任意地接近理论上的最高利润，即高成本的买家几乎都被有效地排除了。<br />20世纪40年代，赫伯特·亚历山大·西蒙详尽而深刻地指出了新古典经济学理论的不现实之处，分析了它的两个致命弱点</p><p>（1）假定目前状况与未来变化具有必然的一致性；</p><p>（2）假定全部可供选择的“备选方案”和“策略”的可能结果都是已知的。而事实上这些都是不可能的。西蒙的分析结论使整个新古典经济学理论和管理学理论失去了存在的基础。西蒙指出传统经济理论假定了一种“经济人”。他们具有“经济”特征，具备所处环境的知识即使不是绝对完备，至少也相当丰富和透彻；他们还具有一个很有条理的、稳定的偏好体系，并拥有很强的计算能力，靠此能计算出在他们的备选行动方案中，哪个可以达到尺寸上的最高点。西蒙认为人们在决定过程中寻找的并非是“最大”或“最优”的标准，而只是“满意”的标准。<br /><a href="https://baike.baidu.com/item/%E6%9C%89%E9%99%90%E7%90%86%E6%80%A7/1125108">百度百科</a><br /><a href="https://en.wikipedia.org/wiki/Bounded_rationality">维基百科</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 青年心理学 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 选修课 </tag>
+            
+            <tag> 心理学 </tag>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>无压力屈从——登门坎效应</title>
+      <link href="/2025/02/18/%E6%97%A0%E5%8E%8B%E5%8A%9B%E5%B1%88%E4%BB%8E%E2%80%94%E2%80%94%E7%99%BB%E9%97%A8%E5%9D%8E%E6%95%88%E5%BA%94/"/>
+      <url>/2025/02/18/%E6%97%A0%E5%8E%8B%E5%8A%9B%E5%B1%88%E4%BB%8E%E2%80%94%E2%80%94%E7%99%BB%E9%97%A8%E5%9D%8E%E6%95%88%E5%BA%94/</url>
+      
+        <content type="html"><![CDATA[<p>派人随机访问一组家庭主妇，要求她们将一个小招牌挂在她们家的窗户上，这些家庭主妇愉快地同意了。过了一段时间，再次访问这组家庭主妇，要求将一个不仅大而且不太美观的招牌放在庭院里，结果有超过半数的家庭主妇同意了。与此同时，派人又随机访问另一组家庭主妇，直接提出将不仅大而且不太美观的招牌放在庭院里，结果只有不足20%的家庭主妇同意。</p><p>实验者让助手到两个居民区劝人在房前竖一块写有“小心驾驶”的大标语牌。在第一个居民区向人们直接提出这个要求，结果遭到很多居民的拒绝，接受的仅为被要求者的17%。在第二个居民区，先请求各居民在一份赞成安全行驶的请愿书上签字，这是很容易做到的小小要求，几乎所有的被要求者都照办了。几周后再向他们提出竖牌的要求，结果接受者竟占被要求者的55%。</p><p><strong>       登门槛效应（Foot In The Door Effect）又称 得寸进尺效应 ，是指一个人一旦接受了他人的一个微不足道的要求，为了避免认知上的 不协调 ，或想给他人以前后一致的印象，就有可能接受更大的要求。</strong><br /><a href="https://zh.wikipedia.org/wiki/%E5%BE%97%E5%AF%B8%E8%BF%9B%E5%B0%BA%E6%B3%95">维基百科</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 青年心理学 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 选修课 </tag>
+            
+            <tag> 心理学 </tag>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>德西效应</title>
+      <link href="/2025/02/18/%E5%BE%B7%E8%A5%BF%E6%95%88%E5%BA%94/"/>
+      <url>/2025/02/18/%E5%BE%B7%E8%A5%BF%E6%95%88%E5%BA%94/</url>
+      
+        <content type="html"><![CDATA[<p>一位老人在一个小乡村里休养，但附近却住着一些十分顽皮的孩子，他们天天互相追逐打闹，喧哗的吵闹声使老人无法好好休息，在屡禁不止的情况下，老人想出了一个办法——他把孩子们都叫到一起，告诉他们谁叫的声音越大，谁得到的奖励就越多，他每次都根据孩子们吵闹的情况给予不同的奖励。到孩子们已经习惯于获取奖励的时候，老人开始逐渐减少所给的奖励，最后无论孩子们怎么吵，老人一分钱也不给。</p><p>结果，孩子们认为受到的待遇越来越不公正，认为“不给钱了谁还给你叫”，再也不到老人所住的房子附近大声吵闹了。</p><p><strong>       人的动机分两种：内部动机、和外部动机。如果按内部动机去行动，我们就是自己的主人。如果驱使我们的是外部动机，我们就会被外部因素所左右，成为它的奴隶。老人的算计很简单，就是将孩子们的内部动机———“快乐地玩”———变成了外部动机———“为美分玩”，而他操纵着外部因素，所以也操纵了孩子们的行为。当有一天满足不了孩子的愿望了，自然就有办法对付这些顽皮的孩子了。</strong><br /><strong>德西效应（Westerners effect）认为适度的奖励有利于巩固个体的内在动机，但过多的奖励却有可能降低个体对事情本身的兴趣．降低其内在动机。</strong><br />（领导不要奖励下属的兴趣）<br /><a href="https://zhuanlan.zhihu.com/p/580973944">知乎</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 青年心理学 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 选修课 </tag>
+            
+            <tag> 心理学 </tag>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>布里丹之驴</title>
+      <link href="/2025/02/18/%E5%B8%83%E9%87%8C%E4%B8%B9%E4%B9%8B%E9%A9%B4/"/>
+      <url>/2025/02/18/%E5%B8%83%E9%87%8C%E4%B8%B9%E4%B9%8B%E9%A9%B4/</url>
+      
+        <content type="html"><![CDATA[<p>在哲学史上，有一头著名的驴子，叫做“布利丹的驴子”，它和别的驴不一样，它喜欢思考，凡事总喜欢问为什么。有一次，主人在它面前放了两捆一样的草料让他吃，这下可把它难住了，因为两捆草料同样鲜嫩，它不知道该先吃哪一捆，犹豫不决，最后，这头驴面对两捆草料饿死了。选择永远是件痛苦的事，所以我们应该懂得机会成本，来帮助我们更好的选择。<br /><a href="https://en.wikipedia.org/wiki/Buridan%27s_ass">维基百科</a><br />有时候选择更多意味着选择更少<br />所以我们需要<a href="https://liukun1111.github.io/2025/02/18/you-xian-li-xing/">有限理性</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 青年心理学 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 选修课 </tag>
+            
+            <tag> 心理学 </tag>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>巴纳姆效应</title>
+      <link href="/2025/02/18/%E5%B7%B4%E7%BA%B3%E5%A7%86%E6%95%88%E5%BA%94/"/>
+      <url>/2025/02/18/%E5%B7%B4%E7%BA%B3%E5%A7%86%E6%95%88%E5%BA%94/</url>
+      
+        <content type="html"><![CDATA[<p>1948年由心理学家<strong>伯特伦·福勒</strong>对他的学生做的一个实验得出的结果。</p><p>他给每个学生都发了一份“个人分析”测验结果表，要求学生对测验结果表与自身特质的契合度进行评分，0分最低，5分最高（事实上，福勒给每个学生发的都是同样的测验结果表，见下表：</p><p><img src="https://pic3.zhimg.com/80/v2-df15f3060164ab346318e1c509b9aafe_1440w.webp" alt="" /></p><p>测验结果表</p><p>不出福勒教授所料，学生交上去的结果，平均评分是4.26。</p><p>在评分结束之后，福勒才告诉大家，其实上述这些测试都是随便从星座与人格关系的描述中搜集出的一些广泛的内容结论。<br /><strong>巴纳姆效应是指人们常常认为一种笼统的、一般性的人格描述十分准确地揭示了自己的特点，当人们用一些普通、含糊不清、广泛的形容词来描述一个人的时候，人们往往很容易就接受这些描述，并认为描述中所说的就是自己。正如一位名叫肖曼·巴纳姆的著名杂技师在评价自己的表演时说，他之所以很受欢迎是因为节目中包含了每个人都喜欢的成分，所以他使得“每一分钟都有人上当受骗”。20世纪50年代，心理学家保罗·米尔以著名的美国马戏团艺人菲尼亚斯·泰勒·巴纳姆的名字将福勒的实验结果命名为“巴纳姆效应”。巴纳姆效应解释了为什么有很多人在请教过算命先生后都认为算命先生说得“很准”，因为那些求助算命的人本身就有易受暗示的特点，而事实上算命先生对每个人说的都是差不多的内容，都是一些笼统的、一般性的概括和描述。</strong><br /><a href="https://zh.wikipedia.org/zh-cn/%E5%B7%B4%E7%B4%8D%E5%A7%86%E6%95%88%E6%87%89">维基百科</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 青年心理学 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 选修课 </tag>
+            
+            <tag> 心理学 </tag>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>文章！文章！</title>
+      <link href="/2025/02/18/%E6%96%87%E7%AB%A0%EF%BC%81%E6%96%87%E7%AB%A0%EF%BC%81/"/>
+      <url>/2025/02/18/%E6%96%87%E7%AB%A0%EF%BC%81%E6%96%87%E7%AB%A0%EF%BC%81/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>简介</p></blockquote><p>什么？</p><span id="more"></span><p>图片</p><p>还没有文章，刘笋在写文章中</p><p>参考</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 测试 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Banner</title>
+      <link href="/2025/02/17/Banner/"/>
+      <url>/2025/02/17/Banner/</url>
+      
+        <content type="html"><![CDATA[<p>［n］横幅</p><p>网页的Banner是指一种横跨于网页上的矩形公告牌，通常用于展示广告内容或重要信息。‌Banner可以是静态的图像，也可以是动态的图像序列，常见的形式包括静态Banner和动态Banner。静态Banner通常出现在网页的顶部和底部，用于宣传和引导用户点击；而动态Banner则常以轮播图的形式出现，具有更好的交互效果，能够吸引用户的注意并促进互动。</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>VISA</title>
+      <link href="/2025/02/16/VISA/"/>
+      <url>/2025/02/16/VISA/</url>
+      
+        <content type="html"><![CDATA[<p>美国的信用卡牌子，visa卡支持外币支付。同类还有万事达MasterCard</p><p><a href="https://baike.baidu.com/item/VISA/60281">VISA——百度百科</a></p><p><a href="https://baike.baidu.com/item/%E4%B8%87%E4%BA%8B%E8%BE%BE%E5%8D%A1/6834979">万事达卡——百度百科</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>避谶</title>
+      <link href="/2025/02/15/%E9%81%BF%E8%B0%B6/"/>
+      <url>/2025/02/15/%E9%81%BF%E8%B0%B6/</url>
+      
+        <content type="html"><![CDATA[<p>bìchèn，说话的时候避开一些不好的诅咒人的句子，比如少说“笑死我了”、“气死我了”这类话，科目二临考试前不要说“挂”这个字，都叫避谶。</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>一辈子吃不上四个菜</title>
+      <link href="/2025/02/12/%E4%B8%80%E8%BE%88%E5%AD%90%E5%90%83%E4%B8%8D%E4%B8%8A%E5%9B%9B%E4%B8%AA%E8%8F%9C/"/>
+      <url>/2025/02/12/%E4%B8%80%E8%BE%88%E5%AD%90%E5%90%83%E4%B8%8D%E4%B8%8A%E5%9B%9B%E4%B8%AA%E8%8F%9C/</url>
+      
+        <content type="html"><![CDATA[<p>一辈子吃不上四个菜指的是自己结婚喜宴，生病床前菜，自己小孩满月宴，去世后代上供菜（p.s.不婚主义怎么你了？）</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>马后炮为什么引申出“事后诸葛亮”的贬义</title>
+      <link href="/2025/02/11/%E9%A9%AC%E5%90%8E%E7%82%AE%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BC%95%E7%94%B3%E5%87%BA%E2%80%9C%E4%BA%8B%E5%90%8E%E8%AF%B8%E8%91%9B%E4%BA%AE%E2%80%9D%E7%9A%84%E8%B4%AC%E4%B9%89/"/>
+      <url>/2025/02/11/%E9%A9%AC%E5%90%8E%E7%82%AE%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BC%95%E7%94%B3%E5%87%BA%E2%80%9C%E4%BA%8B%E5%90%8E%E8%AF%B8%E8%91%9B%E4%BA%AE%E2%80%9D%E7%9A%84%E8%B4%AC%E4%B9%89/</url>
+      
+        <content type="html"><![CDATA[<p>user:马后炮是什么意思？</p><p>deepseek:“马后炮”是一个中文俗语，通常用来形容**事后才提出建议、采取行动或发表意见，但对已经发生的事情毫无帮助**的行为。其含义类似于“事后诸葛亮”，带有一定的贬义，暗指说话者缺乏预见性，只在事情发生后显得聪明或积极，却无法改变结果。### 词源解析这个词源自**中国象棋**的术语：- **“马”**和**“炮”**是象棋中的两种棋子，炮的攻击需要“隔山打牛”（借助一个棋子作为炮架）。- 如果对方已移动了关键棋子（如“马”），再使用“炮”去攻击时，往往为时已晚，无法挽回局势。因此用“马后炮”比喻行动滞后、无效的事后补救。---### 使用场景与例句1. **批评事后无效的建议**     - 例：比赛都输了，你才说该换战术，这不是马后炮吗？  2. **讽刺缺乏预见性**     - 例：他总在项目失败后指责团队，典型的马后炮。  3. **自嘲或幽默**     - 例：哎呀，我又当了一回马后炮，早知道该听你的！---### 近义词- **事后诸葛亮**：事情发生后自称早有预见（更强调“显摆聪明”）。  - **放空炮**：说空话不行动。  - **亡羊补牢**：虽为事后补救，但此词偏褒义，强调及时改正。---### 文化延伸“马后炮”反映了中国文化中对**未雨绸缪**和**及时行动**的重视，批评那些缺乏主动性、仅在事后表现积极的行为。与之相对的俗语如**“笨鸟先飞”**（能力不足者提前行动）则倡导提早准备。</p><p>user:为什么会有这样的引申义呢？在象棋中马后炮是一种象棋杀招，马炮配合威力大让人难以招架，为什么马后炮会引申出这样一个贬义词呢？</p><p>deepseek:“马后炮”从象棋术语演变为贬义俗语，看似矛盾，实则体现了语言隐喻的巧妙转化。其背后的逻辑和文化内涵可通过以下几点深入解析：---### 一、象棋术语中的“马后炮”为何被赋予贬义？1. **时机错位的隐喻**     在象棋中，“马后炮”虽是杀招，但**必须精准卡在对方“将/帅”无法逃脱的位置**。若敌方已移动关键棋子（如“将”已避开攻击路线），此时再摆出“马后炮”，看似招式凌厉，实则**错过最佳时机，攻击无效**。这种“招式正确但时机错误”的特性，被抽象为“事后补救却无实际作用”的贬义。2. **战术的“滞后性”被放大**     象棋高手常强调“走一步看三步”，而“马后炮”作为终局杀招，需前期布局配合。若棋手在局势已定后才想起用此招，反而暴露其**缺乏前瞻性**，与俗语中“事后才显聪明”的行为形成类比。---### 二、语言演变的“反差式隐喻”汉语俗语常通过**反差对比**制造讽刺效果：- **原义与引申义的反差**：用象棋中本应“主动进攻”的杀招，反讽现实中“被动滞后”的行为，形成强烈对比，增强语言表现力。- **文化心理的投射**：中国文化重视“未雨绸缪”（如“宜未雨而绸缪，毋临渴而掘井”），对“事后诸葛亮”的批评天然带有道德评判色彩，“马后炮”的贬义化正是这种价值观的体现。---### 三、与其他俗语的联动强化“马后炮”并非孤立存在，它与以下表达共同构成“事后聪明”的语义网络：1. **“事后诸葛亮”**：直接讽刺事后冒充先知（诸葛亮象征神机妙算）。  2. **“贼走关门”**：强调行动滞后于事态发展。  3. **“临渴掘井”**：批评缺乏事先准备。  这些俗语相互关联，使“马后炮”的贬义更容易被接受和传播。---### 四、为何不用其他象棋术语？——符号的独特性象棋中还有许多杀招（如“双车错”“重炮杀”），但只有“马后炮”被引申为贬义，因其**结构特殊性**更契合隐喻需求：- **“马”与“炮”的配合**：需严格依赖棋子位置，若炮架（马）或被攻击目标（敌方将帅）移位，则攻击失效，完美对应“时机稍纵即逝”的现实场景。  - **“炮”的隔山打牛特性**：象征“间接性”，暗喻事后建议的“隔空指点”与实际脱节。---### 五、现代语境中的泛化与延伸随着使用场景扩大，“马后炮”的贬义进一步泛化，甚至可用于幽默或自嘲：- **职场**：项目失败后指责流程问题（“早干嘛去了？”）。  - **生活**：灾害发生后才呼吁防灾（如“台风过了才修堤坝”）。  - **国际关系**：危机结束后才提出解决方案（被批“外交马后炮”）。---### 结语：语言是动态的文化镜像“马后炮”的语义演变，本质是**集体经验对语言的重塑**——人们从象棋中提炼出“错失时机”的核心矛盾，将其投射到社会行为批评中，最终使一个战术术语承载了深刻的文化反思。这种“旧词新义”的现象，正是汉语生命力的生动体现。</p><p>user:你说的两点，马后炮必须精准的卡在对方将帅无法逃脱的位置和马后炮需要提前布局，这都不应该是马后炮引申出“事后诸葛亮”这种意思的原因，马后炮作为杀招并没有攻击无效战术滞后的意思，你说的完全是下棋者自己不会谋子夺势，只会走眼光招，他就算不走马后炮杀招，比如走铁门栓，他不卡准位置不提前布局也会出现进攻无效和战术滞后，马后炮作为杀招并没有特殊之处，为什么唯独马后炮会引申出这样的意义呢？感觉毫无关联</p><p>deepseek:服务器繁忙，请稍后再试。</p><p></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>菲尔兹奖</title>
+      <link href="/2025/02/10/%E8%8F%B2%E5%B0%94%E5%85%B9%E5%A5%96/"/>
+      <url>/2025/02/10/%E8%8F%B2%E5%B0%94%E5%85%B9%E5%A5%96/</url>
+      
+        <content type="html"><![CDATA[<p>菲尔兹奖（Fields Medal），又译为菲尔茨奖，是依加拿大数学家约翰·查尔斯·菲尔兹（John Charles Fields）要求设立的国际性数学奖项，于1936年首次颁发。菲尔兹奖是数学领域的国际最高奖项之一。因诺贝尔奖未设置数学奖，故该奖被誉为“数学界的诺贝尔奖”，四年发一次。</p><p>学习资料:</p><p><a href="https://baike.baidu.com/item/%E8%8F%B2%E5%B0%94%E5%85%B9%E5%A5%96/186887">菲尔兹奖——百度百科</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>佛龛</title>
+      <link href="/2025/02/09/%E4%BD%9B%E9%BE%9B/"/>
+      <url>/2025/02/09/%E4%BD%9B%E9%BE%9B/</url>
+      
+        <content type="html"><![CDATA[<p>拼音：fó kān。供奉佛像、神位等的小阁子，如佛龛、神龛等，一般为木制，中国古代的石窟雕刻一般是神龛式，小龛又称椟。</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>light</title>
+      <link href="/2025/02/08/light/"/>
+      <url>/2025/02/08/light/</url>
+      
+        <content type="html"><![CDATA[<p>light [adj] 少量的，轻微的，浅色的，淡的，(颜色)亮的</p><blockquote>——You are probably well enough to take a little light exercise.<pre><code>——你恢复得不错，大概可以做些轻微的运动了。</code></pre></blockquote><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>朝鲜和韩国</title>
+      <link href="/2025/02/07/%E6%9C%9D%E9%B2%9C%E5%92%8C%E9%9F%A9%E5%9B%BD/"/>
+      <url>/2025/02/07/%E6%9C%9D%E9%B2%9C%E5%92%8C%E9%9F%A9%E5%9B%BD/</url>
+      
+        <content type="html"><![CDATA[<p>朝鲜语和韩语大体上一样，韩朝之前是一个国家。<br /><a href="https://baike.baidu.com/item/%E6%9C%9D%E9%9F%A9%E5%85%B3%E7%B3%BB?fromModule=lemma_search-box">朝韩关系——百度百科</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>nomedia</title>
+      <link href="/2025/02/06/nomedia/"/>
+      <url>/2025/02/06/nomedia/</url>
+      
+        <content type="html"><![CDATA[<p>.nomedia文件，安卓设备中其父目录下的所有子目录媒体文件都不会被扫描到相册、音乐、视频中。<br />可以用来屏蔽你不想在相册中出现的图片。</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>CC协议</title>
+      <link href="/2025/02/05/CC%E5%8D%8F%E8%AE%AE/"/>
+      <url>/2025/02/05/CC%E5%8D%8F%E8%AE%AE/</url>
+      
+        <content type="html"><![CDATA[<p>即知识共享许可协议（Creative Commons license）内容有姓名标示（BY）：您可以自由复制、散布、展示及演出本作品；您必须按照作者或授权人所指定的方式，保留其姓名标示。非商业性（NC）：您可以自由复制、散布、展示及演出本作品；您不得为商业目的而使用本作品。禁止改作（ND）：您可以自由复制、散布、展示及演出本作品；您不得改变、转变或改作本作品。相同方式分享（SA）：您可以自由复制、散布、展示及演出本作品；若您改变、转变或改作本作品，仅在遵守与本著作相同的授权条款下，您才能散布由本作品产生的衍生作品。其中ND和SA互斥，排列组合共有C21*C21*(C21*C21-1)-1=11种组合模式，（p.s.减1是排除4种都不选，都不选属于公有领域）。使用例：<code>商业转载请联系作者获得授权，非商业转载请注明出处。</code><br><code>For commercial use, please contact the author for authorization. For non-commercial use, please indicate the source.</code><br><code>协议(License)：署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0)</code>学习资料<a href="https://baike.baidu.com/item/%E7%9F%A5%E8%AF%86%E5%85%B1%E4%BA%AB%E8%AE%B8%E5%8F%AF%E5%8D%8F%E8%AE%AE/23190065">知识共享许可协议——百度百科</a><a href="https://www.bilibili.com/opus/418226555027436629">科普：知识共享许可协议(CC) 4.0协议 ——哔哩哔哩</a><a href="https://space.bilibili.com/383013?spm_id_from=333.1369.opus.module_author_name.click">@靈雲Reign</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>直系亲属</title>
+      <link href="/2025/02/04/%E7%9B%B4%E7%B3%BB%E4%BA%B2%E5%B1%9E/"/>
+      <url>/2025/02/04/%E7%9B%B4%E7%B3%BB%E4%BA%B2%E5%B1%9E/</url>
+      
+        <content type="html"><![CDATA[<p>法律术语，包括直系血亲和直系姻亲。直系血亲是和自己有直接血缘关系的，例如：配偶，父母，祖父母，曾祖父母，儿女，孙子女直系姻亲即配偶的直系血亲，直系血亲的配偶，例如：公婆、岳父母、儿媳、女婿、孙媳、孙女婿兄弟姐妹及其直系亲属算旁系亲属，例如：侄女，舅舅，姑姑学习资料：<a href="https://zhuanlan.zhihu.com/p/359989524">你在法律上的“直系亲属”都有谁？ ——知乎@马俊哲律师</a><a href="https://www.lawzhishi.cn/home/info/467636.html">女婿是直系亲属吗——法书网</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>谵妄</title>
+      <link href="/2025/02/03/%E8%B0%B5%E5%A6%84/"/>
+      <url>/2025/02/03/%E8%B0%B5%E5%A6%84/</url>
+      
+        <content type="html"><![CDATA[<!-- wp:paragraph --><p>突发性意识障碍。（p.s.在药物不良反应中看到的）</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>学习资料:<a href="https://baike.baidu.com/item/%E8%B0%B5%E5%A6%84/10332063">谵妄</a></p><!-- /wp:paragraph --><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>五路财神，九路财神</title>
+      <link href="/2025/02/02/%E4%BA%94%E8%B7%AF%E8%B4%A2%E7%A5%9E%EF%BC%8C%E4%B9%9D%E8%B7%AF%E8%B4%A2%E7%A5%9E/"/>
+      <url>/2025/02/02/%E4%BA%94%E8%B7%AF%E8%B4%A2%E7%A5%9E%EF%BC%8C%E4%B9%9D%E8%B7%AF%E8%B4%A2%E7%A5%9E/</url>
+      
+        <content type="html"><![CDATA[<p>大五路财神：东路财神比干、西路财神关公、南路财神柴王爷、北路财神赵公明、中路财神王亥。<br />九路财神：上面五路加上端木赐（西南）、李诡祖（东北）、范蠡(lǐ)（东南）、刘海蟾（西北）。<br />学习资料：<br /><a href="https://www.meipian.cn/50v6dm6z">五路财神都是谁？</a></p><!-- wp:paragraph --><p></p><!-- /wp:paragraph --><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>费曼求导法</title>
+      <link href="/2025/02/01/%E8%B4%B9%E6%9B%BC%E6%B1%82%E5%AF%BC%E6%B3%95/"/>
+      <url>/2025/02/01/%E8%B4%B9%E6%9B%BC%E6%B1%82%E5%AF%BC%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<p>一种对某一类函数的高效的求导方法，本质是取对数求导。</p>$$f(x)=u^{a} (x)v^{b}(x)w^{c}(x)\times …$$$$f'(x)=f(x)[a\frac{u'(x)}{u(x)}+b\frac{v'(x)}{v(x)}+c\frac{w'(x)}{w(x)}+…]$$<p>学习资料<br><a href="https://zhuanlan.zhihu.com/p/352992453">理查德·费曼如何求复杂函数的导数的？非常聪明的求导技巧 ——知乎@一派胡言</a><br><a href="https://www.bilibili.com/video/BV1hG411Z7Cb/">高中生也能懂的费曼求导法：简单，但有效——bilibili@泰勒猫爱丽丝</a><br><a href="https://baike.baidu.com/item/%E5%AF%B9%E6%95%B0%E6%B1%82%E5%AF%BC%E6%B3%95/1779861">对数求导法——百度百科</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>新闻中的系</title>
+      <link href="/2025/01/31/%E6%96%B0%E9%97%BB%E4%B8%AD%E7%9A%84%E7%B3%BB/"/>
+      <url>/2025/01/31/%E6%96%B0%E9%97%BB%E4%B8%AD%E7%9A%84%E7%B3%BB/</url>
+      
+        <content type="html"><![CDATA[<p>“系”是更书面的用法，但也不是新闻里所有的“是”都用“系”代替。“系”字替代“是”字时，并不是全部通用。“系”专指——“这件事归类为……”，有“严谨归类”的暗示，强调定性意义。（p.s.可以把“系”理解成“是因为”“是属于”的意思）<strong>本合同项下房产系甲方婚前个人财产。</strong><strong>经查，嫌疑人张某（男，35岁）系酒后驾驶，目前已被刑事拘留。</strong><strong>此文物系明代永乐年间官窑烧制，具有极高艺术价值</strong><a href="https://www.zhihu.com/question/21651362">为什么很多新闻用「系」代替「是」？ ——知乎@無雙</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>乖张</title>
+      <link href="/2025/01/30/%E4%B9%96%E5%BC%A0/"/>
+      <url>/2025/01/30/%E4%B9%96%E5%BC%A0/</url>
+      
+        <content type="html"><![CDATA[<!-- wp:paragraph --><p>形容人偏执，不驯服，与众不同。现代多用于形容人做事情不正规，不是很讲究。</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>英文：eccentric and unreasonable</p><!-- /wp:paragraph --><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>十二生肖的来历</title>
+      <link href="/2025/01/29/%E5%8D%81%E4%BA%8C%E7%94%9F%E8%82%96%E7%9A%84%E6%9D%A5%E5%8E%86/"/>
+      <url>/2025/01/29/%E5%8D%81%E4%BA%8C%E7%94%9F%E8%82%96%E7%9A%84%E6%9D%A5%E5%8E%86/</url>
+      
+        <content type="html"><![CDATA[<!-- wp:paragraph --><p>‌十二生肖的选取是基于与人类生活的亲密程度和动物的生活习性。‌十二生肖的选取主要分为三类动物：‌</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>驯化了的动物‌：牛、马、羊、鸡、狗、猪。这些动物与人类的生活密切相关，常用于农耕、运输、家庭守护等。‌与人类关系密切的</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>其他动物‌：鼠、虎、兔、蛇、猴。这些动物在自然界中与人类有较多的互动，有的对人类生活有重要影响。‌</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>中华民族的文化图腾‌：龙。龙在中国文化中象征着权力和吉祥，是重要的文化符号。‌</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>顺序的确定是根据动物的活动时间。例如，子时（夜半时分）老鼠最活跃，因此老鼠排在第一位；丑时（鸡鸣时分）牛习惯夜间吃草，所以牛排在第二位；寅时（平旦时分）老虎最凶猛，因此老虎排在第三位，以此类推。</p><!-- /wp:paragraph --><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>GPU</title>
+      <link href="/2025/01/28/GPU/"/>
+      <url>/2025/01/28/GPU/</url>
+      
+        <content type="html"><![CDATA[<p>CPU是中央处理器，GPU是图形处理器，决定了显卡的性能。<br />训练神经网络GPU比CPU快得多，因为GPU处理矩阵计算非常高效，深度学习需要计算大量的浮点矩阵。</p><!-- wp:paragraph --><p></p><!-- /wp:paragraph --><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>line</title>
+      <link href="/2025/01/27/line/"/>
+      <url>/2025/01/27/line/</url>
+      
+        <content type="html"><![CDATA[<!-- wp:paragraph --><p>line [n]台词</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>he forgot his lines.他忘记了他的台词</p><!-- /wp:paragraph --><!-- wp:paragraph --><p></p><!-- /wp:paragraph --><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>海涅定理</title>
+      <link href="/2025/01/26/%E6%B5%B7%E6%B6%85%E5%AE%9A%E7%90%86/"/>
+      <url>/2025/01/26/%E6%B5%B7%E6%B6%85%E5%AE%9A%E7%90%86/</url>
+      
+        <content type="html"><![CDATA[<p>$$\lim_{x \to a} f(x)&#x3D;b \Leftrightarrow \text{取} f(x) \text{内任意数列} \left{ a_{n} \right}, \lim_{n \to \infty} \left{ a_{n} \right}&#x3D;a, \text{且} \underline{\left{ a_{n} \right} \ne a} $$<br>和复合函数极限的性质好像，内层函数不能等于极限。证明过程也类似，用的极限的ε-δ定义，证明过程参考<a href="https://baike.baidu.com/item/%E6%B5%B7%E6%B6%85%E5%AE%9A%E7%90%86/8843389">海涅定理_百度百科</a><br>学习资料<br><a href="https://kns.cnki.net/kcms2/article/abstract?v=_bj0XFJq-76V4JYAUp3Qxfg-BVt8YodXGfspUWD8Ltg6DPWjRXET8r6onCQyfBLm5FkFeVUOVlfsrjI8ZbXBDXvlNFV9zsnBLMPkufoStdkZLCrB1y37kr6fFwBNv8l0OWZbm7tPcyeIpQQyuYDYI3sTHBfI0MaGEcc4TodKwX3NeIkoC7_hD74OGNgVaq8u&amp;uniplatform=NZKPT&amp;language=CHS">[1]吴少祥,余庆红.海涅定理及其应用[J].高等数学研究, 2007(05):32-34.DOI:10.3969&#x2F;j.issn.1008-1399.2007.05.012.</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>希区柯克变焦</title>
+      <link href="/2025/01/25/%E5%B8%8C%E5%8C%BA%E6%9F%AF%E5%85%8B%E5%8F%98%E7%84%A6/"/>
+      <url>/2025/01/25/%E5%B8%8C%E5%8C%BA%E6%9F%AF%E5%85%8B%E5%8F%98%E7%84%A6/</url>
+      
+        <content type="html"><![CDATA[<p>又叫滑动变焦，一种摄影手法，主体大小不变，通过透视变形改变背景大小，从而使主体有一种突然拉近或拉远的感觉。<br />学习资料：<br /><a href="https://zhuanlan.zhihu.com/p/356522997">什么是希区柯克变焦（Dolly Zoom）——知乎@艺类</a><br /><a href="https://zhuanlan.zhihu.com/p/69761501">直奔大师——可能是史上最全的希区柯克式变焦教程——知乎@孟什维克</a></p><!-- wp:paragraph --><p></p><!-- /wp:paragraph --><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>985211双一流</title>
+      <link href="/2025/01/24/985211%E5%8F%8C%E4%B8%80%E6%B5%81/"/>
+      <url>/2025/01/24/985211%E5%8F%8C%E4%B8%80%E6%B5%81/</url>
+      
+        <content type="html"><![CDATA[<p>985：1998年5月4日，时任国家主席在庆祝北京大学建校100周年大会上宣告：“为了实现现代化，我国要有若干所具有世界先进水平的一流大学。</p><p>“985工程大学”一期建设率先在北京大学和清华大学开始实施，实施“985工程大学”，是中国共产党和中华人民共和国国务院在世纪之交作出的重大决策。但在2016年06月23日，教育部官网发布文件，宣布382份规范性文件失效，包含《关于继续实施“985工程”建设项目的意见》等“985”“211”工程以及重点、优势学科建设的相关文件。虽然985大学不再评选，而是统筹为了双一流建设，但是在人们心中，985大学依然代表了中国最好的那一批大学，社会认可度非常高。</p><p>211：“211工程大学”，即面向21世纪、重点建设100所左右的高等学校和一批重点学科的建设工程，于1995年11月经国务院批准后正式启动。</p><p>“211工程”是新中国成立以来由国家立项在高等教育领域进行的规模最大、层次最高的重点建设工作，是中国政府实施“科教兴国”战略的重大举措、中华民族面对世纪之交的中国国内外形势而作出的发展高等教育的重大决策。（所有985大学均入选了211工程)2016年6月，教育部官网发布了“关于宣布失效一批规范性文件的通知”，宣布《“211工程”建设实施管理办法》等一批规范性文件失效。虽然211大学不再评选，但是在人们心中，211大学也是中国比较好的那一批大学，社会认可度稍逊于985大学，当然所有的985大学也是211大学。</p><p>双一流：“双一流”建设，即建设世界一流大学和一流学科，是中共中央、国务院作出的重大战略决策，也是中国高等教育领域继“211工程”“985工程”之后的又一国家战略，有利于提升中国高等教育综合实力和国际竞争力，为实现“两个一百年”奋斗目标和实现中华民族伟大复兴的中国梦提供有力支撑。</p><p>2019年11月28日，教育部官网发布声明：已将“211工程”和“985工程”等重点建设项目统筹为“双一流”建设。双一流大学共计147所，包含了所有985、211大学，另外增补了32所近年来发展较好的大学。</p><p>(p.s.意思是现在985和211两个工程统筹为一个了，而且多加了几个学校，也就是说985211的学校名单不会变了，这些都是双一流，除此也有非985211的双一流学校，名单可能还会扩大)</p><p>学习资料</p><p><a href="https://m.dxsbb.com/news/46723.html">985 211是什么意思 有哪些区别？——大学生必备网</a></p><p><a href="https://m.dxsbb.com/news/143600.html">985 211 双一流是什么意思 有哪些区别？——大学生必备网</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>拉链定理</title>
+      <link href="/2025/01/22/%E6%8B%89%E9%93%BE%E5%AE%9A%E7%90%86/"/>
+      <url>/2025/01/22/%E6%8B%89%E9%93%BE%E5%AE%9A%E7%90%86/</url>
+      
+        <content type="html"><![CDATA[<p>数列收敛的充分必要条件是其奇偶子数列收敛于同一极限。</p>$$\lim_{n \to \infty} x_{n} =a\Leftrightarrow \lim_{k \to \infty} x_{2k-1}=\lim_{k \to \infty} x_{2k}=a $$ <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>拉偏架</title>
+      <link href="/2025/01/21/%E6%8B%89%E5%81%8F%E6%9E%B6/"/>
+      <url>/2025/01/21/%E6%8B%89%E5%81%8F%E6%9E%B6/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>简介</p></blockquote><p>劝架时故意挡住一方手脚让另一方打。</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>拥有核武器的国家</title>
+      <link href="/2025/01/20/%E6%8B%A5%E6%9C%89%E6%A0%B8%E6%AD%A6%E5%99%A8%E7%9A%84%E5%9B%BD%E5%AE%B6/"/>
+      <url>/2025/01/20/%E6%8B%A5%E6%9C%89%E6%A0%B8%E6%AD%A6%E5%99%A8%E7%9A%84%E5%9B%BD%E5%AE%B6/</url>
+      
+        <content type="html"><![CDATA[<!-- wp:paragraph --><p>按照先后顺序：美国、苏联（现俄罗斯）、英国、法国和中国。也是联合国五常。</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>非法拥有核武器的国家(核不扩散条约之后)：印度，巴基斯坦，朝鲜。</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>学习资料：</p><!-- /wp:paragraph --><!-- wp:paragraph --><p><a href="https://baike.baidu.com/item/%E6%A0%B8%E5%9B%BD%E5%AE%B6/4868190">核国家——百度百科</a></p><!-- /wp:paragraph --><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>int类型最大值</title>
+      <link href="/2025/01/19/int%E7%B1%BB%E5%9E%8B%E6%9C%80%E5%A4%A7%E5%80%BC/"/>
+      <url>/2025/01/19/int%E7%B1%BB%E5%9E%8B%E6%9C%80%E5%A4%A7%E5%80%BC/</url>
+      
+        <content type="html"><![CDATA[<!-- wp:paragraph --><p>‌在32位系统中，int类型的最大值是2147483647‌。这是因为32位系统中，int类型通常占用32个二进制位，其中最高位用于表示符号（0为正，1为负），其余31位用于表示数值。因此，int类型的最大正整数是2^31−1，即2147483647</p><!-- /wp:paragraph --><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>脾虚</title>
+      <link href="/2025/01/18/%E8%84%BE%E8%99%9A/"/>
+      <url>/2025/01/18/%E8%84%BE%E8%99%9A/</url>
+      
+        <content type="html"><![CDATA[<!-- wp:paragraph --><p>脾虚的临床症状包括食欲下降、倦怠乏力、大便不成形、腹胀疼痛、体重减轻等(p.s.上吐下泻)</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>吃南瓜，山药，萝卜，红枣，花生等改善消化的食物。</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>学习资料</p><!-- /wp:paragraph --><!-- wp:paragraph --><p><a href="https://baike.baidu.com/item/%E8%84%BE%E8%99%9A/6335367">脾虚——百度百科</a></p><!-- /wp:paragraph --><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>零知识证明</title>
+      <link href="/2025/01/15/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E/"/>
+      <url>/2025/01/15/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E/</url>
+      
+        <content type="html"><![CDATA[<p>一种不让对方知道任何技术细节又让对方认为你掌握了这个知识的证明方法。比如对方问你一道数独题，你不想让他知道怎么填，一个格都不想让他知道，但是你也不想让他觉得你也不会，就可以用一种零知识证明方法：你把数独解出来后，把所有格的数字（一共9*9=81）个数写在81张纸片上并放在对应的格子上，已知的数字纸片正面朝上放，待填的数字纸片背面朝上放(不让他看到答案)，让他随机抽取行、列或九宫验证，然后将每行（列或九宫）的纸片放在放在袋子里，一共9个袋子，他打开袋子查看发现每个袋子都是1到9的卡片，没有重复和缺少的数字。再次摆好纸片，让他再次随机选取验证方式，重复过程。当他每次检查袋子都是1到9的卡片，没有重复和缺少的数字，他就相信你真的会解这个数独，但是袋子里的纸片打乱了，他不知道正确答案，于是你完成了0知识证明。如何用零知识证明你作业做完了但是不透露关于你作业的任何信息呢（包括你的作业真的已提交的页面，就是要让他相信（99.999999确定）但是不能让他100%确定，不然就不是零知识了）学习资料：<a href="https://www.bilibili.com/video/BV1iacBebE1E">神奇的零知识证明：既能保守秘密，又让别人信你——bilibili@李永乐老师官方</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>象棋等级分计算</title>
+      <link href="/2025/01/13/%E8%B1%A1%E6%A3%8B%E7%AD%89%E7%BA%A7%E5%88%86%E8%AE%A1%E7%AE%97/"/>
+      <url>/2025/01/13/%E8%B1%A1%E6%A3%8B%E7%AD%89%E7%BA%A7%E5%88%86%E8%AE%A1%E7%AE%97/</url>
+      
+        <content type="html"><![CDATA[<!-- wp:paragraph --><p>象棋的等级分采用ELO计算公式Rn=Ro+K*(W-We)Rn：赛后等级分Ro：赛前等级分W：比赛结果，胜1，和0.5，负0We：双方等级分差值决定，由于计算复杂，一般是直接查表，50分是0.571K：浮动系数，一般棋手为10，部分等级分特低的选手可能更高。y=x+10（0.5-0.571）=x-0.71也就说两人分差是50分和棋一盘，分高的人就扣0.71，分低的人就加0.71，双方分差越大，这个数字会越大所以一般棋手遇见高手往往更倾向于顶和，毕竟和棋就有分，我实力本就不如你，强行要赢你风险太大，不如全力求和保个平，反正平局也是我赚。</p><!-- /wp:paragraph --><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>后封机</title>
+      <link href="/2025/01/12/%E5%90%8E%E5%B0%81%E6%9C%BA/"/>
+      <url>/2025/01/12/%E5%90%8E%E5%B0%81%E6%9C%BA/</url>
+      
+        <content type="html"><![CDATA[<p>包装被拆封过，手机可能被把玩了几天，但是没有激活，退货后厂家再次包装的手机。</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>四则运算的英文</title>
+      <link href="/2025/01/11/%E5%9B%9B%E5%88%99%E8%BF%90%E7%AE%97%E7%9A%84%E8%8B%B1%E6%96%87/"/>
+      <url>/2025/01/11/%E5%9B%9B%E5%88%99%E8%BF%90%E7%AE%97%E7%9A%84%E8%8B%B1%E6%96%87/</url>
+      
+        <content type="html"><![CDATA[<!-- wp:paragraph --><p>add（plus）,subtract(minus),multiply(times),divide</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>‌One plus one is/equals two（一加一等于二）</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>Two minus one equals one./Subtract one from two equals one.(二减一等于一)</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>One times two equals two./Multiply one by two equals two.(一乘以二等于二)</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>Two divided by one equals two./Dividing two by one equals two.(二除以一等于二)</p><!-- /wp:paragraph --><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>拉平效应</title>
+      <link href="/2025/01/11/%E6%8B%89%E5%B9%B3%E6%95%88%E5%BA%94/"/>
+      <url>/2025/01/11/%E6%8B%89%E5%B9%B3%E6%95%88%E5%BA%94/</url>
+      
+        <content type="html"><![CDATA[<p>H2SO4、HCl和HNO3的酸性是有区别的，但是在水溶液中，1mol/L的这三个酸的pH都是0，没有表现出酸性差异。<br />这是因为强酸在水溶液中给出质子的能力都很强，水的碱性已足够接受这些酸给出的质子，只要这些酸的浓度不是太大，则它们将定量地与水作用，全部转化为H3O+即它们的酸的强度全部被拉平到H3O+的水平，这种将不同强度的酸拉平到溶剂化质子（这里是水化质子H3O+）水平的效应，称为拉平效应。<br />以醋酸作为溶剂可以表现出它们的酸性差异。<br />酸性HCl（盐酸）&gt;H₂SO₄（硫酸）&gt;HNO₃（硝酸）。<br />酸性强并不代表破坏性强，氧化性强，腐蚀性强<br />可乐跟醋的pH差不多<br />学习资料<br /><a href="https://baike.baidu.com/item/%E6%8B%89%E5%B9%B3%E6%95%88%E5%BA%94/268257">拉平效应——百度百科</a><br /><a href="https://www.bilibili.com/video/BV11yrkYME4G/">【毕导】世界上最强的酸，比纯硫酸强一亿亿倍？——bilibili@毕导</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>交流技巧</title>
+      <link href="/2025/01/09/%E4%BA%A4%E6%B5%81%E6%8A%80%E5%B7%A7/"/>
+      <url>/2025/01/09/%E4%BA%A4%E6%B5%81%E6%8A%80%E5%B7%A7/</url>
+      
+        <content type="html"><![CDATA[<!-- wp:paragraph --><p>说完一件事后问对方“你（您）听明白了吗？”“您听懂我意思没有？”不如说“不知道我说清楚没？”“不知道我讲明白没？”</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>Do you understand?和Does it make sense?的区别。</p><!-- /wp:paragraph --><!-- wp:paragraph --><p></p><!-- /wp:paragraph --><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>医保</title>
+      <link href="/2025/01/08/%E5%8C%BB%E4%BF%9D/"/>
+      <url>/2025/01/08/%E5%8C%BB%E4%BF%9D/</url>
+      
+        <content type="html"><![CDATA[<p>分为城乡居民基本医疗保险、城镇职工基本医疗保险。大学生交的是城乡居民基本医疗保险，不同参保地每年缴费可能会不同。<br />下载“国家医保服务平台”手机客户端软件注册登录后可查看参保信息。<br />起付线：字面意思，起付线以下的不报销。<br />封顶线：字面意思，封顶线以上的不报销。<br />报销比例：字面意思，报销金额=可报销部分x报销比例。<br />报销范围：医药费，诊疗费，住院费<br />支持电子医保支付的药店，绝大多数门口挂有“医保定点销售药店”牌子，还可以高德地图查看，支持的药店会显示医保定点<br /><img class="" src="http://111.229.28.209/wp-content/uploads/2025/01/ae50c94414cc28e526632c8f3382ce9.jpg" alt="ae50c94414cc28e526632c8f3382ce9.jpg" width="341" height="87" /><br />又听说大学生医保一般不能在药店使用，不懂，下次去问问好了<br />校医院的药为什么便宜？是医保报销后的价格吗？是自动使用医保吗？不懂，下次去问问。</p><!-- wp:paragraph --><p>学习资料</p><!-- /wp:paragraph --><!-- wp:paragraph --><p><a href="https://www.bilibili.com/video/BV1eWxneME3Q">真的有大学开了《成年人社会常识课》【看病&amp;医保篇】——bilibili@方山厨子</a></p><!-- /wp:paragraph --><!-- wp:paragraph --><p></p><!-- /wp:paragraph --><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>口嫌体正直</title>
+      <link href="/2025/01/07/%E5%8F%A3%E5%AB%8C%E4%BD%93%E6%AD%A3%E7%9B%B4/"/>
+      <url>/2025/01/07/%E5%8F%A3%E5%AB%8C%E4%BD%93%E6%AD%A3%E7%9B%B4/</url>
+      
+        <content type="html"><![CDATA[<!-- wp:paragraph --><p>“口嫌体正直”源于日语“口が嫌だと言っても 体は正直なものだ”的汉字缩写，罗马音为：“Kuchi ga iyada to itte mo karada wa shoujikina monoda”，通常译为：“嘴上说不要，身体反应倒是很诚实嘛。”实际上指嘴巴上说假话，身体行为倒如实地反应了自己内心的真实想法。</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>理解为傲娇，但是范围相对傲娇来说要小。口嫌体正直仅限于生物，傲娇目标可以是无生命物，比如电脑傲娇了（蓝屏或者出一些其他问题导致不能正常使用），此时就不能说电脑口嫌体正直。口嫌体正直可以理解为是傲娇的一种常见的表现形式。（p.s.就是傲娇的充分不必要条件？）</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>b站弹幕看到的一个词，觉得很奇怪就查了一下</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>学习资料：</p><!-- /wp:paragraph --><!-- wp:paragraph --><p><a href="https://baike.baidu.com/item/%E5%8F%A3%E5%AB%8C%E4%BD%93%E6%AD%A3%E7%9B%B4/6435207">百度百科</a></p><!-- /wp:paragraph --><!-- wp:paragraph --><p></p><!-- /wp:paragraph --><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>希腊字母</title>
+      <link href="/2025/01/06/%E5%B8%8C%E8%85%8A%E5%AD%97%E6%AF%8D/"/>
+      <url>/2025/01/06/%E5%B8%8C%E8%85%8A%E5%AD%97%E6%AF%8D/</url>
+      
+        <content type="html"><![CDATA[<p>发现今天好像真的没学新东西，急忙把之前抄的希腊字母表翻出来认读了一遍。<br><img class="" src="https://cloudflare-imgbed-8lm.pages.dev/file/1745136861728_希腊字母表1.jpg" alt="希腊字母表1" width="329" height="253" /><img class="" src="https://cloudflare-imgbed-8lm.pages.dev/file/1745136863135_希腊字母表2.jpg" alt="希腊字母表2" width="337" height="253" /><br>忘记之前从哪里抄的了，大概是美式英语读音，而且有些音标是错的（中文汉字音译没错，照着读差不多能读出中式读音）<br>χ读“恺”数学老师会读“卡”（卡方分布），还有的老师会读“吸”，“七”。<br>电学里的阻抗Ζ原来是希腊字母“泽塔”（大写Ζ小写ζ），一直以为是英文字母Z，也就读作Z了。<br>不太懂物化老师为什么把吸附量Γ（伽马，小写γ）读成“套”，“套”应该是T（小写τ）吧。</p><p>学习资料</p><p><a href="https://www.bilibili.com/video/BV1d44y147bT">24个希腊字母到底读啥? 数学&#x2F;物理老师直呼内行!——bilibili@英语兔</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>LGBT</title>
+      <link href="/2025/01/05/LGBT/"/>
+      <url>/2025/01/05/LGBT/</url>
+      
+        <content type="html"><![CDATA[<p>老美的LGBTQ+，现在似乎演变成了LGBTTTQQIAAP+<br /><strong>L</strong>: Lesbian 女同性恋<br /><strong>G</strong>: Gay 男同性恋<br /><strong>B</strong>: Bisexual 两性恋<br /><strong>T</strong>: Transgender 跨性别者<br /><strong>T</strong>:Transsexual 变性人<br /><strong>T</strong>: Two-spirited 双灵人（有两个内在自我的人）（p.s.也有简写成<strong>2</strong>的）<br /><strong>Q</strong>: Queer 酷儿（性别身份拒绝被定义的人）<br /><strong>Q</strong>: Questioning 疑性恋（性别认同尚在探索中的人）<br /><strong>I</strong>:Intersex 间性人<br /><strong>A</strong>: Asexual无性恋<br /><strong>A</strong>: Ally直同志（性少数人群的同盟者）<br /><strong>P</strong>: Pansexual 泛性恋<br />也有LGBTQIAPKDXREW的说法<br /><strong>L</strong> – Lesbian（女同性恋者）：指被女性所吸引的女性。<br /><strong>G</strong> – Gay（男同性恋者）：指被男性所吸引的男性。<br /><strong>B</strong> – Bisexual（双性恋者）：指对男性和女性都可能有性吸引或浪漫情感的人。<br /><strong>T</strong> – Transgender（跨性别者）：指其性别认同与其出生时被指定的性别不一致的人。<br /><strong>Q</strong> – Queer（酷儿）：一个更广泛的术语，用于描述那些不认同传统性取向和性别角色的人。<br /><strong>I</strong> – Intersex（间性人）：指出生时生殖器官或性染色体组合不符合典型的男性或女性模式的人。<br /><strong>A</strong> – Asexual（无性恋者）：指对性没有兴趣或需求的人。<br /><strong>P</strong> – Pansexual（泛性恋者）：指对任何性别的人都有可能产生性吸引或浪漫情感的人。<br /><strong>K</strong> – Demisexual（半性恋者）：指在建立深厚情感联系后才会对他人产生性吸引的人。<br /><strong>D</strong> – Genderqueer（性别酷儿）：指不认同传统性别二元论的人，可能跨越或超越传统的性别界限。<br /><strong>X</strong> – Non-binary（非二元性别者）：指不认同自己完全属于男性或女性的人，可能认为自己处于两者之间的某个位置，或者完全没有性别。<br /><strong>R</strong> – Romantic（浪漫主义者）：虽然这个术语通常不特指性取向或性别认同，但在这里可以泛指那些重视浪漫关系的人。<br /><strong>E</strong> – Enby/Enbyfriend（无性别朋友/无性别者）：是“Non-binary”的非正式缩写，指非二元性别者。<br /><strong>W</strong> – Womxn（女性/女性群体）：一个包含所有性别认同为女性的群体的术语，旨在包含跨性别女性等边缘化群体。</p><!-- wp:paragraph --><p>学习资料</p><!-- /wp:paragraph --><!-- wp:paragraph --><p><a href="https://www.cnlongdexin.com/lgbtqiapkdxrew%E5%88%86%E5%88%AB%E6%8C%87%E4%BB%80%E4%B9%88/">lgbtqiapkdxrew分别指什么？全面解析这些术语的含义——赤猫</a><br><a href="https://www.bilibili.com/opus/28817564111927802">科普文｜ LGBTTTQQIAAP+ 性少数群体，究竟还有多少种——bilibili@开挖掘机的舒克</a><br><a href="https://zh.wikipedia.org/wiki/LGBT">LGBT——维基百科</a></p><!-- /wp:paragraph --><!-- wp:paragraph --><p></p><!-- /wp:paragraph --><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>过拟合</title>
+      <link href="/2025/01/04/%E8%BF%87%E6%8B%9F%E5%90%88/"/>
+      <url>/2025/01/04/%E8%BF%87%E6%8B%9F%E5%90%88/</url>
+      
+        <content type="html"><![CDATA[<p>‌‌‌‌　　数据拟合时偏差不是越小越好，偏差太小会出现过拟合，过拟合的曲线对样本解释性很好，但是用拟合曲线预测数据很不准会出现离谱的结果。<br />‌‌‌‌比如1，3，5，7这几个样本点如果用f(x)=<img class="" src="http://111.229.28.209/wp-content/uploads/2025/01/Pasted-image-20250104232737.png" alt="Pasted image 20250104232737.png" width="170" height="18" />来拟合，就会得到第五项是f(5)=114514，这样离谱又恶臭的预测结果。<br />‌‌‌‌<strong>哲学启发</strong>：<br />‌‌‌‌奥卡姆剃刀原理，如无必要勿增实体，不要用尝试用复杂的方法给出一个解释所有现象的完美理论。<br />‌‌‌‌刷题刷多了思维被过拟合到练习题中，习题也有不严谨的，为了用一个准确的做题思维解释所有的题，就会钻牛角尖走火入魔。<br />‌‌‌‌学而不思则欠拟合，思而不学则过拟合。<br />[collapse title="拷打gtp"]<img class="" src="http://111.229.28.209/wp-content/uploads/2025/01/Pasted-image-20250104234411.png" alt="Pasted image 20250104234411.png" width="477" height="3196" />[/collapse]<br />‌‌‌‌学习资料：<a href="https://www.bilibili.com/video/BV1D362YpEGL">【漫士】为什么刷题越多，考得反而越差？——bilibili@漫士沉思录</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>最小作用量原理</title>
+      <link href="/2025/01/03/%E6%9C%80%E5%B0%8F%E4%BD%9C%E7%94%A8%E9%87%8F%E5%8E%9F%E7%90%86/"/>
+      <url>/2025/01/03/%E6%9C%80%E5%B0%8F%E4%BD%9C%E7%94%A8%E9%87%8F%E5%8E%9F%E7%90%86/</url>
+      
+        <content type="html"><![CDATA[<p>‌‌‌‌　　光的反射和折射路径是为了时间最短，这个现象具有普适性，系统在运动时，会选择一个最优路径，这个路径让系统所需的“总努力”（作用量）最小。电子在原子中总是趋向于最低能量轨道，肥皂泡趋向表面积最小的球形，这是最小作用量原理的特殊表现形式，分别表现为能量最小，表面自由能最小，在背后有一个更基础更本质的量，最小量。(p.s.这个概念比动量还抽象啊)<br />‌‌‌‌　　最小量：action（A）<br />‌‌‌‌　　莫佩尔蒂最先提出A=∑mvs<br />‌‌‌‌　　欧拉提出A=∫mvdsA<br />‌‌‌‌　　经典力学中的拉格朗日形式S=∫Ldt<br />‌‌‌‌　　L 是拉格朗日量（系统的动能减去势能），积分在系统的运动路径上计算</p><p>‌‌‌‌参考资料<br /><a href="https://www.bilibili.com/video/BV11x6xYpEMU/">这道简单的数学题彻底改变了物理学——bilibili@Veritasium真理元素</a></p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一学 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+  
+  
+</search>
