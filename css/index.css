@@ -7606,26 +7606,6 @@ body[data-type="link"] #page .page-title {
     padding: 0px 20px 0px;
   }
 }
-div#bannerGroup {
-  margin-right: 10px;
-  width: calc(51% - 10px) !important;
-}
-@media screen and (max-width: 768px) {
-  #home_top {
-    padding: 0px 15px;
-  }
-  #topPostGroup {
-    height: 280px;
-  }
-  #swiper_container_blog {
-    padding: 0 10px;
-  }
-}
-@media screen and (max-width: 1200px) {
-  div#bannerGroup {
-    display: none !important;
-  }
-}
 @media screen and (max-width: 1200px) {
   #recent-posts > .recent-post-item >.recent-post-info > .article-title {
     line-height: 30px;
@@ -24933,7 +24913,7 @@ div#swiper_container:hover {
   height: 100%;
   top: 0;
   left: 0;
-  box-shadow: 0 -109px 133px -9px #000000 inset;
+  /*box-shadow: 0 -109px 133px -9px #000000 inset;*//*删除主页banner阴影，也可修改后面的 16 位色值大概和你图片相匹配*/
 }
 
 .topGroup .todayCard.hide {
