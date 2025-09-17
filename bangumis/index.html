@@ -60,7 +60,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2025-09-17 09:08:34',
+  postUpdate: '2025-09-17 10:06:19',
   postMainColor: '',
 }</script><noscript><style type="text/css">
   #nav {
@@ -324,6 +324,7 @@ window.addEventListener('load', () => {
             method: "POST",
             body: JSON.stringify({
               "event": "GET_RECENT_COMMENTS",
+              "url": "/comments/",
               "includeReply": false,
               "pageSize": 100
             }),
