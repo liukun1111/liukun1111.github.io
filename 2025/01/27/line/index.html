@@ -287,7 +287,7 @@ window.addEventListener('load', () => {
         line: 5, //- 弹幕行数
         speed: 20, //- 弹幕播放速度
         hover: true, //- 鼠标hover时是否暂停播放弹幕
-        loop: false, //- 开启循环播放
+        loop: true, //- 开启循环播放
         colourful: true, //- 开启彩色弹幕
         coefficient: 1.38, //- 弹幕密度系数
         runtime: 10, //- 循环弹幕播放时长
@@ -298,8 +298,9 @@ window.addEventListener('load', () => {
           const options = {
             method: "POST",
             body: JSON.stringify({
-              "event": "GET_RECENT_COMMENTS",
-              "url": "/comments/",
+              //- "event": "GET_RECENT_COMMENTS", //- 不需要指定页面，则启动此条
+              "event": "COMMENT_GET",
+              "url": "/comments/",  //- 仅限 comments 页面评论,启用："event": "COMMENT_GET",, 不需要可以直接注释掉
               "includeReply": false,
               "pageSize": 100
             }),
