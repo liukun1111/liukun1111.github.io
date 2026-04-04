@@ -409,6 +409,10 @@
     .footer a { color: var(--c4); text-decoration: none; }
     .footer a:hover { text-decoration: underline; }
 
+    .section--delay { animation-delay: 0.4s; }
+
+    .footer-copyright { margin-top: 6px; }
+
     /* ─── Scrollbar ──────────────────────────────────────────── */
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
@@ -527,7 +531,7 @@
   </section>
 
   <!-- ── Timeline ───────────────────────────────────── -->
-  <section class="section" style="animation-delay:0.4s">
+  <section class="section section--delay">
     <h2 class="section-title">成长历程</h2>
     <div class="glass timeline">
       <div class="tl-item">
@@ -572,7 +576,7 @@
 
   <footer class="footer">
     <p>Made with ❤️ by <a href="https://github.com/liukun1111" target="_blank" rel="noopener">lkii</a></p>
-    <p style="margin-top:6px">© 2026 · All rights reserved</p>
+    <p class="footer-copyright">© 2026 · All rights reserved</p>
   </footer>
 
 </main>
