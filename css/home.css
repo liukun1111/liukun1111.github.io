@@ -13,3 +13,48 @@
   #recent-posts > .recent-post-item:not(a):hover::before {
     transform: translateX(100%) skewX(-60deg);
   }
+
+/* Homepage excerpt spacing fix on mobile/tablet */
+@media screen and (max-width: 1200px) {
+  #recent-posts > .recent-post-item > .recent-post-info {
+    height: auto !important;
+    min-height: 140px;
+    overflow: visible !important;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #recent-posts > .recent-post-item > .recent-post-info > .recent-post-info-top {
+    order: 0;
+    padding: 0 20px !important;
+  }
+
+  #recent-posts > .recent-post-item > .recent-post-info > .content {
+    order: 1;
+    display: block !important;
+    -webkit-line-clamp: unset !important;
+    overflow: visible !important;
+    margin-top: 0.6rem !important;
+    padding: 0 20px !important;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+
+  #recent-posts > .recent-post-item > .recent-post-info > .article-meta-wrap {
+    order: 2;
+    position: static !important;
+    left: auto !important;
+    bottom: auto !important;
+    width: auto !important;
+    margin-top: 0.6rem !important;
+    padding: 0 20px 20px !important;
+    flex-wrap: wrap !important;
+    row-gap: 0.3rem;
+  }
+
+  #recent-posts > .recent-post-item > .recent-post-info > .article-meta-wrap > .post-meta-date {
+    white-space: normal !important;
+    overflow: visible;
+    text-overflow: clip;
+  }
+}

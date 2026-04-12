@@ -1,0 +1,169 @@
+#running-challenge-dashboard {
+  margin-top: 2rem;
+  padding: 1.2rem;
+  border: var(--style-border);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 0% 0%, color-mix(in srgb, var(--anzhiyu-main) 12%, transparent), transparent 36%),
+    var(--anzhiyu-card-bg);
+}
+
+#running-challenge-dashboard .rc-dashboard-title {
+  margin: 0;
+  color: var(--anzhiyu-fontcolor);
+}
+
+#running-challenge-dashboard .rc-dashboard-subtitle {
+  margin: 0.5rem 0 1rem;
+  color: var(--anzhiyu-secondtext);
+  font-size: 0.92rem;
+}
+
+#running-challenge-dashboard .rc-dashboard-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+#running-challenge-dashboard .rc-dashboard-summary-item {
+  padding: 0.8rem 0.9rem;
+  border: var(--style-border);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--anzhiyu-main) 7%, var(--anzhiyu-card-bg));
+}
+
+#running-challenge-dashboard .rc-dashboard-summary-item dt {
+  margin: 0;
+  color: var(--anzhiyu-secondtext);
+  font-size: 0.82rem;
+}
+
+#running-challenge-dashboard .rc-dashboard-summary-item dd {
+  margin: 0.4rem 0 0;
+  color: var(--anzhiyu-fontcolor);
+  font-size: 1.04rem;
+  font-weight: 700;
+}
+
+#running-challenge-dashboard .rc-dashboard-table-wrap {
+  overflow-x: auto;
+  border: var(--style-border);
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+#running-challenge-dashboard .rc-dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+  font-size: 0.92rem;
+}
+
+#running-challenge-dashboard .rc-dashboard-table th,
+#running-challenge-dashboard .rc-dashboard-table td {
+  padding: 0.65rem 0.75rem;
+  text-align: left;
+  border-bottom: var(--style-border);
+}
+
+#running-challenge-dashboard .rc-dashboard-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: color-mix(in srgb, var(--anzhiyu-main) 8%, var(--anzhiyu-card-bg));
+  color: var(--anzhiyu-fontcolor);
+  font-weight: 700;
+}
+
+#running-challenge-dashboard .rc-dashboard-table tbody tr:hover {
+  background: color-mix(in srgb, var(--anzhiyu-main) 10%, transparent);
+}
+
+#running-challenge-dashboard .rc-metric-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  line-height: 1.2;
+}
+
+#running-challenge-dashboard .rc-metric-main {
+  color: var(--anzhiyu-fontcolor);
+}
+
+#running-challenge-dashboard .rc-metric-delta {
+  font-size: 0.8rem;
+}
+
+#running-challenge-dashboard .rc-delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-weight: 600;
+}
+
+/* 运动数据风格：绿涨红跌 */
+#running-challenge-dashboard .rc-delta-up {
+  color: #2c9f5a;
+}
+
+#running-challenge-dashboard .rc-delta-down {
+  color: #e64545;
+}
+
+#running-challenge-dashboard .rc-delta-flat {
+  color: var(--anzhiyu-secondtext);
+}
+
+#running-challenge-dashboard .rc-dashboard-empty {
+  color: var(--anzhiyu-secondtext);
+  text-align: center;
+}
+
+#running-challenge-dashboard .rc-dashboard-charts {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+}
+
+#running-challenge-dashboard .rc-dashboard-chart {
+  height: 340px;
+  border: var(--style-border);
+  border-radius: 12px;
+}
+
+#running-challenge-dashboard .rc-dashboard-note,
+#running-challenge-dashboard .rc-dashboard-error {
+  border: var(--style-border);
+  border-radius: 10px;
+  padding: 0.75rem;
+  color: var(--anzhiyu-secondtext);
+  background: color-mix(in srgb, var(--anzhiyu-main) 7%, transparent);
+  font-size: 0.9rem;
+}
+
+#running-challenge-dashboard .rc-dashboard-note {
+  display: none;
+}
+
+#running-challenge-dashboard .rc-dashboard-error {
+  display: none;
+  color: #d4380d;
+  background: color-mix(in srgb, #ff4d4f 10%, var(--anzhiyu-card-bg));
+}
+
+@media (max-width: 900px) {
+  #running-challenge-dashboard .rc-dashboard-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  #running-challenge-dashboard {
+    padding: 1rem;
+  }
+
+  #running-challenge-dashboard .rc-dashboard-chart {
+    height: 290px;
+  }
+}
