@@ -671,17 +671,17 @@ window.addEventListener('load', () => {
         coefficient: 1.38, //- 弹幕密度系数
         runtime: 10, //- 循环弹幕播放时长
       });
-      const DANMU_CACHE_KEY = 'twikoo-danmu-v2';
-      const DANMU_LEGACY_CACHE_KEY = 'twikoo-danmu';
-      const DEFAULT_DANMU_AVATAR = 'https://cravatar.cn/avatar/d615d5793929e8c7d70eab5f00f7f5f1?d=mp';
-      const CRAVATAR_BASE = 'https://cravatar.cn/avatar/';
+      const DANMU_CACHE_KEY = 'twikoo-danmu-v4';
+      const DEFAULT_DANMU_AVATAR = '/img/avatar.jpg';
+      const WEAVATAR_BASE = 'https://weavatar.com/avatar/';
+      const TARGET_DANMU_PAGE = '/comments/'.replace(/\/+$/, '') || '/';
 
       function resolveDanmuAvatar(item) {
         if (item && typeof item.avatar === 'string' && item.avatar.trim() !== '') {
           return item.avatar.trim();
         }
         if (item && typeof item.mailMd5 === 'string' && item.mailMd5.trim() !== '') {
-          return `${CRAVATAR_BASE}${item.mailMd5.trim()}?d=mp&s=80`;
+          return `${WEAVATAR_BASE}${item.mailMd5.trim()}?d=mp&s=80`;
         }
         return DEFAULT_DANMU_AVATAR;
       }
@@ -703,20 +703,10 @@ window.addEventListener('load', () => {
       try {
         let danmuStore = normalizeCachedDanmuStore(saveToLocal.get(DANMU_CACHE_KEY));
         if (!danmuStore.length) {
-          const legacyDanmuStore = normalizeCachedDanmuStore(saveToLocal.get(DANMU_LEGACY_CACHE_KEY));
-          if (legacyDanmuStore.length) {
-            danmuStore = legacyDanmuStore;
-            saveToLocal.set(DANMU_CACHE_KEY, danmuStore, 0.5);
-          }
-        }
-        if (!danmuStore.length) {
           const options = {
             method: "POST",
             body: JSON.stringify({
-              //- "event": "GET_RECENT_COMMENTS", //- 不需要指定页面，则启动此条
-              "event": "COMMENT_GET",
-              "url": "/comments/",  //- 仅限 comments 页面评论,启用："event": "COMMENT_GET",, 不需要可以直接注释掉
-              "includeReply": false,
+              "event": "GET_RECENT_COMMENTS",
               "pageSize": 100
             }),
             headers: { 'Content-Type': 'application/json' }
@@ -726,14 +716,18 @@ window.addEventListener('load', () => {
           if (response.ok) {
             const { data } = await response.json();
             //- console.info(data);
-            data.forEach(i => {
-              if (i.avatar == undefined) i.avatar = 'https://cravatar.cn/avatar/d615d5793929e8c7d70eab5f00f7f5f1?d=mp'
+            data.filter(i => {
+              const currentPage = (i.url || '').replace(/\/+$/, '') || '/';
+              return currentPage === TARGET_DANMU_PAGE;
+            }).forEach(i => {
               i.avatar = resolveDanmuAvatar(i)
               i.url = i.url || '/comments/'
               danmuStore.push({ avatar: i.avatar, content: i.nick + '：' + formatDanmaku(i.comment), url: i.url + '#' + i.id })
             });
-            Danmaku.batchSend(danmuStore, true);
-            saveToLocal.set(DANMU_CACHE_KEY, danmuStore, 0.5)
+            if (danmuStore.length) {
+              Danmaku.batchSend(danmuStore, true);
+              saveToLocal.set(DANMU_CACHE_KEY, danmuStore, 0.5)
+            }
           }
           //- 格式化评论
           function formatDanmaku(str) {
