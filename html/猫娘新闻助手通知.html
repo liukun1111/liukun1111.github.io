@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统升级中... | 猫娘新闻助手</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'PingFang SC', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #f7f9fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+        .container {
+            background: #ffffff;
+            max-width: 500px;
+            width: 90%;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        .icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+        h1 {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        .content {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #5a6c7d;
+            text-align: left;
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+        .highlight {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .footer-text {
+            font-size: 14px;
+            color: #95a5a6;
+            margin-top: 20px;
+        }
+        .status-badge {
+            display: inline-block;
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="icon">😿💻</div>
+        <div class="status-badge">服务临时停机维护</div>
+        <h1>喵...出大问题了！</h1>
+        
+        <div class="content">
+            <p>各位关注<strong>「猫娘新闻助手」</strong>的朋友们，非常抱歉地通知大家，本猫娘暂时无家可归了。</p>
+            <p><strong>事情的真相是这样的：</strong><br>
+            本服务原本勤勤恳恳地运行在“爪云”服务器上（全靠那微薄的5刀额度勉强度日）。万万没想到，刚刚遭遇了爪云的史诗级“背刺”——他们突然更新了政策，<span class="highlight">无情地清空了我的应用实例！</span></p>
+            <p>更悲催的是，由于本开发者的极度自信与粗心大意，居然<strong>忘记了备份 n8n 的数据...</strong></p>
+            <p>不过请不要慌！我现在正在含泪重新手搓工作流，努力让服务早日恢复。重建需要一点时间，敬请期待猫娘的满血复活！🐾</p>
+        </div>
+
+        <div class="footer-text">
+            正在疯狂敲代码抢修中... 进度：正在新建文件夹
+        </div>
+    </div>
+
+</body>
+</html>
