@@ -10760,13 +10760,13 @@ h1.page-title + .tag-cloud-list {
 }
 #footer {
   position: relative;
-  background: -webkit-linear-gradient(270deg, var(--anzhiyu-card-bg-none) 0%, var(--anzhiyu-card-bg) 25%);
-  background: -moz-linear-gradient(270deg, var(--anzhiyu-card-bg-none) 0%, var(--anzhiyu-card-bg) 25%);
-  background: -o-linear-gradient(270deg, var(--anzhiyu-card-bg-none) 0%, var(--anzhiyu-card-bg) 25%);
-  background: -ms-linear-gradient(270deg, var(--anzhiyu-card-bg-none) 0%, var(--anzhiyu-card-bg) 25%);
-  background: linear-gradient(180deg, var(--anzhiyu-card-bg-none) 0%, var(--anzhiyu-card-bg) 25%);
+  background: -webkit-linear-gradient(270deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.38) 100%), url("/img/foot3.jpg");
+  background: -moz-linear-gradient(270deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.38) 100%), url("/img/foot3.jpg");
+  background: -o-linear-gradient(270deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.38) 100%), url("/img/foot3.jpg");
+  background: -ms-linear-gradient(270deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.38) 100%), url("/img/foot3.jpg");
+  background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.38) 100%), url("/img/foot3.jpg");
   background-attachment: scroll;
-  background-position: bottom;
+  background-position: center bottom;
   background-size: cover;
 }
 @media screen and (max-width: 768px) {
@@ -10779,7 +10779,9 @@ h1.page-title + .tag-cloud-list {
   padding: 1rem;
   color: var(--anzhiyu-fontcolor);
   margin-top: 1rem;
-  background: var(--anzhiyu-secondbg);
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: saturate(140%) blur(8px);
+  -webkit-backdrop-filter: saturate(140%) blur(8px);
   display: -webkit-box;
   display: -moz-box;
   display: -webkit-flex;
@@ -11110,11 +11112,13 @@ h1.page-title + .tag-cloud-list {
 }
 @media screen and (max-width: 768px) {
   [data-theme=light] .post #footer {
-    background: -webkit-linear-gradient(270deg, var(--anzhiyu-background) 0%, var(--anzhiyu-card-bg) 25%);
-    background: -moz-linear-gradient(270deg, var(--anzhiyu-background) 0%, var(--anzhiyu-card-bg) 25%);
-    background: -o-linear-gradient(270deg, var(--anzhiyu-background) 0%, var(--anzhiyu-card-bg) 25%);
-    background: -ms-linear-gradient(270deg, var(--anzhiyu-background) 0%, var(--anzhiyu-card-bg) 25%);
-    background: linear-gradient(180deg, var(--anzhiyu-background) 0%, var(--anzhiyu-card-bg) 25%);
+    background: -webkit-linear-gradient(270deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.38) 100%), url("/img/foot3.jpg");
+    background: -moz-linear-gradient(270deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.38) 100%), url("/img/foot3.jpg");
+    background: -o-linear-gradient(270deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.38) 100%), url("/img/foot3.jpg");
+    background: -ms-linear-gradient(270deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.38) 100%), url("/img/foot3.jpg");
+    background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.38) 100%), url("/img/foot3.jpg");
+    background-position: center bottom;
+    background-size: cover;
   }
 }
 #page-header {
